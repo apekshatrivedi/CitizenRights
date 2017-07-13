@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:weightSum="1">
+
+
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:background="@drawable/lower_border"
+            >
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/dept"
+                android:visibility="visible"
+                app:srcCompat="@drawable/dept" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/deptarray"
+                android:prompt="@string/dept_prompt"
+
+
+                />
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:background="@drawable/lower_border"
+            >
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/dept"
+                android:visibility="visible"
+                app:srcCompat="@drawable/dept" />
+
+            <EditText
+                android:id="@+id/dname"
+                android:hint="Department name"
+                style="@style/styletext"
+                />
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:background="@drawable/lower_border"
+            >
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/date"
+                app:srcCompat="@drawable/date" />
+
+            <TextView
+                android:id="@+id/datepicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg"
+                android:hint="Date of complaint"
+                android:paddingLeft="10dp"
+                android:inputType="textCapWords"
+                android:onClick="showDatePickerDialog"
+                android:textColor="@color/white"
+                android:textColorHint="@color/input_register_hint"
+                style="?android:attr/editTextStyle"/>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:background="@drawable/lower_border"
+            >
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/title"
+                android:visibility="visible"
+                app:srcCompat="@drawable/title" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg"
+                android:hint="Title"
+                android:paddingLeft="10dp"
+                android:inputType="textCapWords"
+                android:textColor="@color/white"
+                android:textColorHint="@color/input_register_hint" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/description"
+                android:visibility="visible"
+                app:srcCompat="@drawable/description" />
+
+            <EditText
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:background="@color/bg"
+                android:hint="Describe your issue"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/input_register_hint"
+                style="?android:attr/editTextStyle"
+                android:scrollHorizontally="false"
+                android:gravity="top|left"/>
+
+
+        </LinearLayout>
+
+
+        <!-- Login Button -->
+
+        <Button
+            android:id="@+id/issuesubmit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="#ea4c88"
+            android:text="Post"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

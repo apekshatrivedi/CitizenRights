@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:weightSum="1">
+
+
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="298dp"
+        android:layout_height="77dp"
+        android:padding="20dp"
+        android:layout_gravity="center"
+        android:src="@drawable/logo1"
+        app:srcCompat="@drawable/logo1"
+        android:layout_weight="0.45" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            >
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:gravity="top|left"
+                android:src="@drawable/comment"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:background="@color/white"
+                android:hint="Comment"
+                android:paddingLeft="10dp"
+                android:textColor="@color/appcolor"
+                android:textColorHint="@color/input_register_hint"
+                style="?android:attr/editTextStyle"
+                android:scrollHorizontally="false"
+                android:gravity="top|left"/>
+
+        </LinearLayout>
+
+        <!-- Login Button -->
+
+        <Button
+            android:id="@+id/comment"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dip"
+            android:background="#ea4c88"
+            android:text="Comment"
+            android:textColor="@color/white" />
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+

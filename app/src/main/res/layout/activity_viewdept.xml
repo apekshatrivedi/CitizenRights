@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+
+        <ImageButton
+            android:id="@+id/edu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/bg"
+            android:scaleType="fitCenter"
+
+            android:src="@drawable/schoolbook" />
+
+        <ImageButton
+            android:id="@+id/office"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/bg"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_name" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+
+        <ImageButton
+            android:id="@+id/govt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/bg"
+            android:scaleType="fitCenter"
+            android:src="@drawable/govt" />
+
+        <ImageButton
+            android:id="@+id/bank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/bg"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bank" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+
+        <ImageButton
+            android:id="@+id/retail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/bg"
+            android:scaleType="fitCenter"
+            android:src="@drawable/retail" />
+
+        <ImageButton
+            android:id="@+id/ngo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@color/bg"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ngo" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
