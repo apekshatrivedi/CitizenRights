@@ -39,9 +39,10 @@
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:visibility="visible"
+        android:padding="5dp"
         android:src="@drawable/email"
         app:srcCompat="@drawable/email"
         android:background="@android:color/transparent"
@@ -68,8 +69,9 @@
 
             <ImageView
                 android:id="@+id/imageView9"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
                 android:visibility="visible"
                 android:src="@drawable/password"
                 app:srcCompat="@drawable/password" />
