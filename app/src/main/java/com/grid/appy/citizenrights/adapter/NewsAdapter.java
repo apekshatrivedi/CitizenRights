@@ -24,13 +24,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     Context context ;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
-        public TextView title,  username;
+        public TextView title,  username, date;
 
         private ItemClickListener itemClickListener;
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             username = (TextView) view.findViewById(R.id.username);
+            date=(TextView)view.findViewById(R.id.date);
 
 
             view.setOnClickListener(this);
@@ -99,7 +100,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
 
                 }
                 else {
-                    Toast.makeText(context, "click" + newsList.get(position), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "click" + newsList.get(position), Toast.LENGTH_SHORT).show();
 
                 }
             }

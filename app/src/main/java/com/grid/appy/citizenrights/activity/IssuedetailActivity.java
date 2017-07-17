@@ -35,6 +35,7 @@ public class IssuedetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent newcomment = new Intent(getApplicationContext(), NewcommentActivity.class);
                 startActivity(newcomment);
+
             }
         });
 
@@ -81,6 +82,12 @@ public class IssuedetailActivity extends AppCompatActivity {
 
         cAdapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent back = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(back);
     }
 
 }

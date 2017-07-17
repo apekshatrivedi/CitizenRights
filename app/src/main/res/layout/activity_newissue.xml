@@ -13,12 +13,13 @@
 
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingRight="20dp"
+        android:layout_weight="0.18">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,12 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:prompt="@string/spinner_title"
-
-
-
-
-
-
                 />
 
         </LinearLayout>
@@ -72,46 +67,6 @@
                 android:hint="Department name"
                 style="@style/styletext"
                 />
-
-
-
-        </LinearLayout>
-
-
-
-
-
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:background="@drawable/lower_border"
-            >
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:padding="5dp"
-                android:src="@drawable/date"
-                app:srcCompat="@drawable/date" />
-
-            <TextView
-                android:id="@+id/datepicker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/bg"
-                android:hint="Date of complaint"
-                android:paddingLeft="10dp"
-                android:inputType="textCapWords"
-                android:onClick="showDatePickerDialog"
-                android:textColor="@color/white"
-                android:textColorHint="@color/input_register_hint"
-                style="?android:attr/editTextStyle"/>
-
 
 
 
@@ -152,6 +107,37 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/lower_border"
+            >
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/attach"
+                android:padding="5dp"/>
+
+
+            <Button
+                android:id="@+id/upload"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="Attach files"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
             <ImageView
                 android:id="@+id/imageView3"
@@ -164,35 +150,39 @@
 
             <EditText
                 android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="225dp"
-                android:hint="Describe your issue"
-                android:background="@color/white"
-                android:paddingLeft="10dp"
-                android:textColor="@color/appcolor"
-                android:textColorHint="@color/input_register_hint"
                 style="?android:attr/editTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:background="@drawable/all_border"
+                android:padding="10dp"
+                android:gravity="top|left"
+                android:hint="Describe your issue"
+                android:paddingLeft="10dp"
                 android:scrollHorizontally="false"
-                android:gravity="top|left"/>
+                android:textColor="@color/white"
+                android:textColorHint="@color/input_register_hint" />
 
 
         </LinearLayout>
 
 
+
         <!-- Login Button -->
+
+
 
         <Button
             android:id="@+id/issuesubmit"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="#ea4c88"
+            android:background="@drawable/curve"
             android:text="Post"
             android:textColor="@color/white" />
+        </LinearLayout>
 
 
-    </LinearLayout>
 
 
 
-</LinearLayout>
+

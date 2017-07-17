@@ -37,7 +37,7 @@
         android:layout_alignParentTop="true"
         android:textStyle="bold"
 
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 
@@ -45,10 +45,18 @@
         android:id="@+id/username"
         android:textColor="@color/white"
         android:layout_below="@id/title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/thumbnail"
        />
+
+    <TextView
+        android:id="@+id/date"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        android:text="12-02-2016"/>
 
 
 

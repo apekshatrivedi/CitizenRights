@@ -99,14 +99,14 @@ public class HomeActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
-
+*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -167,43 +167,43 @@ public class HomeActivity extends AppCompatActivity
 
 //recycler view
     private void prepareNewsData() {
-        News news = new News("School issue", "username1");
+        News news = new News("School issue", "username","12-09-2017");
         newsList.add(news);
 
-         news = new News("Office issue", "username1");
+         news = new News("Office issue", "username1","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username9");
+        news = new News("Office issue", "username9","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username1");
+        news = new News("Office issue", "username1","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username9");
+        news = new News("Office issue", "username9","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username1");
+        news = new News("Office issue", "username1","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username9");
+        news = new News("Office issue", "username9","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username1");
+        news = new News("Office issue", "username1","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username9");
+        news = new News("Office issue", "username9","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username1");
+        news = new News("Office issue", "username1","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username9");
+        news = new News("Office issue", "username9","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username1");
+        news = new News("Office issue", "username1","12-09-2017");
         newsList.add(news);
 
-        news = new News("Office issue", "username9");
+        news = new News("Office issue", "username9","12-09-2017");
         newsList.add(news);
 
 

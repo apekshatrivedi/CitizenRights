@@ -6,8 +6,25 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
 
+
+    <!--Custom dimens used in application -->
+
+    <!--Padding -->
     <dimen name="large_padding">20dp</dimen>
     <dimen name="small_padding">10dp</dimen>
+    <dimen name="micro_padding">5dp</dimen>
+
+
+    <!-- Margins -->
+    <dimen name="margin_top">8dp</dimen>
+
+    <!--Icons-->
+    <dimen name="icon_width">30dp</dimen>
+    <dimen name="icon_height">30dp</dimen>
+
+    <!--Button-->
+    <dimen name="btn_height">40dp</dimen>
+
 
 
 </resources>

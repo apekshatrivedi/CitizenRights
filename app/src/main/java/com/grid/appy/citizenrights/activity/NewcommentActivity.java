@@ -24,7 +24,11 @@ public class NewcommentActivity extends AppCompatActivity {
                 // Switching to activity_forgetpassword screen
                 Intent i1 = new Intent(getApplicationContext(), IssuedetailActivity.class);
                 startActivity(i1);
+
             }
         });
     }
+
+
+
 }

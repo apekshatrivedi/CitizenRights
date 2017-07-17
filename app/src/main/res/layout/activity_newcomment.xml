@@ -32,8 +32,9 @@
 
             <ImageView
                 android:id="@+id/imageView8"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
                 android:background="@android:color/transparent"
                 android:gravity="top|left"
                 android:src="@drawable/comment"
@@ -42,11 +43,13 @@
             <EditText
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
+                android:layout_marginLeft="5dp"
                 android:layout_height="225dp"
-                android:background="@color/white"
+                android:background="@drawable/all_border"
+                android:padding="10dp"
                 android:hint="Comment"
                 android:paddingLeft="10dp"
-                android:textColor="@color/appcolor"
+                android:textColor="@color/white"
                 android:textColorHint="@color/input_register_hint"
                 style="?android:attr/editTextStyle"
                 android:scrollHorizontally="false"
@@ -61,7 +64,7 @@
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dip"
-            android:background="#ea4c88"
+            android:background="@drawable/curve"
             android:text="Comment"
             android:textColor="@color/white" />
 

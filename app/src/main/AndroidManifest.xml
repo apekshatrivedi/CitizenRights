@@ -61,7 +61,7 @@
             android:label="Comment" />
         <activity
             android:name=".activity.DeptissueActivity"
-            android:label="@string/title_activity_deptissue"
+            android:label="Department Name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
