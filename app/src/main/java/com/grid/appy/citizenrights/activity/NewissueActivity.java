@@ -18,9 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.grid.appy.citizenrights.R;
 
 
@@ -47,8 +44,36 @@ public class NewissueActivity extends AppCompatActivity implements AdapterView.O
 
             public void onClick(View v) {
                 // Switching to activity_home screen
-                Intent issues = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(issues);
+
+                EditText desc =(EditText)findViewById(R.id.desc);
+                final String description = desc.getText().toString();
+
+
+                EditText dept =(EditText)findViewById(R.id.dname);
+                final String dename = dept.getText().toString();
+
+
+                EditText titleedit =(EditText)findViewById(R.id.title);
+                final String title = titleedit.getText().toString();
+
+                  if (!isValidDname(dename)) {
+                    dept.setError("Enter department name");
+                }
+
+               else if (!isValidTitle(title)) {
+                    titleedit.setError("Enter a title");
+                }
+
+
+
+             else  if (!isValidDesc(description)) {
+                    desc.setError("Give some description for the issue");
+                }
+
+                else {
+                       Intent issues = new Intent(getApplicationContext(), HomeActivity.class);
+                       startActivity(issues);
+                   }
             }
         });
 
@@ -58,7 +83,7 @@ public class NewissueActivity extends AppCompatActivity implements AdapterView.O
 
             public void onClick(View v) {
                 // Switching to activity_home screen
-               openImageIntent();
+                openImageIntent();
             }
         });
 
@@ -98,7 +123,7 @@ public class NewissueActivity extends AppCompatActivity implements AdapterView.O
         String item = parent.getItemAtPosition(position).toString();
 
         // Showing selected spinner item
-      //  Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        //  Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
@@ -147,7 +172,26 @@ public class NewissueActivity extends AppCompatActivity implements AdapterView.O
         startActivityForResult(chooserIntent, 200);
     }
 
+    private boolean isValidDesc(String pass) {
+        if (pass != null && pass.length() > 1) {
+            return true;
+        }
+        return false;
+    }
 
+    private boolean isValidTitle(String pass) {
+        if (pass != null&& pass.length() > 1 ) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isValidDname(String pass) {
+        if (pass != null && pass.length() > 1) {
+            return true;
+        }
+        return false;
+    }
 
 
 

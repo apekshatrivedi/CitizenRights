@@ -51,6 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
+
+
             android:background="@drawable/lower_border"
             >
             <ImageView
@@ -73,12 +75,13 @@
         </LinearLayout>
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="8dp"
-            android:gravity="center"
             android:background="@drawable/lower_border"
-            >
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -90,13 +93,13 @@
                 app:srcCompat="@drawable/title" />
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/bg"
                 android:hint="Title"
-                android:paddingLeft="10dp"
                 android:inputType="textCapWords"
+                android:paddingLeft="10dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/input_register_hint" />
 
@@ -105,40 +108,41 @@
 
 
         <LinearLayout
+
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:background="@drawable/lower_border"
-            >
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/thumbnail"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                app:srcCompat="@drawable/attach"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                app:srcCompat="@drawable/attach" />
 
 
             <Button
                 android:id="@+id/upload"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
                 android:text="Attach files"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="15dp" />
         </LinearLayout>
 
-
-        </LinearLayout>
-
-
-
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="8dp">
+
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="30dp"
@@ -149,14 +153,14 @@
                 app:srcCompat="@drawable/description" />
 
             <EditText
-                android:id="@+id/textView2"
+                android:id="@+id/desc"
                 style="?android:attr/editTextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="240dp"
                 android:background="@drawable/all_border"
-                android:padding="10dp"
                 android:gravity="top|left"
                 android:hint="Describe your issue"
+                android:padding="10dp"
                 android:paddingLeft="10dp"
                 android:scrollHorizontally="false"
                 android:textColor="@color/white"
@@ -165,21 +169,30 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/issuesubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curve"
+            android:text="Post"
+
+            android:textColor="@color/white"/>
+
+
+        </LinearLayout>
+
+
+
+
+
 
 
         <!-- Login Button -->
 
 
 
-        <Button
-            android:id="@+id/issuesubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/curve"
-            android:text="Post"
-            android:textColor="@color/white" />
-        </LinearLayout>
+</LinearLayout>
 
 
 

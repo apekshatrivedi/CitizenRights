@@ -11,14 +11,14 @@
 
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.14"
         android:text="Notification alert"
         android:textColor="@color/white" />
     <Switch
-        android:id="@+id/switch6"
+        android:id="@+id/newcomment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.14"
@@ -27,7 +27,7 @@
 
 
     <Switch
-        android:id="@+id/switch4"
+        android:id="@+id/autologin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.14"
@@ -35,7 +35,7 @@
         android:textColor="@color/white" />
 
     <Switch
-        android:id="@+id/switch3"
+        android:id="@+id/allowcomments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.14"
@@ -43,7 +43,7 @@
         android:textColor="@color/white" />
 
     <Switch
-        android:id="@+id/switch5"
+        android:id="@+id/autorefresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.14"

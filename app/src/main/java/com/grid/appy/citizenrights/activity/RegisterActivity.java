@@ -64,25 +64,25 @@ public class RegisterActivity extends Activity {
                     nameedit.setError("Invalid Name");
                 }
 
-                else if (!isValidPhone(phone)) {
+               else if (!isValidPhone(phone)) {
                     phoneedit.setError("Invalid Phone");
                 }
 
-                else if (!isValidEmail(email)) {
+               else if (!isValidEmail(email)) {
                     emailedit.setError("Invalid Email");
                 }
-               else if (!isValidPassword(password)) {
+              else if (!isValidPassword(password)) {
                     pass.setError("Password must be greater than 4 characters");
                 }
-                else if (!isValidrePassword(repassword,password)) {
+            else    if (!isValidrePassword(repassword,password)) {
                     repass.setError("Password does not match");
                 }
 
                 else{
-              
 
-                    Intent i2 = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(i2);
+
+                   Intent i2 = new Intent(getApplicationContext(), HomeActivity.class);
+                   startActivity(i2);
             }}
         });
     }
