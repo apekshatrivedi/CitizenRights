@@ -27,15 +27,10 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //recycleview adapters
     private List<News> newsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private NewsAdapter nAdapter;
-
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,27 +40,15 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-
         nAdapter = new NewsAdapter(newsList,this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
-
-
         recyclerView.setAdapter(nAdapter);
-
-
-
-
-
         prepareNewsData();
 
         //Floating fab
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +69,9 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
     }
 
+    //on back action
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -99,14 +81,14 @@ public class HomeActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-/*
+
+    //action bar icon
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
-*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -115,7 +97,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
             return true;
         }
 
@@ -129,33 +111,34 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.home) {
-            // Handle the camera action
+            // Handle the home action
 
                     Intent home = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(home);
 
-
         } else if (id == R.id.issue) {
+            // Handle the viewissue action
 
             Intent viewissue = new Intent(getApplicationContext(), ViewissueActivity.class);
             startActivity(viewissue);
 
         } else if (id == R.id.dept) {
+            // Handle the view dept action
             Intent viewdept = new Intent(getApplicationContext(), ViewdeptActivity.class);
             startActivity(viewdept);
 
         } else if (id == R.id.setting) {
-
+            // Handle the setting action
             Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(settings);
 
         } else if (id == R.id.help) {
-
+            // Handle the help action
             Intent help = new Intent(getApplicationContext(), Helpactivity.class);
             startActivity(help);
 
         } else if (id == R.id.logout) {
-
+            // Handle the logout action
             Intent logout = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(logout);
         }
@@ -205,8 +188,6 @@ public class HomeActivity extends AppCompatActivity
 
         news = new News("Office issue", "username9","12-09-2017");
         newsList.add(news);
-
-
 
 
         nAdapter.notifyDataSetChanged();

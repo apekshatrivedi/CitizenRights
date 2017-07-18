@@ -14,7 +14,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-
+        //notification switch
         Switch notification = (Switch) findViewById(R.id.notification);
         notification.setChecked(true);
         notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -35,6 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //new comment switch
         Switch newcomment = (Switch) findViewById(R.id.newcomment);
         newcomment.setChecked(true);
         newcomment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -56,6 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        //autologin switch
         Switch autologin = (Switch) findViewById(R.id.autologin);
         autologin.setChecked(false);
         autologin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -77,7 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-
+        //allowcomments switch
         Switch allowcomments = (Switch) findViewById(R.id.allowcomments);
         allowcomments.setChecked(true);
         allowcomments.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -99,6 +102,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        //autorefresh switch
         Switch autorefresh = (Switch) findViewById(R.id.autorefresh);
         autorefresh.setChecked(true);
         autorefresh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -119,12 +123,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
-
 
     //oncreate ends here
     }

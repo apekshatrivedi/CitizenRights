@@ -22,13 +22,11 @@
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="match_parent"
-                android:layout_height="77dp"
+                android:layout_height="160dp"
                 android:layout_marginBottom="2dp"
-                android:padding="@dimen/small_padding"
                 android:layout_gravity="center"
-                android:src="@drawable/logo1"
-                app:srcCompat="@drawable/logo1"
-                android:layout_weight="0.37" />
+                android:src="@drawable/citizen"
+                android:layout_weight="6.20" />
 
 
 
@@ -66,8 +64,8 @@
                         android:hint="@string/hint_name"
                         android:paddingLeft="@dimen/small_padding"
                         android:inputType="textCapWords"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/input_register_hint" />
+                        android:textColor="@color/colorTextPrimary"
+                        android:textColorHint="@color/colorTextSecondary" />
 
 
                 </LinearLayout>
@@ -96,8 +94,8 @@
                         android:hint="@string/hint_phone"
                         android:paddingLeft="10dp"
                         android:inputType="phone"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/input_register_hint" />
+                        android:textColor="@color/colorTextPrimary"
+                        android:textColorHint="@color/colorTextSecondary" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -123,8 +121,8 @@
                         android:hint="@string/hint_email"
                         android:inputType="textEmailAddress"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/input_register_hint" />
+                        android:textColor="@color/colorTextPrimary"
+                        android:textColorHint="@color/colorTextSecondary" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -149,8 +147,8 @@
                         android:hint="@string/hint_password"
                         android:inputType="textPassword"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/input_register_hint" />
+                        android:textColor="@color/colorTextPrimary"
+                        android:textColorHint="@color/colorTextSecondary" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -174,8 +172,8 @@
                         android:hint="@string/hint_repassword"
                         android:inputType="textPassword"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/input_register_hint" />
+                        android:textColor="@color/colorTextPrimary"
+                        android:textColorHint="@color/colorTextSecondary" />
                 </LinearLayout>
                 <!-- Login Button -->
 
@@ -198,7 +196,7 @@
                     android:background="@null"
                     android:text="@string/btn_link_to_login"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorTextPrimary"
                     android:textSize="15dp" />
             </LinearLayout>
 

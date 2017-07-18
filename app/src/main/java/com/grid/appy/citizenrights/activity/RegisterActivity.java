@@ -21,7 +21,6 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.activity_register);
 
         Button loginScreen = (Button) findViewById(R.id.btnLinkToLoginScreen);
-
         // Listening to Login Screen link
         loginScreen.setOnClickListener(new View.OnClickListener() {
 
@@ -37,8 +36,9 @@ public class RegisterActivity extends Activity {
 
             public void onClick(View arg0) {
                 // Closing registration screen
-                // Switching to Login Screen/closing register screen
+                // closing register screen
 
+                //form validation
                 EditText nameedit;
                 nameedit = (EditText) findViewById(R.id.name);
                 EditText phoneedit;
@@ -50,15 +50,11 @@ public class RegisterActivity extends Activity {
                 EditText repass;
                 repass = (EditText) findViewById(R.id.repassword);
 
-
-
                 final String email = emailedit.getText().toString();
                 final String name = nameedit.getText().toString();
                 final String phone = phoneedit.getText().toString();
                 final String password = pass.getText().toString();
                 final String repassword = repass.getText().toString();
-
-
 
                 if (!isValidName(name)) {
                     nameedit.setError("Invalid Name");
@@ -71,22 +67,22 @@ public class RegisterActivity extends Activity {
                else if (!isValidEmail(email)) {
                     emailedit.setError("Invalid Email");
                 }
+
               else if (!isValidPassword(password)) {
                     pass.setError("Password must be greater than 4 characters");
                 }
+
             else    if (!isValidrePassword(repassword,password)) {
                     repass.setError("Password does not match");
                 }
 
                 else{
-
-
+                    //switching to home activity
                    Intent i2 = new Intent(getApplicationContext(), HomeActivity.class);
                    startActivity(i2);
             }}
         });
     }
-
 
     // validating email id
     private boolean isValidEmail(String email) {
@@ -97,8 +93,8 @@ public class RegisterActivity extends Activity {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
-    private boolean isValidName(String email) {
+        //validating name
+        private boolean isValidName(String email) {
         String EMAIL_PATTERN = "^[A-Za-z\\\\s]{1,}[\\\\.]{0,1}[A-Za-z\\\\s]{0,}$";
 
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
@@ -106,6 +102,7 @@ public class RegisterActivity extends Activity {
         return matcher.matches();
     }
 
+    //validating phone
     private boolean isValidPhone(String email) {
         String EMAIL_PATTERN = "^[2-9]{2}[0-9]{8}$";
 
@@ -114,6 +111,7 @@ public class RegisterActivity extends Activity {
         return matcher.matches();
     }
 
+    //validating password
     private boolean isValidPassword(String pass) {
         if (pass != null && pass.length() > 4) {
             return true;
@@ -121,7 +119,7 @@ public class RegisterActivity extends Activity {
         return false;
     }
 
-
+    //validating re-enter password
     private boolean isValidrePassword(String repass,String pass) {
         if (repass.contentEquals(pass)) {
             return true;
@@ -129,6 +127,5 @@ public class RegisterActivity extends Activity {
             return false;
         }
     }
-
 
 }

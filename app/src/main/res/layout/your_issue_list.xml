@@ -27,7 +27,7 @@
 
     <TextView
         android:id="@+id/title"
-        android:textColor="@color/white"
+        android:textColor="@color/colorTextPrimary"
         android:textSize="16dp"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/date"
-        android:textColor="@color/white"
+        android:textColor="@color/colorTextSecondary"
         android:layout_width="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_height="wrap_content" />

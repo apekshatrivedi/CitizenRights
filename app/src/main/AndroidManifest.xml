@@ -8,13 +8,13 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:icon="@drawable/logo1"
+        android:icon="@drawable/citizen"
         android:label="@string/app_name"
-        android:logo="@drawable/logo1"
+        android:logo="@drawable/citizen"
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.LoginActivity"
-            android:icon="@drawable/logo1"
+            android:icon="@drawable/citizen"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,12 +57,10 @@
             android:name=".activity.IssuedetailActivity"
             android:label="Issues" />
         <activity
-            android:name=".activity.NewcommentActivity"
-            android:label="Comment" />
-        <activity
             android:name=".activity.DeptissueActivity"
             android:label="Department Name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.EditissueActivity"></activity>
     </application>
 
 </manifest>

@@ -3,11 +3,9 @@ package com.grid.appy.citizenrights.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 
 import com.grid.appy.citizenrights.R;
 
@@ -16,20 +14,16 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends Activity {
 
-
-
-
     private EditText emailedit, password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // setting default screen to activity_login.xml
-
         setContentView(R.layout.activity_login);
 
+        //Forget Screen
         Button forgetScreen = (Button) findViewById(R.id.btnLinkToForgetScreen);
-
         // Listening to forgetpassword link
         forgetScreen.setOnClickListener(new View.OnClickListener() {
 
@@ -40,6 +34,7 @@ public class LoginActivity extends Activity {
             }
         });
 
+        //Home page
         Button login=(Button)findViewById(R.id.btnLogin);
         login.setOnClickListener(new View.OnClickListener() {
 
@@ -51,16 +46,13 @@ public class LoginActivity extends Activity {
 
                 final String email = emailedit.getText().toString();
                 final String pass = password.getText().toString();
+
                 if (!isValidEmail(email)) {
                     emailedit.setError("Invalid Email");
                 }
-
-
                else if (!isValidPassword(pass)) {
                     password.setError("Invalid Password");
                 }
-
-
                 else{
                 Intent i2 = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(i2);}
@@ -68,7 +60,6 @@ public class LoginActivity extends Activity {
         });
 
         // Listening to register new account link
-
         Button registerScreen = (Button) findViewById(R.id.btnLinkToRegisterScreen);
 
         // Listening to register new account link
@@ -80,16 +71,7 @@ public class LoginActivity extends Activity {
                 startActivity(i);
             }
         });
-
-
-
-
-
-
-
     }
-
-
     // validating email id
     private boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -107,6 +89,4 @@ public class LoginActivity extends Activity {
         }
         return false;
     }
-
-
 }

@@ -38,8 +38,7 @@ public class ForgetpasswordActivity extends AppCompatActivity {
         reset.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                // Closing Forgetpassword screen
-                // Switching to Login Screen/closing forgetpassword screen
+                // reset email button
                 EditText emailedit;
                 emailedit = (EditText) findViewById(R.id.email);
                 final String email = emailedit.getText().toString();

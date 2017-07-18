@@ -4,75 +4,40 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/bg"
-    android:gravity="center"
+    android:gravity="center|top"
     android:orientation="vertical"
     android:padding="10dp"
     android:weightSum="1">
 
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="top|center"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:layout_weight="0.18">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:background="@drawable/lower_border"
-            >
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:padding="5dp"
-                android:src="@drawable/dept"
-                android:visibility="visible"
-                app:srcCompat="@drawable/dept" />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:prompt="@string/spinner_title"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-
-
-            android:background="@drawable/lower_border"
-            >
-            <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:padding="5dp"
-                android:src="@drawable/dept"
-                android:visibility="visible"
-                app:srcCompat="@drawable/dept" />
-
-            <EditText
-                android:id="@+id/dname"
-                android:hint="Department name"
-                style="@style/styletext"
-                />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/citizen"
+            app:srcCompat="@drawable/citizen"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            />
 
 
 
-        </LinearLayout>
 
         <LinearLayout
 
@@ -100,8 +65,8 @@
                 android:hint="Title"
                 android:inputType="textCapWords"
                 android:paddingLeft="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/input_register_hint" />
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextSecondary" />
 
 
         </LinearLayout>
@@ -132,7 +97,7 @@
                 android:paddingLeft="10dp"
                 android:text="Attach files"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/colorTextSecondary"
                 android:textSize="15dp" />
         </LinearLayout>
 
@@ -156,15 +121,15 @@
                 android:id="@+id/desc"
                 style="?android:attr/editTextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="220dp"
                 android:background="@drawable/all_border"
                 android:gravity="top|left"
                 android:hint="Describe your issue"
                 android:padding="10dp"
                 android:paddingLeft="10dp"
                 android:scrollHorizontally="false"
-                android:textColor="@color/white"
-                android:textColorHint="@color/input_register_hint" />
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextSecondary" />
 
 
         </LinearLayout>
@@ -184,6 +149,7 @@
 
 
 
+</ScrollView>
 
 
 

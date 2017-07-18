@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#FF4081</item>
+        <item name="colorPrimary">#FE9800</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#FF4081</item>
+        <item name="colorAccent">#FE5722</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -20,11 +20,11 @@
     <style name="styletext">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/bg</item>
+        <item name="android:background">@color/white</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:inputType">textCapWords</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textColorHint">@color/input_register_hint</item>
+        <item name="android:textColorHint">@color/colorTextSecondary</item>
     </style>
 
 </resources>

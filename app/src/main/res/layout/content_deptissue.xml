@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:background="@color/bg"
             android:hint="Department Name"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/colorTextSecondary"
             android:textSize="20dp"
             android:textStyle="bold"
             android:paddingLeft="10dp"

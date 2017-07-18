@@ -16,14 +16,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.14"
         android:text="Notification alert"
-        android:textColor="@color/white" />
+        android:textColor="@color/colorTextPrimary" />
     <Switch
         android:id="@+id/newcomment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.14"
-        android:text="New comment alert"
-        android:textColor="@color/white" />
+        android:text="New reply alert"
+        android:textColor="@color/colorTextPrimary" />
 
 
     <Switch
@@ -32,15 +32,15 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.14"
         android:text="Allow auto-login"
-        android:textColor="@color/white" />
+        android:textColor="@color/colorTextPrimary" />
 
     <Switch
         android:id="@+id/allowcomments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.14"
-        android:text="Allow comments"
-        android:textColor="@color/white" />
+        android:text="Allow reply view"
+        android:textColor="@color/colorTextPrimary" />
 
     <Switch
         android:id="@+id/autorefresh"
@@ -48,14 +48,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.14"
         android:text="Auto-Refresh"
-        android:textColor="@color/white" />
+        android:textColor="@color/colorTextPrimary" />
 
     <Button
         android:id="@+id/reset"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_marginTop="20dip"
-        android:background="#ea4c88"
+        android:background="@drawable/curve"
         android:text="Reset to default"
         android:textColor="@color/white" />
     <Button
@@ -63,7 +63,7 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_marginTop="20dip"
-        android:background="#ea4c88"
+        android:background="@drawable/curve"
         android:text="Clear issue history"
         android:textColor="@color/white" />
 

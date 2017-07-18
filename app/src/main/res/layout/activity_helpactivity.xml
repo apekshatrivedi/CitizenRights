@@ -27,7 +27,7 @@
         android:inputType="textMultiLine"
         android:padding="7dp"
         android:text="@string/help"
-        android:textColor="@color/white"
+        android:textColor="@color/colorTextSecondary"
         android:textSize="10pt" />
     </LinearLayout>
 

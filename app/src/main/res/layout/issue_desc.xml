@@ -15,8 +15,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,8 +28,8 @@
                 android:layout_height="250dp"
                 android:padding="20dp"
                 android:layout_gravity="center"
-                android:src="@drawable/logo1"
-                app:srcCompat="@drawable/logo1"
+                android:src="@drawable/citizen"
+                app:srcCompat="@drawable/citizen"
                 android:layout_weight="0.45" />
 
             <LinearLayout
@@ -57,13 +55,18 @@
                     android:layout_height="wrap_content"
                     android:background="@color/bg"
                     android:hint="Title of the Issue"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/colorPrimary"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:paddingLeft="10dp"
                     android:inputType="textCapWords"
                     android:textColor="@color/white"
                      />
+
+
+
+
+
             </LinearLayout>
 
 
@@ -82,8 +85,9 @@
         android:textStyle="bold"
         android:paddingLeft="10dp"
         android:inputType="textCapWords"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/colorTextSecondary"
+
+
         />
 
     <TextView
@@ -93,8 +97,9 @@
         android:hint="some XYZ department"
         android:paddingLeft="10dp"
         android:inputType="textCapWords"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/colorTextPrimary"
+        android:textColorHint="@color/colorTextPrimary"
+
        />
 
 
@@ -113,8 +118,8 @@
         android:hint="Username: "
         android:paddingLeft="10dp"
         android:inputType="textCapWords"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
+        android:textColor="@color/colorTextSecondary"
+        />
     <TextView
         android:id="@+id/textViewgiven"
         android:layout_width="match_parent"
@@ -122,11 +127,14 @@
         android:hint="( who posted issue)"
         android:paddingLeft="10dp"
         android:inputType="textCapWords"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
+        android:textColor="@color/colorTextPrimary"
+        android:textColorHint="@color/colorTextPrimary"
+       />
 
 </LinearLayout>
-           <LinearLayout
+
+
+            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:background="@drawable/lower_border">
@@ -140,32 +148,35 @@
                    android:hint="Date: "
                    android:paddingLeft="10dp"
                    android:inputType="textCapWords"
-                   android:textColor="@color/white"
-                   android:textColorHint="@color/white" />
+                   android:textColor="@color/colorTextSecondary"
+                   />
 
-               <TextView
-                   android:id="@+id/dategiven"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:hint="12-09-2017"
-                   android:paddingLeft="10dp"
-                   android:inputType="textCapWords"
-                   android:textColor="@color/white"
-                   android:textColorHint="@color/white"/>
+                <TextView
+                    android:id="@+id/dategiven"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="12-09-2017"
+                    android:paddingLeft="10dp"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textColorHint="@color/colorTextPrimary"
+                    />
 
-           </LinearLayout>
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/lower_border"
+                android:gravity="top|left"
                 android:hint="@string/test"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-               android:paddingBottom="10dp"
-                android:gravity="top|left"/>
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextPrimary" />
+
 
             <TextView
                 android:layout_marginTop="5dp"
@@ -174,9 +185,9 @@
                 android:inputType="textCapWords"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                android:hint="Comments"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"/>
+                android:hint="Reply"
+                android:textColor="@color/colorTextPrimary"
+               />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -194,13 +205,19 @@
     </ScrollView>
 
 
+
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_marginTop="5dp"
-        android:layout_width="wrap_content"
+        android:layout_width="54dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/comment" />
+        app:srcCompat="@drawable/pen"
+        android:elevation="6dp"
+        app:pressedTranslationZ="12dp"/>
+
+
 
 </android.support.design.widget.CoordinatorLayout>
