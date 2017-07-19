@@ -1,5 +1,6 @@
 package com.grid.appy.citizenrights.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,20 +41,27 @@ public class ForgetpasswordActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 // reset email button
                 EditText emailedit;
-                emailedit = (EditText) findViewById(R.id.email);
+                emailedit = (EditText) findViewById(R.id.phone);
                 final String email = emailedit.getText().toString();
                   if (!isValidEmail(email)) {
-                    emailedit.setError("Invalid Email");
+                    emailedit.setError("Invalid Phone");
                 }
+                else
+                  {
+                      Intent home = new Intent(getApplicationContext(), OtpActivity.class);
+                      startActivity(home);
+                  }
             }
         });
+
+
+
 
     }
 
     // validating email id
     private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        String EMAIL_PATTERN = "^[2-9]{2}[0-9]{8}$";
 
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);

@@ -1,5 +1,6 @@
 package com.grid.appy.citizenrights.activity;
 
+//Note file upload MAX 2MB
 
 
 import android.content.ComponentName;

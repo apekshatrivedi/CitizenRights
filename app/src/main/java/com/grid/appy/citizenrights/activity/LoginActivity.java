@@ -54,7 +54,7 @@ public class LoginActivity extends Activity {
                     password.setError("Invalid Password");
                 }
                 else{
-                Intent i2 = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent i2 = new Intent(getApplicationContext(), NewissueActivity.class);
                 startActivity(i2);}
             }
         });

@@ -1,8 +1,10 @@
 package com.grid.appy.citizenrights.activity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,8 @@ import com.grid.appy.citizenrights.model.DividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,6 +43,8 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        checkFirstRun();
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         nAdapter = new NewsAdapter(newsList,this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -53,7 +59,7 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newissue = new Intent(getApplicationContext(), NewissueActivity.class);
+                Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(newissue);
             }
         });
@@ -71,6 +77,20 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    public void checkFirstRun() {
+        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
+        if (isFirstRun){
+            // Place your dialog code here to display the dialog
+
+
+            new AlertDialog.Builder(this).setTitle("Terms and conditions").setMessage("By installing this application by default you agree to the terms and conditions of this app").setNeutralButton("OK", null).show();
+
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("isFirstRun", false)
+                    .apply();
+        }
+    }
     //on back action
     @Override
     public void onBackPressed() {
@@ -78,6 +98,7 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+
             super.onBackPressed();
         }
     }

@@ -24,8 +24,9 @@ public class ViewdeptActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // Switching to activity_deptissue screen
-                Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
-
+                Intent i1 = new Intent(ViewdeptActivity.this, DeptissueActivity.class);
+                String message="Education";
+                i1.putExtra("message", message);
                 startActivity(i1);
             }
         });
@@ -37,6 +38,8 @@ public class ViewdeptActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Switching to activity_deptissue screen
                 Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
+                String message="Work";
+                i1.putExtra("message", message);
                 startActivity(i1);
             }
         });
@@ -48,6 +51,8 @@ public class ViewdeptActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Switching to activity_issue screen
                 Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
+                String message="Bank";
+                i1.putExtra("message", message);
                 startActivity(i1);
             }
         });
@@ -59,6 +64,8 @@ public class ViewdeptActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Switching to activity_deptissue screen
                 Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
+                String message="NGO";
+                i1.putExtra("message", message);
                 startActivity(i1);
             }
         });
@@ -71,6 +78,8 @@ public class ViewdeptActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Switching to activity_forgetpassword screen
                 Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
+                String message="Retail";
+                i1.putExtra("message", message);
                 startActivity(i1);
             }
         });
@@ -83,6 +92,8 @@ public class ViewdeptActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Switching to activity_forgetpassword screen
                 Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
+                String message="Government";
+                i1.putExtra("message", message);
                 startActivity(i1);
             }
         });

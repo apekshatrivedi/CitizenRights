@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/bg"
-                android:hint="Title"
+                android:hint="Issue title"
                 android:inputType="textCapWords"
                 android:paddingLeft="10dp"
                 android:textColor="@color/colorTextPrimary"

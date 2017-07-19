@@ -23,7 +23,11 @@ import com.grid.appy.citizenrights.model.DividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.id.message;
+
 public class DeptissueActivity extends AppCompatActivity {
+
+
 
     //Recycler view adapter objects
     private List<Dept> deptList = new ArrayList<>();
@@ -36,6 +40,13 @@ public class DeptissueActivity extends AppCompatActivity {
         setContentView(R.layout.activity_deptissue);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        Bundle bundle = getIntent().getExtras();
+        String message = bundle.getString("message");
+
+        TextView txtView = (TextView) findViewById(R.id.deptname);
+        txtView.setText(message);
 
         //new issue fab
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

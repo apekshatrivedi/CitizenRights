@@ -78,8 +78,8 @@ public class RegisterActivity extends Activity {
 
                 else{
                     //switching to home activity
-                   Intent i2 = new Intent(getApplicationContext(), HomeActivity.class);
-                   startActivity(i2);
+                    Intent logout = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(logout);
             }}
         });
     }

@@ -5,15 +5,16 @@ package com.grid.appy.citizenrights.model;
  */
 
 public class Comment {
-    private String username, comment, date;
+    private String username, comment, date,time;
 
     public Comment() {
     }
 
-    public Comment(String username, String comment, String date) {
+    public Comment(String username, String comment, String date,String time) {
         this.username = username;
         this.comment = comment;
         this.date = date;
+        this.time=time;
     }
 
     public String getUsername() {
@@ -23,6 +24,15 @@ public class Comment {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
 
     public String getDate() {
         return date;

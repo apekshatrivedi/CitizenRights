@@ -61,7 +61,7 @@ public class IssuedetailActivity extends AppCompatActivity {
         prepareCommentData();
 
     } private void prepareCommentData() {
-        Comment comment = new Comment("Department name", "Reply - \n" +
+        Comment comment = new Comment("Department name", "\n" +"Reply-"+"\n"+
 
 
                 "Usu cu officiis placerat recusabo, ea mea numquam intellegebat. Pro suas hinc viris an, populo efficiendi intellegebat mea ad! Nam minim delicata ut, ne aperiri adipisci prodesset sea? Ubique civibus eleifend sea at, sea cibo semper facilisis et, ne nusquam accusam vix. Audire appetere concludaturque ei eos, pro suas placerat te. Deleniti constituto cum ne, sit vitae fastidii corrumpit eu?\n" +
@@ -69,7 +69,7 @@ public class IssuedetailActivity extends AppCompatActivity {
                 "Mei no idque augue minim, regione ornatus has ut. Mei ne meis debitis propriae. Ut vis quod indoctum. Eos probo fabulas cu, bonorum tractatos persequeris eos ea.\n" +
                 "\n" +
                 "Ea vix consequat conc\n" +
-                "Agam docendi mea no, quem diceret incorrupte ei ius. No quo i", "12-03-2015");
+                "Agam docendi mea no, quem diceret incorrupte ei ius. No quo i", "12-03-2015","11:45 AM");
         commentList.add(comment);
 
 
@@ -82,8 +82,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     //action on back
     @Override
     public void onBackPressed() {
-        Intent back = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(back);
+        finish();
     }
 
 

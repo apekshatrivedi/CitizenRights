@@ -12,6 +12,7 @@
     <string name="emailerror">Enter a valid email</string>
     <string name="mobileerror">Enter a valid mobile</string>
     <string name="passmatch">Password does not match</string>
+    <string name="copyright"> © GRID R&amp;D</string>
 
     <string name="hint_email">Email</string>
     <string name="hint_phone">Phone</string>

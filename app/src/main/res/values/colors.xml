@@ -4,12 +4,14 @@
     <color name="colorPrimaryDark">#F47C00</color>
     <color name="colorLightPrimary">#FEDFB2</color>
     <color name="color_text_icon">#212121</color>
-    <color name="colorAccent">#FE5722</color>
+    <color name="colorAccent">#F47C00</color>
     <color name="colorTextPrimary">#212121</color>
     <color name="colorTextSecondary">#757575</color>
     <color name="colorDivider">#BCBDBD</color>
     <color name="white">#ffffff</color>
     <color name="bg">#ffffff</color>
+
+
 
 
     <color name="satisfied">#1b5e20</color>

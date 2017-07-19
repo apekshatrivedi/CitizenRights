@@ -29,7 +29,7 @@
             />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/deptname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/bg"
@@ -39,7 +39,7 @@
             android:textStyle="bold"
             android:paddingLeft="10dp"
             android:inputType="textCapWords"
-            android:textColor="@color/white"
+            android:textColor="@color/colorTextPrimary"
             />
     </LinearLayout>
 

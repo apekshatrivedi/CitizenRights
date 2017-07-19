@@ -153,9 +153,31 @@
 
                 <TextView
                     android:id="@+id/dategiven"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="12-09-2017"
+                    android:paddingLeft="10dp"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textColorHint="@color/colorTextPrimary"
+                    />
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:hint="Time: "
+                    android:paddingLeft="10dp"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/colorTextSecondary"
+                    />
+
+                <TextView
+                    android:id="@+id/timegiven"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="10:39 AM"
                     android:paddingLeft="10dp"
                     android:inputType="textCapWords"
                     android:textColor="@color/colorTextPrimary"

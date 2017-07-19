@@ -16,13 +16,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     private List<Comment> commentList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView username, comment, date;
+        public TextView username, comment, date,time;
 
         public MyViewHolder(View view) {
             super(view);
             username = (TextView) view.findViewById(R.id.username);
             comment = (TextView) view.findViewById(R.id.comment);
             date = (TextView) view.findViewById(R.id.date);
+            time=(TextView)view.findViewById(R.id.time);
         }
     }
 
@@ -45,6 +46,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         holder.username.setText(comment.getUsername());
         holder.comment.setText(comment.getComment());
         holder.date.setText(comment.getDate());
+        holder.time.setText(comment.getTime());
     }
 
     @Override
