@@ -1,16 +1,20 @@
 package com.grid.appy.citizenrights.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.adapter.CommentAdapter;
@@ -43,8 +47,7 @@ public class IssuedetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newedit = new Intent(getApplicationContext(), EditissueActivity.class);
-                startActivity(newedit);
+                showInputDialog();
 
             }
         });
@@ -69,6 +72,16 @@ public class IssuedetailActivity extends AppCompatActivity {
                 "Mei no idque augue minim, regione ornatus has ut. Mei ne meis debitis propriae. Ut vis quod indoctum. Eos probo fabulas cu, bonorum tractatos persequeris eos ea.\n" +
                 "\n" +
                 "Ea vix consequat conc\n" +
+                "Agam docendi mea no, quem diceret incorrupte ei ius. No quo i", "12-03-2015","11:45 AM");
+        commentList.add(comment);
+
+         comment = new Comment("Username", "\n" +"Reply-"+"\n"+
+
+
+               "\n" +
+                "Mei no idque augue minim, regione ornatus has ut. Mei ne meis debitis propriae. Ut vis quod indoctum. Eos probo fabulas cu, bonorum tractatos persequeris eos ea.\n" +
+                "\n" +
+
                 "Agam docendi mea no, quem diceret incorrupte ei ius. No quo i", "12-03-2015","11:45 AM");
         commentList.add(comment);
 
@@ -104,11 +117,46 @@ public class IssuedetailActivity extends AppCompatActivity {
         if (id == R.id.action_delete) {
             return true;
         }
+        if(id==R.id.action_edit)
+        {
+            Intent newedit = new Intent(getApplicationContext(), EditissueActivity.class);
+            startActivity(newedit);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
+    protected void showInputDialog() {
 
+        // get prompts.xml view
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View promptView = layoutInflater.inflate(R.layout.reply, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptView);
+
+        final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
+        // setup a dialog window
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                       // resultText.setText("Hello, " + editText.getText());
+
+
+
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create an alert dialog
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
 
 
 }

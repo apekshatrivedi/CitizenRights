@@ -30,6 +30,17 @@ public class RegisterActivity extends Activity {
                 finish();
             }
         });
+        Button deptrScreen = (Button) findViewById(R.id.deptregister);
+        // Listening to Login Screen link
+        deptrScreen.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+                // Closing registration screen
+                // Switching to Login Screen/closing register screen
+                Intent logout = new Intent(getApplicationContext(), DeptregistrationActivity.class);
+                startActivity(logout);
+            }
+        });
 
         Button register =(Button)findViewById(R.id.btnRegister);
         register.setOnClickListener(new View.OnClickListener() {
