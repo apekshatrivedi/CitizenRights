@@ -148,7 +148,13 @@ public class HomeActivity extends AppCompatActivity
             Intent viewdept = new Intent(getApplicationContext(), ViewdeptActivity.class);
             startActivity(viewdept);
 
-        } else if (id == R.id.setting) {
+        }else if (id == R.id.admin) {
+            // Handle the setting action
+            Intent settings = new Intent(getApplicationContext(), AdminviewActivity.class);
+            startActivity(settings);
+
+        }
+        else if (id == R.id.setting) {
             // Handle the setting action
             Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(settings);
