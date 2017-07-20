@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:gravity="top|center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:weightSum="1">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/citizen"
+                android:visibility="visible"
+                app:srcCompat="@drawable/citizen" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_weight="4.25">
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:background="@drawable/lower_border">
+
+                    <ImageView
+                        android:id="@+id/imageView8"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:visibility="visible"
+                        android:padding="5dp"
+                        android:src="@drawable/otp"
+                        app:srcCompat="@drawable/otp"
+                        android:background="@android:color/transparent"
+                        />
+
+                    <EditText
+                        android:id="@+id/otp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/bg"
+                        android:hint="OTP"
+                        android:inputType="numberPassword"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textColorHint="@color/colorTextSecondary" />
+
+                </LinearLayout>
+
+                <!-- Login Button -->
+
+                <Button
+                    android:id="@+id/btnreset"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dip"
+                    android:background="@drawable/curve"
+                    android:text="Reset-Password"
+                    android:textColor="@color/white" />
+
+
+
+                <!-- Link to Login Screen -->
+
+                <Button
+                    android:id="@+id/btnLinkToLoginScreen"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dip"
+                    android:background="@null"
+                    android:text="Resend OTP"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+
+</LinearLayout>
