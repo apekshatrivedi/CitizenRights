@@ -147,10 +147,15 @@
                         app:srcCompat="@drawable/branch" />
 
                     <TextView
-                        android:id="@+id/spinner2"
+                        android:id="@+id/branchname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/bg"
                         android:hint="Branch name"
+                        android:inputType="text"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textColorHint="@color/colorTextSecondary"
 
                         />
 
