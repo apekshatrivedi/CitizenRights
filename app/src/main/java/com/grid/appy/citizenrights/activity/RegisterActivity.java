@@ -124,10 +124,12 @@ public class RegisterActivity extends Activity {
 
     //validating password
     private boolean isValidPassword(String pass) {
-        if (pass != null && pass.length() > 4) {
-            return true;
-        }
-        return false;
+        String EMAIL_PATTERN = "((?=.*\\d)(?=.*[a-z]).{6,20})";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(pass);
+        return matcher.matches();
+
     }
 
     //validating re-enter password

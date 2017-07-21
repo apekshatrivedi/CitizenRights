@@ -35,7 +35,7 @@ public class LoginActivity extends Activity {
         });
 
         //Home page
-        Button login=(Button)findViewById(R.id.btnLogin);
+        Button login = (Button) findViewById(R.id.btnLogin);
         login.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -49,13 +49,12 @@ public class LoginActivity extends Activity {
 
                 if (!isValidEmail(email)) {
                     emailedit.setError("Invalid Email");
-                }
-               else if (!isValidPassword(pass)) {
+                } else if (!isValidPassword(pass)) {
                     password.setError("Invalid Password");
+                } else {
+                    Intent i2 = new Intent(getApplicationContext(), NewissueActivity.class);
+                    startActivity(i2);
                 }
-                else{
-                Intent i2 = new Intent(getApplicationContext(), NewissueActivity.class);
-                startActivity(i2);}
             }
         });
 
@@ -72,6 +71,7 @@ public class LoginActivity extends Activity {
             }
         });
     }
+
     // validating email id
     private boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -84,9 +84,11 @@ public class LoginActivity extends Activity {
 
     // validating password with retype password
     private boolean isValidPassword(String pass) {
-        if (pass != null && pass.length() > 1) {
-            return true;
-        }
-        return false;
+        String EMAIL_PATTERN = "((?=.*\\d)(?=.*[a-z]).{6,20})";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(pass);
+        return matcher.matches();
+
     }
 }
