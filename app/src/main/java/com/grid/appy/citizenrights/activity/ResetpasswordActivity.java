@@ -42,7 +42,7 @@ public class ResetpasswordActivity extends AppCompatActivity {
 
 
                 if (!isValidPassword(password)) {
-                    pass.setError("Password must be greater than 4 characters");
+                    pass.setError("min 6 characters which includes a digit ");
                 }
 
                 else    if (!isValidrePassword(repassword,password)) {
