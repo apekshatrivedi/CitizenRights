@@ -80,6 +80,10 @@ public class LoginActivity extends Activity {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+
+
+
+
     }
 
     // validating password with retype password
