@@ -9,6 +9,9 @@ import android.widget.EditText;
 
 import com.grid.appy.citizenrights.R;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ResetpasswordActivity extends AppCompatActivity {
 
     @Override
@@ -58,10 +61,12 @@ public class ResetpasswordActivity extends AppCompatActivity {
     }
 
     private boolean isValidPassword(String pass) {
-        if (pass != null && pass.length() > 4) {
-            return true;
-        }
-        return false;
+        String EMAIL_PATTERN = "((?=.*\\d)(?=.*[a-z]).{6,20})";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(pass);
+        return matcher.matches();
+
     }
 
     //validating re-enter password
