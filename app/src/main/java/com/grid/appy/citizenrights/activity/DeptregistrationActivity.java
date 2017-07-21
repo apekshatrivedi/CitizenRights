@@ -30,9 +30,7 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
         setContentView(R.layout.activity_deptregistration);
         et_empname = (EditText) findViewById(R.id.name);
         et_uniqueid = (EditText) findViewById(R.id.otp);
-        et_education = (EditText) findViewById(R.id.spinner1);
-        et_edu = (EditText) findViewById(R.id.spinner2);
-        et_admin = (EditText) findViewById(R.id.spinner);
+
         et_phone = (EditText) findViewById(R.id.phone);
         et_email = (EditText) findViewById(R.id.email);
         et_password = (EditText) findViewById(R.id.password);
@@ -43,9 +41,9 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
             public void onClick(View view) {
                 String empname = et_empname.getText().toString().trim();
                 String uniqueid = et_uniqueid.getText().toString().trim();
-                String education= et_education.getText().toString().trim();
-                String edu = et_edu.getText().toString().trim();
-                String admin = et_admin.getText().toString().trim();
+               // String education= et_education.getText().toString().trim();
+                //String edu = et_edu.getText().toString().trim();
+                //String admin = et_admin.getText().toString().trim();
                 String phone = et_phone.getText().toString().trim();
                 String email = et_email.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
@@ -117,13 +115,11 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
                     Toast.makeText(getApplicationContext(), "Password missmatch", Toast.LENGTH_LONG).show();
                     return;
                 }
-
-
-
                 Toast.makeText(DeptregistrationActivity.this, "success", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(DeptregistrationActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+
 
             }});
 
