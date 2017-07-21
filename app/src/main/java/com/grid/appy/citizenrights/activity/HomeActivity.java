@@ -17,7 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.grid.appy.citizenrights.model.CheckNetwork;
 import com.grid.appy.citizenrights.model.News;
 import com.grid.appy.citizenrights.adapter.NewsAdapter;
 import com.grid.appy.citizenrights.R;
@@ -43,27 +45,38 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        checkFirstRun();
+        if(CheckNetwork.isInternetAvailable(this)) {
+            checkFirstRun();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        nAdapter = new NewsAdapter(newsList,this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(nAdapter);
-        prepareNewsData();
+            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+            nAdapter = new NewsAdapter(newsList, this);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+            recyclerView.setAdapter(nAdapter);
+            prepareNewsData();
 
-        //Floating fab
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(newissue);
-            }
-        });
+            //Floating fab
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(newissue);
+                }
+            });
+        }
+        else{
+            //no connection
+            Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
+            toast.show();
 
+            Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
+            startActivity(newissue);
+
+
+        }
 
         //navigation view
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
