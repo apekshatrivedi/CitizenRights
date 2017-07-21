@@ -74,7 +74,7 @@
             android:label="Admin portal"
             />
         <activity android:name=".activity.PeopleviewActivity"
-            android:label="Department members"
+            android:label="Employee details"
             ></activity>
     </application>
 
