@@ -20,6 +20,7 @@ public class ForgetpasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Set View to activity_forgetpassword.xml
         setContentView(R.layout.activity_forgetpassword);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         Button loginScreen = (Button) findViewById(R.id.btnLinkToLoginScreen);
@@ -66,5 +67,10 @@ public class ForgetpasswordActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

@@ -13,6 +13,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //notification switch
         Switch notification = (Switch) findViewById(R.id.notification);
@@ -81,26 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         //allowcomments switch
-        Switch allowcomments = (Switch) findViewById(R.id.allowcomments);
-        allowcomments.setChecked(true);
-        allowcomments.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-
-                if (isChecked) {
-
-                    Toast.makeText(getApplicationContext(), "Comments enabled",
-                            Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                    Toast.makeText(getApplicationContext(),
-                            "Comments disabled", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         //autorefresh switch
         Switch autorefresh = (Switch) findViewById(R.id.autorefresh);
@@ -125,5 +107,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
     //oncreate ends here
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

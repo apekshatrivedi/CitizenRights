@@ -39,6 +39,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issuedetail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -154,6 +155,11 @@ public class IssuedetailActivity extends AppCompatActivity {
         // create an alert dialog
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
 

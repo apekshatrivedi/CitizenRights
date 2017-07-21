@@ -35,6 +35,7 @@ public class NewissueActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newissue);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button issuesubmit=(Button)findViewById(R.id.issuesubmit);
         issuesubmit.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +126,11 @@ public class NewissueActivity extends AppCompatActivity  {
             return true;
         }
         return false;
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
 
