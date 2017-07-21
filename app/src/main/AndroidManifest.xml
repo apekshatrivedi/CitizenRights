@@ -124,6 +124,8 @@
         <activity android:name=".activity.AdminviewActivity"
             android:label="Admin portal"
             >
+
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.HomeActivity"/>
