@@ -36,6 +36,7 @@ public class AdminviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminview);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view1);
@@ -64,6 +65,11 @@ public class AdminviewActivity extends AppCompatActivity {
         people = new People("Name", "Work");
         peopleList.add(people);
         pAdapter.notifyDataSetChanged();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
 

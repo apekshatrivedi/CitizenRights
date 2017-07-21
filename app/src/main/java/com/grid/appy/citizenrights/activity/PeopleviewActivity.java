@@ -16,6 +16,7 @@ public class PeopleviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peopleview);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ImageButton isvalid=(ImageButton)findViewById(R.id.valid);
         isvalid.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +40,11 @@ public class PeopleviewActivity extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 
 
 

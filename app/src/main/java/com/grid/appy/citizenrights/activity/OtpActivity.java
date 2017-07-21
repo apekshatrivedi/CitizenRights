@@ -18,9 +18,10 @@ public class OtpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        Button reset =(Button)findViewById(R.id.btnreset);
+        Button reset = (Button) findViewById(R.id.btnreset);
         reset.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -30,15 +31,12 @@ public class OtpActivity extends AppCompatActivity {
                 final String otp = emailedit.getText().toString();
                 if (!isValidOTP(otp)) {
                     emailedit.setError("Invalid OTP");
-                }
-                else
-                {
+                } else {
                     Intent home = new Intent(getApplicationContext(), ResetpasswordActivity.class);
                     startActivity(home);
                 }
             }
         });
-
 
 
     }
@@ -49,5 +47,11 @@ public class OtpActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

@@ -34,13 +34,6 @@
         android:text="Allow auto-login"
         android:textColor="@color/colorTextPrimary" />
 
-    <Switch
-        android:id="@+id/allowcomments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.14"
-        android:text="Allow reply view"
-        android:textColor="@color/colorTextPrimary" />
 
     <Switch
         android:id="@+id/autorefresh"
