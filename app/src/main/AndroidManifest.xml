@@ -23,6 +23,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".activity.LoginActivity"
@@ -36,46 +37,108 @@
         <!-- Entry for ForgetPassword.class -->
         <activity
             android:name=".activity.ForgetpasswordActivity"
-            android:label="Reset Password" />
+            android:label="Reset Password" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activity.HomeActivity"/>
+        </activity>
         <activity
             android:name=".activity.ViewissueActivity"
             android:label="Your issue history"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.HomeActivity"/>
+        </activity>
         <activity
             android:name=".activity.NewissueActivity"
-            android:label="Post your issue" />
+            android:label="Post your issue" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.HomeActivity"/>
+        </activity>
         <activity
             android:name=".activity.ViewdeptActivity"
-            android:label="Departments" />
+            android:label="Departments">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activity.HomeActivity"/>
+
+        </activity>
+
         <activity
             android:name=".activity.SettingsActivity"
-            android:label="Settings" />
+            android:label="Settings"/>
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activity.HomeActivity"/>
         <activity
             android:name=".activity.Helpactivity"
-            android:label="Help" />
+            android:label="Help" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activity.HomeActivity"/>
+        </activity>
+
         <activity
             android:name=".activity.IssuedetailActivity"
-            android:label="Issues" />
+            android:label="Issues" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.HomeActivity"/>
+
+        </activity>
+
         <activity
             android:name=".activity.DeptissueActivity"
             android:label="Department issues"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.EditissueActivity" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.HomeActivity"/>
+
+        </activity>
+        <activity android:name=".activity.EditissueActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.HomeActivity"/>
+
+        </activity>
         <activity
             android:name=".activity.OtpActivity"
-            android:label="OTP" />
+            android:label="OTP" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activity.HomeActivity"/>
+        </activity>
         <activity
             android:name=".activity.ResetpasswordActivity"
-            android:label="Password Reset" />
+            android:label="Password Reset" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activity.HomeActivity"/></activity>
+
         <activity android:name=".activity.DeptregistrationActivity"
             android:label="Department registration"
             />
         <activity android:name=".activity.AdminviewActivity"
             android:label="Admin portal"
-            />
+            >
+
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.HomeActivity"/>
+
+        </activity>
         <activity android:name=".activity.PeopleviewActivity"
             android:label="Employee details"
-            ></activity>
+            >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.HomeActivity"/>
+        </activity>
     </application>
 
 </manifest>
