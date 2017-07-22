@@ -28,6 +28,9 @@ import java.util.List;
 public class AdminviewActivity extends AppCompatActivity {
 
 
+
+
+
     private List<People> peopleList = new ArrayList<>();
     private RecyclerView recyclerView;
     private PeopleAdapter pAdapter;
