@@ -69,8 +69,8 @@ public class HomeActivity extends AppCompatActivity
         }
         else{
             //no connection
-            Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
-            toast.show();
+           // Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
+            //toast.show();
 
             Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
             startActivity(newissue);
