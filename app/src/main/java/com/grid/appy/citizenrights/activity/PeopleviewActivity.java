@@ -18,6 +18,9 @@ public class PeopleviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_peopleview);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
+
         ImageButton isvalid=(ImageButton)findViewById(R.id.valid);
         isvalid.setOnClickListener(new View.OnClickListener() {
 
