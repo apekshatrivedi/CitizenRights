@@ -19,6 +19,7 @@
     <string name="hint_password">Password</string>
     <string name="hint_repassword">Re-enter Password</string>
     <string name="hint_name">Fullname</string>
+    <string name="hint_aadhar">Aadharr Number</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_forget">Reset Password</string>
     <string name="btn_register">REGISTER</string>

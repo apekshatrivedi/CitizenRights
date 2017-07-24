@@ -3,10 +3,12 @@ package com.grid.appy.citizenrights.activity;
         import android.app.Activity;
         import android.content.Intent;
         import android.os.Bundle;
+        import android.text.TextUtils;
         import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
         import android.widget.TextView;
+        import android.widget.Toast;
 
         import com.grid.appy.citizenrights.R;
 
@@ -60,6 +62,8 @@ public class RegisterActivity extends Activity {
                 pass= (EditText) findViewById(R.id.password);
                 EditText repass;
                 repass = (EditText) findViewById(R.id.repassword);
+                EditText aadharrnum;
+                aadharrnum=(EditText)findViewById(R.id.aadhar1);
 
                 final String email = emailedit.getText().toString();
                 final String name = nameedit.getText().toString();
@@ -85,6 +89,17 @@ public class RegisterActivity extends Activity {
 
             else    if (!isValidrePassword(repassword,password)) {
                     repass.setError("Password does not match");
+                }
+                if (TextUtils.isEmpty((CharSequence) aadharrnum))
+                {
+                    aadharrnum.setError("This field is required");
+                    return;
+                }
+                if(!(aadharrnum.length()==12))
+
+                {
+                    Toast.makeText(getApplicationContext(), "Incorrect Aadhar Number", Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 else{

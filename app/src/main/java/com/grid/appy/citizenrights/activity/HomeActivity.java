@@ -2,7 +2,9 @@ package com.grid.appy.citizenrights.activity;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -38,6 +40,7 @@ public class HomeActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private NewsAdapter nAdapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +75,8 @@ public class HomeActivity extends AppCompatActivity
            // Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
             //toast.show();
 
-            Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
-            startActivity(newissue);
+           // Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
+            //startActivity(newissue);
 
 
         }
