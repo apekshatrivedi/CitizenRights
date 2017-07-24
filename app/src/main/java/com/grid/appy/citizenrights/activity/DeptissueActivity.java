@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.adapter.DeptAdapter;
+import com.grid.appy.citizenrights.model.CheckNetwork;
 import com.grid.appy.citizenrights.model.Dept;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
@@ -42,34 +43,38 @@ public class DeptissueActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        if(CheckNetwork.isInternetAvailable(this)) {
+            Bundle bundle = getIntent().getExtras();
+            String message = bundle.getString("message");
 
-        Bundle bundle = getIntent().getExtras();
-        String message = bundle.getString("message");
+            TextView txtView = (TextView) findViewById(R.id.deptname);
+            txtView.setText(message);
 
-        TextView txtView = (TextView) findViewById(R.id.deptname);
-        txtView.setText(message);
-
-        //new issue fab
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newissue = new Intent(getApplicationContext(), NewissueActivity.class);
-                startActivity(newissue);
-            }
-        });
-
-
+            //new issue fab
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent newissue = new Intent(getApplicationContext(), NewissueActivity.class);
+                    startActivity(newissue);
+                }
+            });
 
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        dAdapter = new DeptAdapter(deptList,this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(dAdapter);
-        prepareDeptData();
+            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+            dAdapter = new DeptAdapter(deptList, this);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+            recyclerView.setAdapter(dAdapter);
+            prepareDeptData();
+        }
+        else
+        {
+            Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
+            startActivity(newissue);
+        }
 
     }
 

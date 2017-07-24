@@ -1,6 +1,7 @@
 package com.grid.appy.citizenrights.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import com.grid.appy.citizenrights.R;
 
 import com.grid.appy.citizenrights.adapter.PeopleAdapter;
 
+import com.grid.appy.citizenrights.model.CheckNetwork;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
 import com.grid.appy.citizenrights.model.People;
@@ -38,6 +40,7 @@ public class AdminviewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        if(CheckNetwork.isInternetAvailable(this)){
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view1);
 
 
@@ -53,7 +56,13 @@ public class AdminviewActivity extends AppCompatActivity {
 
 
 
-        preparePeopleData();
+        preparePeopleData();}
+
+        else
+        {
+            Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
+            startActivity(newissue);
+        }
 
     }
 

@@ -18,6 +18,7 @@ import android.widget.EditText;
 
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.adapter.CommentAdapter;
+import com.grid.appy.citizenrights.model.CheckNetwork;
 import com.grid.appy.citizenrights.model.Comment;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
@@ -42,27 +43,36 @@ public class IssuedetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        if(CheckNetwork.isInternetAvailable(this)) {
 
-        //Floating fab
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showInputDialog();
+            //Floating fab
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showInputDialog();
 
-            }
-        });
+                }
+            });
 
 
+            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+            cAdapter = new CommentAdapter(commentList);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+            recyclerView.setAdapter(cAdapter);
+            prepareCommentData();
+        }
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        cAdapter = new CommentAdapter(commentList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(cAdapter);
-        prepareCommentData();
+        else
+        {
+
+            Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
+            startActivity(newissue);
+
+        }
 
     } private void prepareCommentData() {
         Comment comment = new Comment("Department name", "\n" +"Reply-"+"\n"+
