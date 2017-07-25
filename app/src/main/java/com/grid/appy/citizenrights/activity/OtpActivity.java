@@ -21,6 +21,8 @@ public class OtpActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+
+
         Button reset = (Button) findViewById(R.id.btnreset);
         reset.setOnClickListener(new View.OnClickListener() {
 
