@@ -1,11 +1,16 @@
 package com.grid.appy.citizenrights.activity;
 
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,12 +37,22 @@ import com.grid.appy.citizenrights.helper.SessionManager;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    private static final int EXTERNAL_READ_PHONE_STATE= 100;
+    private SharedPreferences permissionStatus;
+
+
+    private SQLiteHandler db;
+    private SessionManager session;
+
 
     //recycleview adapters
     private List<News> newsList = new ArrayList<>();
@@ -52,38 +67,99 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if(CheckNetwork.isInternetAvailable(this)) {
+        permissionStatus = getSharedPreferences("permissionStatus", MODE_PRIVATE);
+
+        if (CheckNetwork.isInternetAvailable(this)) {
             checkFirstRun();
 
-            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-            nAdapter = new NewsAdapter(newsList, this);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-            recyclerView.setLayoutManager(mLayoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-            recyclerView.setAdapter(nAdapter);
-            prepareNewsData();
+            // SqLite database handler
+            db = new SQLiteHandler(getApplicationContext());
 
-            //Floating fab
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(newissue);
+            // session manager
+            session = new SessionManager(getApplicationContext());
+
+           // if (!session.isLoggedIn()) {
+               // logoutUser();
+         //   }
+
+
+            // Fetching user details from sqlite
+            HashMap<String, String> user = db.getUserDetails();
+
+
+            if (ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this, Manifest.permission.READ_PHONE_STATE)) {
+                    //Show Information about why you need the permission
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                    builder.setTitle("Need phone state Permission");
+                    builder.setMessage("This app needs read phone state permission.");
+                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, EXTERNAL_READ_PHONE_STATE);
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
                 }
-            });
+
+            else {
+                //just request the permission
+                ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE},EXTERNAL_READ_PHONE_STATE);
+            }
+
+
+            SharedPreferences.Editor editor = permissionStatus.edit();
+            editor.putBoolean(Manifest.permission.READ_PHONE_STATE,true);
+            editor.commit();
+
+
+
+
+        } else {
+            //You already have the permission, just go ahead.
+            proceedAfterPermission();
         }
+
+
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        nAdapter = new NewsAdapter(newsList, this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(nAdapter);
+        prepareNewsData();
+
+        //Floating fab
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(newissue);
+            }
+        });
+    }
+
         else{
             //no connection
-           // Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
+            // Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
             //toast.show();
 
             Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
-           startActivity(newissue);
+            startActivity(newissue);
 
 
         }
+
 
         //navigation view
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,7 +198,10 @@ public class HomeActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
+    private void proceedAfterPermission() {
+        //We've got the permission, now we can proceed further
+        Toast.makeText(getBaseContext(), "We got the read phone state Permission", Toast.LENGTH_LONG).show();
+    }
     //action bar icon
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -186,8 +265,10 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.logout) {
             // Handle the logout action
-            Intent logout = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(logout);
+
+                logoutUser();
+
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -238,6 +319,22 @@ public class HomeActivity extends AppCompatActivity
 
 
         nAdapter.notifyDataSetChanged();
+    }
+
+
+    /**
+     * Logging out the user. Will set isLoggedIn flag to false in shared
+     * preferences Clears the user data from sqlite users table
+     * */
+    private void logoutUser() {
+        session.setLogin(false);
+
+        db.deleteUsers();
+
+        // Launching the login activity
+        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

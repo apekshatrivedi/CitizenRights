@@ -1,10 +1,14 @@
 package com.grid.appy.citizenrights.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -97,10 +101,16 @@ public class RegisterActivity extends Activity {
                // TelephonyManager tManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
                 //String imei = tManager.getDeviceId();
 
+
+
+
+
+
                 TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
                 telephonyManager.getDeviceId();
 
-                String imei =telephonyManager.toString();;
+               String imei = "12345";
+                // String imei =telephonyManager.toString();;
                 //form validation
                 EditText aadhar;
                 aadhar = (EditText) findViewById(R.id.aadhar1);
