@@ -37,13 +37,39 @@
             />
 
 
-
-
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/lower_border"
+            android:gravity="center">
 
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:src="@drawable/user"
+                android:visibility="visible"
+                app:srcCompat="@drawable/user" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg"
+                android:hint="Username"
+                android:inputType="textCapWords"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextSecondary" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/lower_border"
             android:gravity="center">
@@ -121,7 +147,7 @@
                 android:id="@+id/desc"
                 style="?android:attr/editTextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="170dp"
                 android:background="@drawable/all_border"
                 android:gravity="top|left"
                 android:hint="Describe your issue"

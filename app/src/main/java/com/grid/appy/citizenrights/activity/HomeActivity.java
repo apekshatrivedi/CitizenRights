@@ -1,8 +1,6 @@
 package com.grid.appy.citizenrights.activity;
 
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -24,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.grid.appy.citizenrights.model.CheckNetwork;
@@ -47,6 +46,12 @@ public class HomeActivity extends AppCompatActivity
 
 
 
+    private TextView txtName;
+    private SQLiteHandler db;
+    private SessionManager session;
+
+
+
 
     //recycleview adapters
     private List<News> newsList = new ArrayList<>();
@@ -65,11 +70,20 @@ public class HomeActivity extends AppCompatActivity
             checkFirstRun();
 
 
+            // SqLite database handler
+            db = new SQLiteHandler(getApplicationContext());
+
+            // session manager
+          session = new SessionManager(getApplicationContext());
 
 
 
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+
+
+
+            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         nAdapter = new NewsAdapter(newsList, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -83,8 +97,17 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(newissue);
+
+                if (!session.isLoggedIn()) {
+                    logoutUser();
+                }
+
+                else {
+
+
+                    Intent newissue = new Intent(getApplicationContext(), NewissueActivity.class);
+                    startActivity(newissue);
+                }
             }
         });
     }
@@ -94,8 +117,9 @@ public class HomeActivity extends AppCompatActivity
             // Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
             //toast.show();
 
-            Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
-            startActivity(newissue);
+
+                Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
+                startActivity(newissue);
 
 
         }
@@ -111,7 +135,35 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // load nav menu header data
+       // loadNavHeader();
+
+
+
+
+
+
     }
+
+/*
+    private void loadNavHeader() {
+        // name, website
+
+
+        // Fetching user details from sqlite
+        HashMap<String, String> user = db.getUserDetails();
+
+        String name = user.get("name");
+        String email = user.get("email");
+
+        // Displaying the user details on the screen
+        username.setText(name);
+        email_nav.setText(email);
+
+    }
+*/
+
+
 
     public void checkFirstRun() {
         boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
@@ -203,8 +255,10 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.logout) {
             // Handle the logout action
 
-            Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(newissue);
+            //Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
+            //startActivity(newissue);
+
+            logoutUser();
 
         }
 
@@ -212,6 +266,7 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 //recycler view
     private void prepareNewsData() {
@@ -264,6 +319,16 @@ public class HomeActivity extends AppCompatActivity
      * preferences Clears the user data from sqlite users table
      * */
 
+    private void logoutUser() {
+        session.setLogin(false);
+
+        db.deleteUsers();
+
+        // Launching the login activity
+        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
 
 

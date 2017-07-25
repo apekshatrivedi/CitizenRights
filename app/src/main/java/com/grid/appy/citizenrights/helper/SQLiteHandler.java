@@ -95,11 +95,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            user.put("aadhar",cursor.getString(1));
-            user.put("name", cursor.getString(2));
-            user.put("phone", cursor.getString(3));
-            user.put("imei", cursor.getString(4));
-            user.put("email", cursor.getString(5));
+            user.put("aadhar",cursor.getString(0));
+            user.put("name", cursor.getString(1));
+            user.put("phone", cursor.getString(2));
+            user.put("imei", cursor.getString(3));
+            user.put("email", cursor.getString(4));
 
         }
         cursor.close();

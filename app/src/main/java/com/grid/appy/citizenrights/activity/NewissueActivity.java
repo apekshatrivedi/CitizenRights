@@ -19,23 +19,57 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.grid.appy.citizenrights.R;
+import com.grid.appy.citizenrights.helper.SQLiteHandler;
+import com.grid.appy.citizenrights.helper.SessionManager;
 
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class NewissueActivity extends AppCompatActivity  {
+
+
+    private TextView txtName;
+    private SQLiteHandler db;
+    private SessionManager session;
+
+
+    private int PICK_IMAGE_REQUEST = 1;
+    public static final String UPLOAD_URL = "http:///PhotoUploadWithText/upload.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newissue);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        txtName = (TextView) findViewById(R.id.username);
+
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+
+        // session manager
+        session = new SessionManager(getApplicationContext());
+
+        // Fetching user details from sqlite
+        HashMap<String, String> user = db.getUserDetails();
+
+        String userid = user.get("imei");
+
+
+        // Displaying the user details on the screen
+        txtName.setText(userid);
+
+
+
 
         Button issuesubmit=(Button)findViewById(R.id.issuesubmit);
         issuesubmit.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +146,22 @@ public class NewissueActivity extends AppCompatActivity  {
         startActivityForResult(chooserIntent, 200);
     }
 
+/*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+*/
     //validating description
     private boolean isValidDesc(String desc) {
         if (desc != null && desc.length() > 1) {
