@@ -27,6 +27,10 @@ import com.grid.appy.citizenrights.adapter.NewsAdapter;
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
+import com.grid.appy.citizenrights.helper.SQLiteHandler;
+import com.grid.appy.citizenrights.helper.SessionManager;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,8 +79,8 @@ public class HomeActivity extends AppCompatActivity
            // Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
             //toast.show();
 
-           // Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
-            //startActivity(newissue);
+            Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
+           startActivity(newissue);
 
 
         }
