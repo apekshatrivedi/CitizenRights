@@ -46,12 +46,6 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    private static final int EXTERNAL_READ_PHONE_STATE= 100;
-    private SharedPreferences permissionStatus;
-
-
-    private SQLiteHandler db;
-    private SessionManager session;
 
 
     //recycleview adapters
@@ -67,65 +61,11 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        permissionStatus = getSharedPreferences("permissionStatus", MODE_PRIVATE);
-
         if (CheckNetwork.isInternetAvailable(this)) {
             checkFirstRun();
 
-            // SqLite database handler
-            db = new SQLiteHandler(getApplicationContext());
-
-            // session manager
-            session = new SessionManager(getApplicationContext());
-
-           // if (!session.isLoggedIn()) {
-               // logoutUser();
-         //   }
 
 
-            // Fetching user details from sqlite
-            HashMap<String, String> user = db.getUserDetails();
-
-
-            if (ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this, Manifest.permission.READ_PHONE_STATE)) {
-                    //Show Information about why you need the permission
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                    builder.setTitle("Need phone state Permission");
-                    builder.setMessage("This app needs read phone state permission.");
-                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, EXTERNAL_READ_PHONE_STATE);
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.show();
-                }
-
-            else {
-                //just request the permission
-                ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE},EXTERNAL_READ_PHONE_STATE);
-            }
-
-
-            SharedPreferences.Editor editor = permissionStatus.edit();
-            editor.putBoolean(Manifest.permission.READ_PHONE_STATE,true);
-            editor.commit();
-
-
-
-
-        } else {
-            //You already have the permission, just go ahead.
-            proceedAfterPermission();
-        }
 
 
 
@@ -198,10 +138,7 @@ public class HomeActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-    private void proceedAfterPermission() {
-        //We've got the permission, now we can proceed further
-        Toast.makeText(getBaseContext(), "We got the read phone state Permission", Toast.LENGTH_LONG).show();
-    }
+
     //action bar icon
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -266,8 +203,8 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.logout) {
             // Handle the logout action
 
-                logoutUser();
-
+            Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(newissue);
 
         }
 
@@ -326,16 +263,8 @@ public class HomeActivity extends AppCompatActivity
      * Logging out the user. Will set isLoggedIn flag to false in shared
      * preferences Clears the user data from sqlite users table
      * */
-    private void logoutUser() {
-        session.setLogin(false);
 
-        db.deleteUsers();
 
-        // Launching the login activity
-        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
 
 

@@ -61,13 +61,13 @@ public class RegisterActivity extends Activity {
         db = new SQLiteHandler(getApplicationContext());
 
         // Check if user is already logged in or not
-        if (session.isLoggedIn()) {
+      //  if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
-            Intent intent = new Intent(RegisterActivity.this,
-                    HomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
+           // Intent intent = new Intent(RegisterActivity.this,
+                 //   HomeActivity.class);
+         //   startActivity(intent);
+        //    finish();
+      //  }
 
         Button loginScreen = (Button) findViewById(R.id.btnLinkToLoginScreen);
         // Listening to Login Screen link
@@ -106,8 +106,8 @@ public class RegisterActivity extends Activity {
 
 
 
-                TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-                telephonyManager.getDeviceId();
+         //       TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+          //      telephonyManager.getDeviceId();
 
                String imei = "12345";
                 // String imei =telephonyManager.toString();;
