@@ -106,6 +106,8 @@ public class RegisterActivity extends Activity {
 
 
 
+
+
          //       TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
           //      telephonyManager.getDeviceId();
 
