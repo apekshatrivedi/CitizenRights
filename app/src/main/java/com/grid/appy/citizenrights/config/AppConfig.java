@@ -7,10 +7,12 @@ package com.grid.appy.citizenrights.config;
 public class AppConfig {
 
     // Server user login url
-    public static String URL_LOGIN = "http://192.168.1.102/Grid/login.php";
+    public static String URL_LOGIN = "http://192.168.1.100/grid/login.php";
 
     // Server user register url
-    public static String URL_REGISTER = "http://192.168.1.102/Grid/register.php";
+    public static String URL_REGISTER = "http://192.168.1.100/grid/register.php";
+
+    public static String UPLOAD_URL = "http://192.168.1.100/grid/upload.php";
 }
 
 
