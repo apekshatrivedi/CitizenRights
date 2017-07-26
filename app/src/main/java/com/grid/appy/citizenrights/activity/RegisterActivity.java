@@ -42,14 +42,16 @@ public class RegisterActivity extends Activity {
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
-
+String imei;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set View to register.xml
         setContentView(R.layout.activity_register);
+       TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 
+        imei= mngr.getDeviceId();
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
@@ -111,7 +113,7 @@ public class RegisterActivity extends Activity {
          //       TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
           //      telephonyManager.getDeviceId();
 
-               String imei = "12345";
+
                 // String imei =telephonyManager.toString();;
                 //form validation
                 EditText aadhar;
@@ -173,7 +175,7 @@ public class RegisterActivity extends Activity {
 
     //validating phone
     private boolean isValidPhone(String email) {
-        String EMAIL_PATTERN = "^[2-9]{2}[0-9]{8}$";
+        String EMAIL_PATTERN = "^[2-9]{1}[0-9]{9}$";
 
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
