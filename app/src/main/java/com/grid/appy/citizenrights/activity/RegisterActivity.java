@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,14 +27,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.grid.appy.citizenrights.R;
+        import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.config.AppConfig;
 import com.grid.appy.citizenrights.config.AppController;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+        import java.util.regex.Matcher;
+        import java.util.regex.Pattern;
 
 public class RegisterActivity extends Activity {
 
@@ -43,14 +42,16 @@ public class RegisterActivity extends Activity {
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
-
+String imei;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set View to register.xml
         setContentView(R.layout.activity_register);
+       TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 
+        imei= mngr.getDeviceId();
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
@@ -62,13 +63,13 @@ public class RegisterActivity extends Activity {
         db = new SQLiteHandler(getApplicationContext());
 
         // Check if user is already logged in or not
-        //  if (session.isLoggedIn()) {
-        // User is already logged in. Take him to main activity
-        // Intent intent = new Intent(RegisterActivity.this,
-        //   HomeActivity.class);
-        //   startActivity(intent);
+      //  if (session.isLoggedIn()) {
+            // User is already logged in. Take him to main activity
+           // Intent intent = new Intent(RegisterActivity.this,
+                 //   HomeActivity.class);
+         //   startActivity(intent);
         //    finish();
-        //  }
+      //  }
 
         Button loginScreen = (Button) findViewById(R.id.btnLinkToLoginScreen);
         // Listening to Login Screen link
@@ -99,7 +100,7 @@ public class RegisterActivity extends Activity {
                 // Closing registration screen
                 // closing register screen
 
-                // TelephonyManager tManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+               // TelephonyManager tManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
                 //String imei = tManager.getDeviceId();
 
 
@@ -109,10 +110,10 @@ public class RegisterActivity extends Activity {
 
 
 
-                //       TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-                //      telephonyManager.getDeviceId();
+         //       TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+          //      telephonyManager.getDeviceId();
 
-                String imei = "12345";
+
                 // String imei =telephonyManager.toString();;
                 //form validation
                 EditText aadhar;
@@ -141,18 +142,7 @@ public class RegisterActivity extends Activity {
                     phoneedit.setError("Invalid Phone");
                 } else if (!isValidEmail(email)) {
                     emailedit.setError("Invalid Email");
-                }  if (TextUtils.isEmpty(aadhar1))
-                {
-                    aadhar.setError("Invalid AADHAR NUMBER");
-                    return;
-                }
-                if(!(aadhar1.length()==12))
-
-                {
-                    aadhar.setError("Incorrect AADHARR NUMBER");
-                    return;
-                }
-                else if (!isValidPassword(password)) {
+                } else if (!isValidPassword(password)) {
                     pass.setError("Password must be greater than 4 characters");
                 } else if (!isValidrePassword(repassword, password)) {
                     repass.setError("Password does not match");
@@ -185,7 +175,7 @@ public class RegisterActivity extends Activity {
 
     //validating phone
     private boolean isValidPhone(String email) {
-        String EMAIL_PATTERN = "^[2-9]{2}[0-9]{8}$";
+        String EMAIL_PATTERN = "^[2-9]{1}[0-9]{9}$";
 
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
