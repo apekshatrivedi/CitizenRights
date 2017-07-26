@@ -12,7 +12,9 @@ public class AppConfig {
     // Server user register url
     public static String URL_REGISTER = "http://192.168.1.100/grid/register.php";
 
-    public static String UPLOAD_URL = "http://192.168.1.100/grid/upload.php";
+    public static String SERVER_URL = "http://192.168.1.100/grid/upload.php";
+
+    public static String UPLOADMYSQL_URL = "http://192.168.1.100/grid/uploadmysql.php";
 }
 
 
