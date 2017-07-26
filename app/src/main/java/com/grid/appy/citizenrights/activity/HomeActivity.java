@@ -1,11 +1,15 @@
 package com.grid.appy.citizenrights.activity;
 
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -70,6 +74,7 @@ public class HomeActivity extends AppCompatActivity
             checkFirstRun();
 
 
+
             // SqLite database handler
             db = new SQLiteHandler(getApplicationContext());
 
@@ -97,6 +102,7 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                 if (!session.isLoggedIn()) {
                     logoutUser();
@@ -144,6 +150,8 @@ public class HomeActivity extends AppCompatActivity
 
 
     }
+
+
 
 /*
     private void loadNavHeader() {
