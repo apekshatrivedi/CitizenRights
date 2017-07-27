@@ -1,9 +1,13 @@
 package com.grid.appy.citizenrights.activity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,16 +16,38 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.grid.appy.citizenrights.R;
+import com.grid.appy.citizenrights.config.AppConfig;
+import com.grid.appy.citizenrights.config.AppController;
+import com.grid.appy.citizenrights.helper.SQLiteHandler;
+import com.grid.appy.citizenrights.helper.SessionManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DeptregistrationActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener
 {
+
+    private static final String TAG = DeptregistrationActivity.class.getSimpleName();
+    private ProgressDialog pDialog;
+    private SessionManager session;
+    private SQLiteHandler db;
+
+
+
+
 EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,et_password,et_retypepassword;
     Button btn_reg;
     @Override
@@ -36,6 +62,18 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
         et_password = (EditText) findViewById(R.id.password);
         et_retypepassword= (EditText) findViewById(R.id.repassword);
         btn_reg = (Button) findViewById(R.id.btnRegister);
+
+
+        // Progress dialog
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+
+        // Session manager
+        session = new SessionManager(getApplicationContext());
+
+        // SQLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+
         btn_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,10 +117,6 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
                     return;
                 }
 
-
-
-
-
                 if (TextUtils.isEmpty(email)) {
                     et_email.setError("This field is required");
                     return;
@@ -116,10 +150,12 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
                     Toast.makeText(getApplicationContext(), "Password missmatch", Toast.LENGTH_LONG).show();
                     return;
                 }
-                Toast.makeText(DeptregistrationActivity.this, "success", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(DeptregistrationActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+
+                TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+
+               String imei= mngr.getDeviceId();
+
+                registerUser( uniqueid, empname, phone, imei, email, password,"dname","desig","branch");
 
 
             }});
@@ -184,4 +220,128 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
+
+    private void registerUser(final String aadhar,final String name,final String phone,final String imei, final String email,
+                              final String password,final String deptid,final String designation,final String branch) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_register";
+
+        pDialog.setMessage("Registering ...");
+        showDialog();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_DREGISTER, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Register Response: " + response.toString());
+                hideDialog();
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+/*
+                        JSONObject user = jObj.getJSONObject("user");
+                        String aadhar = user.getString("aadhar");
+                        String name = user.getString("name");
+                        String phone = user.getString("phone");
+                        String imei = user.getString("imei");
+                        String email = user.getString("email");
+
+
+                        // Inserting row in users table
+                        db.addUser(aadhar,name,phone,imei, email);
+*/
+                        Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
+
+                        // Launch login activity
+                        Intent intent = new Intent(
+                                DeptregistrationActivity.this,
+                                LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("aadhar",aadhar);
+                params.put("name", name);
+                params.put("phone", phone);
+                params.put("imei", imei);
+                params.put("deptmail", email);
+                params.put("password", password);
+                params.put("deptid", "deptid");
+                params.put("designation", "designation");
+                params.put("branch", "branch");
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    private void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
