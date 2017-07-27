@@ -18,20 +18,21 @@
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/VollyNetworkImageView1"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:src="@drawable/citizen"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:text="Image Name"
             android:id="@+id/textView_item"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/VollyNetworkImageView1"
             android:layout_toEndOf="@+id/VollyNetworkImageView1"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="5dp"/>
 
     </RelativeLayout>
 

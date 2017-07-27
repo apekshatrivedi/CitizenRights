@@ -6,16 +6,21 @@ package com.grid.appy.citizenrights.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.grid.appy.citizenrights.R;
+import com.grid.appy.citizenrights.activity.DeptissueActivity;
 import com.grid.appy.citizenrights.activity.IssuedetailActivity;
+import com.grid.appy.citizenrights.activity.NewissueActivity;
+import com.grid.appy.citizenrights.activity.ViewdeptActivity;
 import com.grid.appy.citizenrights.interfaces.ItemClickListener;
 
 import java.util.List;
@@ -27,53 +32,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     List<GetDataAdapter> getDataAdapter;
 
     ImageLoader imageLoader1;
-
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
-        public TextView textView_item;
-
-        private ItemClickListener itemClickListener;
-        public MyViewHolder(View view) {
-            super(view);
-            textView_item = (TextView) view.findViewById(R.id.textView_item);
-
-
-
-            view.setOnClickListener(this);
-            view.setOnLongClickListener(this);
-
-        }
-
-        public void setItemClickListener(ItemClickListener itemClickListener){
-
-            this.itemClickListener=itemClickListener;
-
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            itemClickListener.onClick(v,getAdapterPosition(),false);
-            Intent intent = new Intent(context, IssuedetailActivity.class);
-            context.startActivity(intent);
-
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-
-            itemClickListener.onClick(v,getAdapterPosition(),true);
-            return true;
-        }
-    }
-
-
-
-
-
-
-
-
-
 
 
     public RecyclerViewAdapter(List<GetDataAdapter> getDataAdapter, Context context){
@@ -96,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder Viewholder, int position) {
 
-        GetDataAdapter getDataAdapter1 =  getDataAdapter.get(position);
+        final GetDataAdapter getDataAdapter1 =  getDataAdapter.get(position);
 
         imageLoader1 = ServerImageParseAdapter.getInstance(context).getImageLoader();
 
@@ -112,6 +70,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         Viewholder.ImageTitleNameView.setText(getDataAdapter1.getImageTitleName());
 
+        Viewholder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intent = new Intent(context, DeptissueActivity.class);
+                String message=getDataAdapter1.getImageTitleName();
+                intent.putExtra("message", message);
+                context.startActivity(intent);
+            }
+        });
+
+
+
+
     }
 
     @Override
@@ -124,6 +97,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public TextView ImageTitleNameView;
         public NetworkImageView networkImageView ;
+        public CardView cardView;
+
 
         public ViewHolder(View itemView) {
 
@@ -133,6 +108,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             networkImageView = (NetworkImageView) itemView.findViewById(R.id.VollyNetworkImageView1) ;
 
+            cardView =(CardView)itemView.findViewById(R.id.cardview1);
+
+
+
         }
+
+
+
     }
 }

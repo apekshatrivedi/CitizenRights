@@ -7,20 +7,20 @@ package com.grid.appy.citizenrights.config;
 public class AppConfig {
 
     // Server user login url
-    public static String URL_LOGIN = "http://192.168.1.102/grid/login.php";
+    public static String URL_LOGIN = "http://192.168.1.6/grid/login.php";
 
     // Server user register url
-    public static String URL_REGISTER = "http://192.168.1.102/grid/register.php";
+    public static String URL_REGISTER = "http://192.168.1.6/grid/register.php";
 
-    public static String URL_DREGISTER = "http://192.168.1.102/grid/register1.php";
+    public static String URL_DREGISTER = "http://192.168.1.6/grid/register1.php";
 
-    public static String SERVER_URL = "http://192.168.1.102/grid/upload.php";
+    public static String SERVER_URL = "http://192.168.1.6/grid/upload.php";
 
-    public static String UPLOADMYSQL_URL = "http://192.168.1.102/grid/uploadmysql.php";
+    public static String UPLOADMYSQL_URL = "http://192.168.1.6/grid/uploadmysql.php";
 
-    public static String DATA_URL = "http://192.168.1.102/grid/feed.php?page=";
 
-    String HTTP_JSON_URL = "http://192.168.1.102/grid/ImageJsonData.php";
+
+    String HTTP_JSON_URL = "http://192.168.1.6/grid/ImageJsonData.php";
 }
 
 
