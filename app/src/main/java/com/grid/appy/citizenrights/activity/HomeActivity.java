@@ -86,135 +86,12 @@ public class HomeActivity extends AppCompatActivity
         if (CheckNetwork.isInternetAvailable(this)) {
             checkFirstRun();
 
-            permissionStatus = getSharedPreferences("permissionStatus",MODE_PRIVATE);
-            if(ActivityCompat.checkSelfPermission(HomeActivity.this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
-                    || ActivityCompat.checkSelfPermission(HomeActivity.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED)
-            {
-                if(ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this,permissionsRequired[0])
-                        || ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this,permissionsRequired[1])
-                        ){
-                    //Show Information about why you need the permission
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                    builder.setTitle("Need Multiple Permissions");
-                    builder.setMessage("This app needs Phone State and Storage permissions.");
-                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            ActivityCompat.requestPermissions(HomeActivity.this,permissionsRequired,PERMISSION_CALLBACK_CONSTANT);
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.show();
-                } else if (permissionStatus.getBoolean(permissionsRequired[0],false)) {
-                    //Previously Permission Request was cancelled with 'Dont Ask Again',
-                    // Redirect to Settings after showing Information about why you need the permission
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                    builder.setTitle("Need Multiple Permissions");
-                    builder.setMessage("This app needs Phone State and Storage permissions.");
-                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            sentToSettings = true;
-                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            Uri uri = Uri.fromParts("package", getPackageName(), null);
-                            intent.setData(uri);
-                            startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
-                            Toast.makeText(getBaseContext(), "Go to Permissions to Grant  Phone State and Storage", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.show();
-                }  else {
-                    //just request the permission
-                    ActivityCompat.requestPermissions(HomeActivity.this,permissionsRequired,PERMISSION_CALLBACK_CONSTANT);
-                }
-
-
-
-                SharedPreferences.Editor editor = permissionStatus.edit();
-                editor.putBoolean(permissionsRequired[0],true);
-                editor.commit();
-            } else {
-                //You already have the permission, just go ahead.
-                proceedAfterPermission();
-            }
-
-           /* if (ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    //Show Information about why you need the permission
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                    builder.setTitle("Need Storage Permission");
-                    builder.setMessage("This app needs storage permission.");
-                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_CONSTANT);
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.show();
-                } else if (permissionStatus.getBoolean(Manifest.permission.READ_EXTERNAL_STORAGE,false)) {
-                    //Previously Permission Request was cancelled with 'Dont Ask Again',
-                    // Redirect to Settings after showing Information about why you need the permission
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                    builder.setTitle("Need Storage Permission");
-                    builder.setMessage("This app needs storage permission.");
-                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            sentToSettings = true;
-                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            Uri uri = Uri.fromParts("package", getPackageName(), null);
-                            intent.setData(uri);
-                            startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
-                            Toast.makeText(getBaseContext(), "Go to Permissions to Grant Storage", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.show();
-                } else {
-                    //just request the permission
-                    ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_CONSTANT);
-                }
-
-
-                SharedPreferences.Editor editor = permissionStatus.edit();
-                editor.putBoolean(Manifest.permission.READ_EXTERNAL_STORAGE,true);
-                editor.commit();
 
 
 
 
-            } else {
-                //You already have the permission, just go ahead.
-                proceedAfterPermission();
-            }
 
-*/
+
 
             // SqLite database handler
             db = new SQLiteHandler(getApplicationContext());
@@ -320,6 +197,78 @@ public class HomeActivity extends AppCompatActivity
                     .edit()
                     .putBoolean("isFirstRun", false)
                     .apply();
+            permissionStatus = getSharedPreferences("permissionStatus",MODE_PRIVATE);
+            if(ActivityCompat.checkSelfPermission(HomeActivity.this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
+                    || ActivityCompat.checkSelfPermission(HomeActivity.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED)
+            {
+                if(ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this,permissionsRequired[0])
+                        || ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this,permissionsRequired[1])
+                        ){
+                    //Show Information about why you need the permission
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                    builder.setTitle("Need Multiple Permissions");
+                    builder.setMessage("This app needs Phone State and Storage permissions.");
+                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            ActivityCompat.requestPermissions(HomeActivity.this,permissionsRequired,PERMISSION_CALLBACK_CONSTANT);
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                } else if (permissionStatus.getBoolean(permissionsRequired[0],false)) {
+                    //Previously Permission Request was cancelled with 'Dont Ask Again',
+                    // Redirect to Settings after showing Information about why you need the permission
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                    builder.setTitle("Need Multiple Permissions");
+                    builder.setMessage("This app needs Phone State and Storage permissions.");
+                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            sentToSettings = true;
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+                            intent.setData(uri);
+                            startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+                            Toast.makeText(getBaseContext(), "Go to Permissions to Grant  Phone State and Storage", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                }  else {
+                    //just request the permission
+                    ActivityCompat.requestPermissions(HomeActivity.this,permissionsRequired,PERMISSION_CALLBACK_CONSTANT);
+                }
+
+
+
+                SharedPreferences.Editor editor = permissionStatus.edit();
+                editor.putBoolean(permissionsRequired[0],true);
+                editor.commit();
+            } else {
+                //You already have the permission, just go ahead.
+                proceedAfterPermission();
+            }
+
+
+
+
+
+
+
+
         }
     }
     //on back action
@@ -350,10 +299,15 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
-            return true;
-        }
 
-        return super.onOptionsItemSelected(item);
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+            return true;
+
+
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
