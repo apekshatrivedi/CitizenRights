@@ -356,50 +356,6 @@ public class NewissueActivity extends AppCompatActivity  {
 
 
 
-
-
-
-
-
-
-
-
-
-
-/*
-    private void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-    }
-
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri filePath = data.getData();
-            try {
-            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-         //  imageView.setImageBitmap(bitmap);
-            } catch (IOException e) {
-            e.printStackTrace();
-            }
-        }
-    }
-    public String getStringImage(Bitmap bmp){
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
-    }
-*/
-
     public void uploadImage(final String proof){
 
         class UploadImage extends AsyncTask<Void,Void,String> {
