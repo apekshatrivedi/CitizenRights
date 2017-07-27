@@ -95,7 +95,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/bg"
-                        android:hint="Unique ID"
+                        android:hint="Aadharr Number"
                         android:inputType="number"
                         android:paddingLeft="10dp"
                         android:textColor="@color/colorTextPrimary"

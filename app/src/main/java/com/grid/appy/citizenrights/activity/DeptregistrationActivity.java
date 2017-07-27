@@ -97,6 +97,7 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
                     et_password.setError("please enter the password");
                     return;
                 }
+
                 else
                 {
                     if (!matcherpassword.matches())

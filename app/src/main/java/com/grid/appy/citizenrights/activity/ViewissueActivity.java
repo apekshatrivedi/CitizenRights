@@ -106,6 +106,9 @@ public class ViewissueActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
             return true;
         }
 
