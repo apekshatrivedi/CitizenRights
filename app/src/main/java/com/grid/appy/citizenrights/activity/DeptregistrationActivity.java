@@ -265,6 +265,9 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
                         finish();
                     } else {
 
+
+
+
                         // Error occurred in registration. Get the error
                         // message
                         String errorMsg = jObj.getString("error_msg");
