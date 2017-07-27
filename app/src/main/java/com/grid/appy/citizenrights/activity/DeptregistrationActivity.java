@@ -132,6 +132,9 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
         spinner.setOnItemSelectedListener(DeptregistrationActivity.this);
         spinner1.setOnItemSelectedListener(DeptregistrationActivity.this);
         spinner2.setOnItemSelectedListener(DeptregistrationActivity.this);
+
+
+
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
 

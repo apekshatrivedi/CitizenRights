@@ -1,19 +1,57 @@
 package com.grid.appy.citizenrights.activity;
 
-import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-
+import org.json.JSONArray;
+import java.util.ArrayList;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import java.util.List;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.widget.Toast;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.grid.appy.citizenrights.R;
-import com.grid.appy.citizenrights.activity.HomeActivity;
+import com.grid.appy.citizenrights.adapter.GetDataAdapter;
+import com.grid.appy.citizenrights.adapter.RecyclerViewAdapter;
+import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
-import static android.R.id.message;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+
 
 public class ViewdeptActivity extends AppCompatActivity {
+
+
+    String HTTP_JSON_URL = "http://192.168.1.102/grid/ImageJsonData.php";
+
+
+    List<GetDataAdapter> GetDataAdapter1;
+
+    RecyclerView recyclerView;
+
+    RecyclerView.LayoutManager recyclerViewlayoutManager;
+
+    RecyclerView.Adapter recyclerViewadapter;
+
+    //String GET_JSON_DATA_HTTP_URL = "http://androidblog.esy.es/ImageJsonData.php";
+    String GET_JSON_DATA_HTTP_URL = "http://192.168.1.102/Grid/ImageJsonData.php";
+    String JSON_IMAGE_TITLE_NAME = "deptname";
+    String JSON_IMAGE_URL = "deptpath";
+
+    JsonArrayRequest jsonArrayRequest ;
+
+    RequestQueue requestQueue ;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,89 +59,20 @@ public class ViewdeptActivity extends AppCompatActivity {
         setContentView(R.layout.activity_viewdept);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        GetDataAdapter1 = new ArrayList<>();
 
-        ImageButton eduScreen = (ImageButton) findViewById(R.id.edu);
-        // Listening to edu link
-        eduScreen.setOnClickListener(new View.OnClickListener() {
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview1);
 
-            public void onClick(View v) {
-                // Switching to activity_deptissue screen
-                Intent i1 = new Intent(ViewdeptActivity.this, DeptissueActivity.class);
-                String message="Education";
-                i1.putExtra("message", message);
-                startActivity(i1);
-            }
-        });
+        recyclerView.setHasFixedSize(true);
 
-        ImageButton officeScreen = (ImageButton) findViewById(R.id.office);
-        // Listening to  work link
-        officeScreen.setOnClickListener(new View.OnClickListener() {
+        recyclerViewlayoutManager = new LinearLayoutManager(this);
 
-            public void onClick(View v) {
-                // Switching to activity_deptissue screen
-                Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
-                String message="Work";
-                i1.putExtra("message", message);
-                startActivity(i1);
-            }
-        });
+        recyclerView.setLayoutManager(recyclerViewlayoutManager);
 
-        ImageButton bankScreen = (ImageButton) findViewById(R.id.bank);
-        // Listening to bank link
-        bankScreen.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // Switching to activity_issue screen
-                Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
-                String message="Bank";
-                i1.putExtra("message", message);
-                startActivity(i1);
-            }
-        });
-
-        ImageButton ngoScreen = (ImageButton) findViewById(R.id.ngo);
-        // Listening to ngo link
-        ngoScreen.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // Switching to activity_deptissue screen
-                Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
-                String message="NGO";
-                i1.putExtra("message", message);
-                startActivity(i1);
-            }
-        });
-
-        ImageButton retailScreen = (ImageButton) findViewById(R.id.retail);
-
-        // Listening to forgetpassword link
-        retailScreen.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // Switching to activity_forgetpassword screen
-                Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
-                String message="Retail";
-                i1.putExtra("message", message);
-                startActivity(i1);
-            }
-        });
-
-        ImageButton govtScreen = (ImageButton) findViewById(R.id.govt);
-
-        // Listening to forgetpassword link
-        govtScreen.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // Switching to activity_forgetpassword screen
-                Intent i1 = new Intent(getApplicationContext(), DeptissueActivity.class);
-                String message="Government";
-                i1.putExtra("message", message);
-                startActivity(i1);
-            }
-        });
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
 
-
+        JSON_DATA_WEB_CALL();
 
 
     }
@@ -113,5 +82,55 @@ public class ViewdeptActivity extends AppCompatActivity {
         return true;
         }
 
+
+    public void JSON_DATA_WEB_CALL(){
+
+        jsonArrayRequest = new JsonArrayRequest(GET_JSON_DATA_HTTP_URL,
+
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        JSON_PARSE_DATA_AFTER_WEBCALL(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public void JSON_PARSE_DATA_AFTER_WEBCALL(JSONArray array){
+
+        for(int i = 0; i<array.length(); i++) {
+
+            GetDataAdapter GetDataAdapter2 = new GetDataAdapter();
+
+            JSONObject json = null;
+            try {
+
+                json = array.getJSONObject(i);
+
+                GetDataAdapter2.setImageTitleNamee(json.getString(JSON_IMAGE_TITLE_NAME));
+
+                GetDataAdapter2.setImageServerUrl(json.getString(JSON_IMAGE_URL));
+
+            } catch (JSONException e) {
+
+                e.printStackTrace();
+            }
+            GetDataAdapter1.add(GetDataAdapter2);
+        }
+
+        recyclerViewadapter = new RecyclerViewAdapter(GetDataAdapter1, this);
+
+        recyclerView.setAdapter(recyclerViewadapter);
+    }
 
 }

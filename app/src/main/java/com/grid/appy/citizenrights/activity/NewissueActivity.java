@@ -365,40 +365,7 @@ public class NewissueActivity extends AppCompatActivity  {
 
 
 
-    public void openImageIntent() {
-      File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-      String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String fname = "ABCD_" + timeStamp;
-        final File sdImageMainDirectory = new File(storageDir, fname);
-        Uri outputFileUri = Uri.fromFile(sdImageMainDirectory);
-        // Camera.
-        final List<Intent> cameraIntents = new ArrayList<Intent>();
-        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        final PackageManager packageManager = getPackageManager();
-        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for(ResolveInfo res : listCam) {
-            final String packageName = res.activityInfo.packageName;
-            final Intent intent = new Intent(captureIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(packageName);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-            cameraIntents.add(intent);
-        }
-        //Gallery.
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        // Filesystem.
-        final Intent fsIntent = new Intent();
-       // fsIntent.setType("*/*");
-        fsIntent.setAction(Intent.ACTION_GET_CONTENT);
-        cameraIntents.add(fsIntent);
-        //Create the Chooser
-        final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Source");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
-        startActivityForResult(chooserIntent, 200);
 
-
-
-    }
 /*
     private void showFileChooser() {
         Intent intent = new Intent();
