@@ -116,6 +116,9 @@ String imei;
 
                 // String imei =telephonyManager.toString();;
                 //form validation
+
+
+                //imei="1234";
                 EditText aadhar;
                 aadhar = (EditText) findViewById(R.id.aadhar1);
                 EditText nameedit;

@@ -85,6 +85,16 @@
                         android:padding="@dimen/micro_padding"
                         android:src="@drawable/phone"
                         app:srcCompat="@drawable/phone" />
+                    <TextView
+                        android:id="@+id/phonecode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/bg"
+                        android:hint="+91"
+                        android:paddingLeft="10dp"
+                        android:inputType="phone"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textColorHint="@color/colorTextSecondary" />
 
                     <EditText
                         android:id="@+id/phone"
@@ -142,7 +152,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/bg"
                         android:hint="@string/hint_aadhar"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:paddingLeft="10dp"
                         android:textColor="@color/colorTextPrimary"
                         android:textColorHint="@color/colorTextSecondary" />
