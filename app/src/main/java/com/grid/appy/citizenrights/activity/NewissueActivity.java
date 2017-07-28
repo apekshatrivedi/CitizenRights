@@ -376,7 +376,9 @@ public class NewissueActivity extends AppCompatActivity  {
                 super.onPostExecute(s);
               //  Toast.makeText(NewissueActivity.this, s, Toast.LENGTH_LONG).show();
                 Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+
             }
 
             @Override

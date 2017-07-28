@@ -15,7 +15,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -27,13 +26,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.grid.appy.citizenrights.adapter.GetDataAdapter;
+import com.grid.appy.citizenrights.adapter.HomeAdapter;
 import com.grid.appy.citizenrights.model.CheckNetwork;
-import com.grid.appy.citizenrights.model.News;
-import com.grid.appy.citizenrights.adapter.NewsAdapter;
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
@@ -41,21 +44,20 @@ import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL1;
 
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    /*private static final int EXTERNAL_STORAGE_PERMISSION_CONSTANT = 100;
-    private static final int REQUEST_PERMISSION_SETTING = 101;
-    private boolean sentToSettings = false;
-    private SharedPreferences permissionStatus;*/
 
-    private TextView txtName;
     private SQLiteHandler db;
     private SessionManager session;
     private static final int PERMISSION_CALLBACK_CONSTANT = 100;
@@ -66,14 +68,22 @@ public class HomeActivity extends AppCompatActivity
     private SharedPreferences permissionStatus;
     private boolean sentToSettings = false;
 
+    List<GetDataAdapter> GetDataAdapter1;
 
+    RecyclerView recyclerView;
 
+    RecyclerView.LayoutManager recyclerViewlayoutManager;
 
+    RecyclerView.Adapter homeadapter;
 
-    //recycleview adapters
-    private List<News> newsList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private NewsAdapter nAdapter;
+    String JSON_TITLE = "title";
+    String JSON_USEREMAIL = "useremail";
+    String JSON_ISSUEDATETIME = "issuedatetime";
+
+    JsonArrayRequest jsonArrayRequest ;
+
+    RequestQueue requestQueue ;
+
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
@@ -86,13 +96,6 @@ public class HomeActivity extends AppCompatActivity
         if (CheckNetwork.isInternetAvailable(this)) {
             checkFirstRun();
 
-
-
-
-
-
-
-
             // SqLite database handler
             db = new SQLiteHandler(getApplicationContext());
 
@@ -100,16 +103,21 @@ public class HomeActivity extends AppCompatActivity
           session = new SessionManager(getApplicationContext());
 
 
+            GetDataAdapter1 = new ArrayList<>();
+
+            recyclerView = (RecyclerView) findViewById(R.id.recycler_view1);
+
+            recyclerView.setHasFixedSize(true);
+
+            recyclerViewlayoutManager = new LinearLayoutManager(this);
+
+            recyclerView.setLayoutManager(recyclerViewlayoutManager);
+
+            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+            JSON_DATA_WEB_CALL();
 
 
-            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        nAdapter = new NewsAdapter(newsList, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(nAdapter);
-        prepareNewsData();
 
         //Floating fab
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -122,8 +130,6 @@ public class HomeActivity extends AppCompatActivity
                 }
 
                 else {
-
-
                     Intent newissue = new Intent(getApplicationContext(), NewissueActivity.class);
                     startActivity(newissue);
                 }
@@ -157,11 +163,6 @@ public class HomeActivity extends AppCompatActivity
 
         // load nav menu header data
        // loadNavHeader();
-
-
-
-
-
 
     }
 
@@ -263,12 +264,6 @@ public class HomeActivity extends AppCompatActivity
             }
 
 
-
-
-
-
-
-
         }
     }
     //on back action
@@ -305,9 +300,6 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
             }
             return true;
-
-
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -365,50 +357,56 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-//recycler view
-    private void prepareNewsData() {
-        News news = new News("School issue", "username","12-09-2017");
-        newsList.add(news);
+    public void JSON_DATA_WEB_CALL(){
 
-         news = new News("Office issue", "username1","12-09-2017");
-        newsList.add(news);
+        jsonArrayRequest = new JsonArrayRequest(GET_JSON_DATA_HTTP_URL1,
 
-        news = new News("Office issue", "username9","12-09-2017");
-        newsList.add(news);
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
 
-        news = new News("Office issue", "username1","12-09-2017");
-        newsList.add(news);
+                        JSON_PARSE_DATA_AFTER_WEBCALL(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-        news = new News("Office issue", "username9","12-09-2017");
-        newsList.add(news);
+                    }
+                });
 
-        news = new News("Office issue", "username1","12-09-2017");
-        newsList.add(news);
+        requestQueue = Volley.newRequestQueue(this);
 
-        news = new News("Office issue", "username9","12-09-2017");
-        newsList.add(news);
-
-        news = new News("Office issue", "username1","12-09-2017");
-        newsList.add(news);
-
-        news = new News("Office issue", "username9","12-09-2017");
-        newsList.add(news);
-
-        news = new News("Office issue", "username1","12-09-2017");
-        newsList.add(news);
-
-        news = new News("Office issue", "username9","12-09-2017");
-        newsList.add(news);
-
-        news = new News("Office issue", "username1","12-09-2017");
-        newsList.add(news);
-
-        news = new News("Office issue", "username9","12-09-2017");
-        newsList.add(news);
-
-
-        nAdapter.notifyDataSetChanged();
+        requestQueue.add(jsonArrayRequest);
     }
+
+    public void JSON_PARSE_DATA_AFTER_WEBCALL(JSONArray array){
+
+        for(int i = 0; i<array.length(); i++) {
+
+            GetDataAdapter GetDataAdapter2 = new GetDataAdapter();
+
+            JSONObject json = null;
+            try {
+
+                json = array.getJSONObject(i);
+
+                GetDataAdapter2.setHome_title(json.getString(JSON_TITLE));
+                GetDataAdapter2.setHome_username(json.getString(JSON_USEREMAIL));
+                GetDataAdapter2.setHome_date(json.getString(JSON_ISSUEDATETIME));
+
+            } catch (JSONException e) {
+
+                e.printStackTrace();
+            }
+            GetDataAdapter1.add(GetDataAdapter2);
+        }
+
+        homeadapter = new HomeAdapter(GetDataAdapter1, this);
+
+        recyclerView.setAdapter(homeadapter);
+    }
+
 
 
     /**
@@ -426,74 +424,7 @@ public class HomeActivity extends AppCompatActivity
         startActivity(intent);
         finish();
     }
-/*
-    private void proceedAfterPermission() {
-        //We've got the permission, now we can proceed further
-        Toast.makeText(getBaseContext(), "We got the Storage Permission", Toast.LENGTH_LONG).show();
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == EXTERNAL_STORAGE_PERMISSION_CONSTANT) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //The External Storage Write Permission is granted to you... Continue your left job...
-                proceedAfterPermission();
-            } else {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    //Show Information about why you need the permission
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-                    builder.setTitle("Need Storage Permission");
-                    builder.setMessage("This app needs storage permission");
-                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-
-
-                            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_CONSTANT);
-
-
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.show();
-                } else {
-                    Toast.makeText(getBaseContext(),"Unable to get Permission",Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PERMISSION_SETTING) {
-            if (ActivityCompat.checkSelfPermission(HomeActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                //Got Permission
-                proceedAfterPermission();
-            }
-        }
-    }
-
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        if (sentToSettings) {
-            if (ActivityCompat.checkSelfPermission(HomeActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                //Got Permission
-                proceedAfterPermission();
-            }
-        }
-    }
-    */
 @Override
 public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);

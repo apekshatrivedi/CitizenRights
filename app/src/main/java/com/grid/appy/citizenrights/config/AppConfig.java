@@ -21,6 +21,8 @@ public class AppConfig {
    // public static String DATA_URL = "http://192.168.1.101/grid/feed.php?page=";
   public static String GET_JSON_DATA_HTTP_URL = "http://192.168.1.101/Grid/ImageJsonData.php";
 
+    public static String GET_JSON_DATA_HTTP_URL1 = "http://192.168.1.101/Grid/homejson.php";
+
    // String HTTP_JSON_URL = "http://192.168.1.102/grid/ImageJsonData.php";
 }
 
