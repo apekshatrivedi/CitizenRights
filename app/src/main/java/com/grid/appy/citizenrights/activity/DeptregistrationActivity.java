@@ -3,8 +3,9 @@ package com.grid.appy.citizenrights.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,18 +15,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.config.AppConfig;
 import com.grid.appy.citizenrights.config.AppController;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,15 +41,29 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.grid.appy.citizenrights.R.id.spinner;
+import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL;
+
 public class DeptregistrationActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener
 {
+    private ArrayList<String> department;
+    //JSON Array
+    private JSONArray result;
+
+    //TextViews to display details
+   // private TextView  textviewdeptid;
+    //private TextView textviewdeptname;
+    //private TextView textviewdeptpath;
+String deptname;
 
     private static final String TAG = DeptregistrationActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
-
+    public static final String TAG_DEPTNAME = "deptname";
+    public static final String TAG_DEPTID = "deptid";
+    public static final String JSON_ARRAY = "result";
 
 
 
@@ -54,6 +73,8 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deptregistration);
+        //This method will fetch the data from the URL
+            getData();
         et_empname = (EditText) findViewById(R.id.name);
         et_uniqueid = (EditText) findViewById(R.id.otp);
 
@@ -158,7 +179,8 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
                 registerUser( uniqueid, empname, phone, imei, email, password,"dname","desig","branch");
 
 
-            }});
+            }
+        });
 
 
         // Spinner element
@@ -208,6 +230,121 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
         spinner1.setAdapter(dataAdapter1);
         spinner2.setAdapter(dataAdapter2);
     }
+        private void getData(){
+            //Creating a string request
+                            StringRequest stringRequest = new StringRequest(GET_JSON_DATA_HTTP_URL, new Response.Listener<String>()
+                            {
+                    @Override
+                        public void onResponse(String response)
+                    {
+                        //showJSON(response);
+                        // JSONObject j = null
+                        try
+                        {
+                            //Parsing the fetched Json String to JSON Object
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray result = jsonObject.getJSONArray(JSON_ARRAY);
+
+                            //Calling method getStudents to get the students from the JSON Array
+                            getStudents(result);
+                        } catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+},
+                    new Response.ErrorListener() {
+                    @Override
+    public void onErrorResponse(VolleyError error) {
+
+                }
+                    });
+
+            //Creating a request queue
+RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+    requestQueue.add(stringRequest);
+    }
+
+        private void getStudents(JSONArray j){
+        //Traversing through all the items in the json array
+            for(int i=0;i<j.length();i++){
+                try {
+                //Getting json object
+JSONObject json = j.getJSONObject(i);
+
+                //Adding the name of the student to array list
+            department.add(json.getString(TAG_DEPTID));
+                } catch (JSONException e) {
+            e.printStackTrace();
+        }
+}
+            //Setting adapter to show the items in the spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, department);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(dataAdapter);
+spinner.setAdapter(new ArrayAdapter<String>(DeptregistrationActivity.this, android.R.layout.simple_spinner_dropdown_item, department));
+}
+            //Method to get student name of a particular position
+        private String getName(int position){
+        String name="";
+            try {
+            //Getting object of given index
+    JSONObject json = result.getJSONObject(position);
+
+            //Fetching name from that object
+name = json.getString(Bitmap.Config.TAG_NAME);
+} catch (JSONException e) {
+e.printStackTrace();
+}
+//Returning the name
+return name;
+}
+
+//Doing the same with this method as we did with getName()
+private String getCourse(int position){
+String course="";
+try {
+JSONObject json = result.getJSONObject(position);
+course = json.getString(TAG_COURSE);
+} catch (JSONException e) {
+e.printStackTrace();
+}
+return course;
+}
+
+
+//Doing the same with this method as we did with getName()
+private String getSession(int position){
+String session="";
+try {
+JSONObject json = result.getJSONObject(position);
+session = json.getString(Bitmap.Config.TAG_SESSION);
+} catch (JSONException e) {
+e.printStackTrace();
+}
+return session;
+}
+
+
+//this method will execute when we pic an item from the spinner
+@Override
+public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    //Setting the values to textviews for a selected item
+    textviewdeptid.setText(getName(position));
+    textviewdeptname.setText(getCourse(position));
+    textviewdeptpath.setText(getSession(position));
+}
+
+//When no item is selected this method would execute
+@Override
+public void onNothingSelected(AdapterView<?> parent) {
+    textviewdeptid.setText("");
+    textviewdeptname.setText("");
+    textviewdeptpath.setText("");
+}
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -322,28 +459,6 @@ EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,e
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
