@@ -62,7 +62,7 @@ public class ForgetpasswordActivity extends AppCompatActivity {
 
     // validating email id
     private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[2-9]{2}[0-9]{8}$";
+        String EMAIL_PATTERN = "^[2-9]{1}[0-9]{9}$";
 
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);

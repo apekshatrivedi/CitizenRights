@@ -23,13 +23,13 @@ import com.grid.appy.citizenrights.model.DividerItemDecoration;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL;
 
 
 public class ViewdeptActivity extends AppCompatActivity {
 
 
-    String HTTP_JSON_URL = "http://192.168.1.102/grid/ImageJsonData.php";
+    String HTTP_JSON_URL = "http://192.168.1.101/grid/ImageJsonData.php";
 
 
     List<GetDataAdapter> GetDataAdapter1;
@@ -41,7 +41,7 @@ public class ViewdeptActivity extends AppCompatActivity {
     RecyclerView.Adapter recyclerViewadapter;
 
     //String GET_JSON_DATA_HTTP_URL = "http://androidblog.esy.es/ImageJsonData.php";
-    String GET_JSON_DATA_HTTP_URL = "http://192.168.1.6/Grid/ImageJsonData.php";
+    //String GET_JSON_DATA_HTTP_URL = "http://192.168.1.101/Grid/ImageJsonData.php";
     String JSON_IMAGE_TITLE_NAME = "deptname";
     String JSON_IMAGE_URL = "deptpath";
 
