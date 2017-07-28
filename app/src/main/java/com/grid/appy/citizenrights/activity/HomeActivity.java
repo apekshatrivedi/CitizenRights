@@ -79,6 +79,7 @@ public class HomeActivity extends AppCompatActivity
     String JSON_TITLE = "title";
     String JSON_USEREMAIL = "useremail";
     String JSON_ISSUEDATETIME = "issuedatetime";
+    String JSON_ISSUEID ="issueid";
 
     JsonArrayRequest jsonArrayRequest ;
 
@@ -394,6 +395,7 @@ public class HomeActivity extends AppCompatActivity
                 GetDataAdapter2.setHome_title(json.getString(JSON_TITLE));
                 GetDataAdapter2.setHome_username(json.getString(JSON_USEREMAIL));
                 GetDataAdapter2.setHome_date(json.getString(JSON_ISSUEDATETIME));
+                GetDataAdapter2.setHome_issueid(json.getString(JSON_ISSUEID));
 
             } catch (JSONException e) {
 

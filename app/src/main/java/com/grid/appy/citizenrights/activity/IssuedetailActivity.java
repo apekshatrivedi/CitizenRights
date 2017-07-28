@@ -1,5 +1,6 @@
 package com.grid.appy.citizenrights.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -9,32 +10,56 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.adapter.CommentAdapter;
 import com.grid.appy.citizenrights.model.CheckNetwork;
 import com.grid.appy.citizenrights.model.Comment;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.grid.appy.citizenrights.config.AppConfig.GET_ISSUE_DATA;
+
 public class IssuedetailActivity extends AppCompatActivity {
+
+
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_USEREMAIL = "useremail";
+    public static final String KEY_issuedatetime = "issuedatetime";
+    public static final String KEY_desc = "description";
+    public static final String JSON_ARRAY = "result";
+
+
+    TextView issue_title;
+    TextView issue_useremail;
+    TextView issue_datetime;
+    TextView issue_description;
+
+
+    private ProgressDialog loading;
 
     //recycleview adapter
     private List<Comment> commentList = new ArrayList<>();
     private RecyclerView recyclerView;
     private CommentAdapter cAdapter;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +69,13 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
         if(CheckNetwork.isInternetAvailable(this)) {
+
+
+
+
+
+            getData();
+
 
             //Floating fab
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -74,7 +106,101 @@ public class IssuedetailActivity extends AppCompatActivity {
 
         }
 
-    } private void prepareCommentData() {
+    }
+
+    private void getData() {
+
+        Bundle bundle = getIntent().getExtras();
+        String message = bundle.getString("message");
+        String issueid = message;
+
+        loading = ProgressDialog.show(this,"Please wait...","Fetching...",false,false);
+
+        String url = GET_ISSUE_DATA+"?issueid="+issueid;
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loading.dismiss();
+                showJSON(response);
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(IssuedetailActivity.this,error.getMessage().toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void showJSON(String response){
+        String title="";
+        String useremail="";
+        String date = "";
+        String desc = "";
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray result = jsonObject.getJSONArray(JSON_ARRAY);
+            JSONObject issueData = result.getJSONObject(0);
+            title = issueData.getString(KEY_TITLE);
+            useremail = issueData.getString(KEY_USEREMAIL);
+            date = issueData.getString(KEY_issuedatetime);
+            desc = issueData.getString(KEY_desc);
+
+            issue_title=(TextView)findViewById(R.id.issue_title);
+            issue_useremail=(TextView)findViewById(R.id.issue_useremail);
+            issue_datetime=(TextView)findViewById(R.id.issue_datetime);
+            issue_description=(TextView)findViewById(R.id.issue_description);
+
+            issue_title.setText(title);
+            issue_useremail.setText(useremail);
+            issue_datetime.setText(date);
+            issue_description.setText(desc);
+
+
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //textViewResult.setText("Name:\t"+name+"\nAddress:\t" +address+ "\nVice Chancellor:\t"+ vc);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void prepareCommentData() {
         Comment comment = new Comment("Department name", "\n" +"Reply-"+"\n"+
 
 

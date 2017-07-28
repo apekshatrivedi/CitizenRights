@@ -9,6 +9,7 @@ public class GetDataAdapter {
     public String ImageServerUrl;
     public String ImageTitleName;
     public String home_title;
+    public String home_issueid;
     public String home_date;
     public String home_username;
 
@@ -31,6 +32,16 @@ public class GetDataAdapter {
     public String getHome_title() {
         return home_title;
     }
+
+    public String getHome_issueid() {
+        return home_issueid;
+    }
+
+    public void setHome_issueid(String home_issueid) {
+        this.home_issueid = home_issueid;
+    }
+
+
 
     public void setHome_title(String home_title) {
         this.home_title = home_title;

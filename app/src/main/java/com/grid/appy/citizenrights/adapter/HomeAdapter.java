@@ -64,8 +64,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
 
                 Intent intent = new Intent(context, IssuedetailActivity.class);
-                //String message=getDataAdapter1.getImageTitleName();
-                //intent.putExtra("message", message);
+                String message=getDataAdapter1.getHome_issueid();
+                intent.putExtra("message", message);
                 context.startActivity(intent);
 
 

@@ -13,11 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.grid.appy.citizenrights.R;
-import com.grid.appy.citizenrights.activity.NewissueActivity;
-import com.grid.appy.citizenrights.adapter.NewsAdapter;
 import com.grid.appy.citizenrights.adapter.YourissueAdapter;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
-import com.grid.appy.citizenrights.model.News;
 import com.grid.appy.citizenrights.model.Yourissue;
 
 import java.util.ArrayList;
