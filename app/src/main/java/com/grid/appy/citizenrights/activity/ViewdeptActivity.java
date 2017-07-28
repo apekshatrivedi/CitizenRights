@@ -72,6 +72,9 @@ public class ViewdeptActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
 
+
+
+
         JSON_DATA_WEB_CALL();
 
 
