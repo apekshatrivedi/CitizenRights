@@ -105,9 +105,12 @@ public class ViewissueActivity extends AppCompatActivity {
 
 
        // jsonArrayRequest = new JsonArrayRequest("http://192.168.1.101/Grid/issuehistory.php?useremail=test@test.com",
+        HashMap<String, String> user = db.getUserDetails();
 
 
-        jsonArrayRequest = new JsonArrayRequest(GET_JSON_DATA_HTTP_URL1,
+        String useremail = user.get("imei");
+
+        jsonArrayRequest = new JsonArrayRequest(GET_JSON_DATA_HTTP_URL2+useremail,
 
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -141,10 +144,10 @@ public class ViewissueActivity extends AppCompatActivity {
 
                     json = array.getJSONObject(i);
 
-                    GetDataAdapter2.setHome_title(json.getString(JSON_TITLE));
-                    GetDataAdapter2.setHome_username(json.getString(JSON_USEREMAIL));
-                    GetDataAdapter2.setHome_date(json.getString(JSON_ISSUEDATETIME));
-                    GetDataAdapter2.setHome_issueid(json.getString(JSON_ISSUEID));
+                    GetDataAdapter2.setHistory_title(json.getString(JSON_TITLE));
+                    GetDataAdapter2.setHistory_username(json.getString(JSON_USEREMAIL));
+                    GetDataAdapter2.setHistory_date(json.getString(JSON_ISSUEDATETIME));
+                    GetDataAdapter2.setHistory_issueid(json.getString(JSON_ISSUEID));
 
 
             } catch (JSONException e) {

@@ -65,7 +65,7 @@ public class YourissueAdapter extends RecyclerView.Adapter<YourissueAdapter.View
 
 
                 Intent intent = new Intent(context, IssuedetailActivity.class);
-                String message=getDataAdapter1.getHome_issueid();
+                String message=getDataAdapter1.getHistory_issueid();
                 intent.putExtra("message", message);
                 context.startActivity(intent);
 

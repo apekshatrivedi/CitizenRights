@@ -65,19 +65,19 @@ public class GetDataAdapter {
         this.home_username = home_username;
     }
 
-    public String getHistory_issueid(){return  home_issueid;}
+    public String getHistory_issueid(){return  history_issueid;}
 
     public void setHistory_issueid(String history_issueid){this.history_issueid=history_issueid;}
 
-    public String getHistory_title(){return  home_title;}
+    public String getHistory_title(){return  history_title;}
 
     public void setHistory_title(String history_title){this.history_title=history_title;}
 
-    public String getHistory_username(){return  home_username;}
+    public String getHistory_username(){return  history_username;}
 
     public void setHistory_username(String history_username){this.history_issueid=history_username;}
 
-    public String getHistory_date(){return  home_date;}
+    public String getHistory_date(){return  history_date;}
 
     public void setHistory_date(String history_date){this.history_date=history_date;}
 

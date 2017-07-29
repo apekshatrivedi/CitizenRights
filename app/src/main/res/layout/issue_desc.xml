@@ -53,7 +53,7 @@
                     android:textStyle="bold"
                     android:paddingLeft="10dp"
                     android:inputType="textCapWords"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                      />
 
 
@@ -63,40 +63,7 @@
             </LinearLayout>
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
 
-    android:background="@drawable/lower_border"
-    >
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Department name: "
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:paddingLeft="10dp"
-        android:inputType="textCapWords"
-        android:textColor="@color/colorTextSecondary"
-
-
-        />
-
-    <TextView
-        android:id="@+id/issue_dept"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="some XYZ department"
-        android:paddingLeft="10dp"
-        android:inputType="textCapWords"
-        android:textColor="@color/colorTextPrimary"
-        android:textColorHint="@color/colorTextPrimary"
-
-       />
-
-
-</LinearLayout>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -167,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/lower_border"
                 android:gravity="top|left"
-                android:hint="@string/test"
+
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:textColor="@color/colorTextPrimary"
