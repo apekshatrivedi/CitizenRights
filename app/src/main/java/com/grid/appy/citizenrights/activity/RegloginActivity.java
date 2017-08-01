@@ -30,7 +30,7 @@ import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
 
 
-public class LoginActivity extends Activity {
+public class RegloginActivity extends Activity {
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private ProgressDialog pDialog;
@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // setting default screen to activity_login.xml
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_reglogin);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -58,12 +58,12 @@ public class LoginActivity extends Activity {
 
 
         // Check if user is already logged in or not
-       // if (session.isLoggedIn()) {
-            // User is already logged in. Take him to main activity
-          //  Intent intent = new Intent(LoginActivity.this, NewissueActivity.class);
-          //  startActivity(intent);
-           // finish();
-      //  }
+        // if (session.isLoggedIn()) {
+        // User is already logged in. Take him to main activity
+        //  Intent intent = new Intent(LoginActivity.this, NewissueActivity.class);
+        //  startActivity(intent);
+        // finish();
+        //  }
 
 
         //Forget Screen
@@ -148,7 +148,7 @@ public class LoginActivity extends Activity {
         showDialog();
 
         StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_LOGIN, new Response.Listener<String>() {
+                AppConfig.URL_LOGIN1, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -167,23 +167,24 @@ public class LoginActivity extends Activity {
 
                         // Now store the user in SQLite
 
-
+/*
                         JSONObject user = jObj.getJSONObject("user");
                         String aadhar = user.getString("aadhar");
                         String name = user.getString("name");
                         String phone = user.getString("phone");
                         String imei = user.getString("imei");
                         String email = user.getString("email");
-                        String type="user";
+                        //String type= user.getString("type");
+                        String type= "dept";
 
 
                         // Inserting row in users table
                         db.addUser(aadhar, name, phone, imei, email,type);
-
+*/
                         // Launch main activity
-                        Intent intent = new Intent(LoginActivity.this,
-                                NewissueActivity.class);
-                        startActivity(intent);
+                        //Intent intent = new Intent(RegloginActivity.this,
+                               // IssuedetailActivity.class);
+                        //startActivity(intent);
                         finish();
                     } else {
                         // Error in login. Get the error message
@@ -213,7 +214,7 @@ public class LoginActivity extends Activity {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
+                params.put("deptmail", email);
                 params.put("password", password);
 
                 return params;

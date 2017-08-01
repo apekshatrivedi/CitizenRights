@@ -42,7 +42,7 @@ public class RegisterActivity extends Activity {
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
-String imei;
+String imei,type;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,11 @@ String imei;
         setContentView(R.layout.activity_register);
        TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 
+
         imei= mngr.getDeviceId();
+
+        type="user";
+
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
@@ -151,7 +155,7 @@ String imei;
                     repass.setError("Password does not match");
                 } else {
                     //switching to home activity
-                    registerUser(aadhar1, name, phone, imei, email, password);
+                    registerUser(aadhar1, name, phone, imei, email, password,type);
                 }
             }
         });
@@ -205,7 +209,7 @@ String imei;
     }
 
     private void registerUser(final String aadhar,final String name,final String phone,final String imei, final String email,
-                              final String password) {
+                              final String password,final String type) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
 
@@ -233,10 +237,11 @@ String imei;
                         String phone = user.getString("phone");
                         String imei = user.getString("imei");
                         String email = user.getString("email");
+                        String type=user.getString("type");
 
 
                         // Inserting row in users table
-                        db.addUser(aadhar,name,phone,imei, email);
+                        db.addUser(aadhar,name,phone,imei, email,type);
 
                         Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
@@ -280,6 +285,7 @@ String imei;
                 params.put("imei", imei);
                 params.put("email", email);
                 params.put("password", password);
+                params.put("type",type);
 
                 return params;
             }

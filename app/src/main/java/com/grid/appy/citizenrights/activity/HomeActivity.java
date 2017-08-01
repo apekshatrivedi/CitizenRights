@@ -49,6 +49,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL1;
@@ -58,6 +59,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    NavigationView navigationView;
     private SQLiteHandler db;
     private SessionManager session;
     private static final int PERMISSION_CALLBACK_CONSTANT = 100;
@@ -94,111 +96,16 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
+
+
+
+
         if (CheckNetwork.isInternetAvailable(this)) {
             checkFirstRun();
 
-            // SqLite database handler
-            db = new SQLiteHandler(getApplicationContext());
 
-            // session manager
-          session = new SessionManager(getApplicationContext());
-
-
-            GetDataAdapter1 = new ArrayList<>();
-
-            recyclerView = (RecyclerView) findViewById(R.id.recycler_view1);
-
-            recyclerView.setHasFixedSize(true);
-
-            recyclerViewlayoutManager = new LinearLayoutManager(this);
-
-            recyclerView.setLayoutManager(recyclerViewlayoutManager);
-
-            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
-            JSON_DATA_WEB_CALL();
-
-
-
-        //Floating fab
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (!session.isLoggedIn()) {
-                    logoutUser();
-                }
-
-                else {
-                    Intent newissue = new Intent(getApplicationContext(), NewissueActivity.class);
-                    startActivity(newissue);
-                }
-            }
-        });
-
-    }
-
-        else{
-            //no connection
-            // Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
-            //toast.show();
-
-
-                Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
-                startActivity(newissue);
-
-
-        }
-
-
-        //navigation view
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        // load nav menu header data
-       // loadNavHeader();
-
-    }
-
-/*
-    private void loadNavHeader() {
-        // name, website
-
-
-        // Fetching user details from sqlite
-        HashMap<String, String> user = db.getUserDetails();
-
-        String name = user.get("name");
-        String email = user.get("email");
-
-        // Displaying the user details on the screen
-        username.setText(name);
-        email_nav.setText(email);
-
-    }
-*/
-
-
-
-    public void checkFirstRun() {
-        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
-        if (isFirstRun){
-            // Place your dialog code here to display the dialog
-
-
-            new AlertDialog.Builder(this).setTitle("Terms and conditions").setMessage("By installing this application by default you agree to the terms and conditions of this app").setNeutralButton("OK", null).show();
-
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                    .edit()
-                    .putBoolean("isFirstRun", false)
-                    .apply();
             permissionStatus = getSharedPreferences("permissionStatus",MODE_PRIVATE);
             if(ActivityCompat.checkSelfPermission(HomeActivity.this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
                     || ActivityCompat.checkSelfPermission(HomeActivity.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED)
@@ -265,6 +172,118 @@ public class HomeActivity extends AppCompatActivity
             }
 
 
+
+
+            // SqLite database handler
+            db = new SQLiteHandler(getApplicationContext());
+
+            // session manager
+          session = new SessionManager(getApplicationContext());
+
+
+            GetDataAdapter1 = new ArrayList<>();
+
+            recyclerView = (RecyclerView) findViewById(R.id.recycler_view1);
+
+            recyclerView.setHasFixedSize(true);
+
+            recyclerViewlayoutManager = new LinearLayoutManager(this);
+
+            recyclerView.setLayoutManager(recyclerViewlayoutManager);
+
+            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+            JSON_DATA_WEB_CALL();
+
+
+
+        //Floating fab
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!session.isLoggedIn()) {
+                    logoutUser();
+                }
+
+                else {
+                    Intent newissue = new Intent(getApplicationContext(), NewissueActivity.class);
+                    startActivity(newissue);
+
+
+                }
+            }
+        });
+
+    }
+
+        else{
+            //no connection
+            // Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
+            //toast.show();
+
+
+                Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
+                startActivity(newissue);
+
+
+        }
+
+
+        //navigation view
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+       navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        if(!session.isLoggedIn()){
+            navigationView = (NavigationView) findViewById(R.id.nav_view);
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.admin).setVisible(false);}
+
+        // load nav menu header data
+       // loadNavHeader();
+
+    }
+
+/*
+    private void loadNavHeader() {
+        // name, website
+
+
+        // Fetching user details from sqlite
+        HashMap<String, String> user = db.getUserDetails();
+
+        String name = user.get("name");
+        String email = user.get("email");
+
+        // Displaying the user details on the screen
+        username.setText(name);
+        email_nav.setText(email);
+
+    }
+*/
+
+
+
+    public void checkFirstRun() {
+        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
+        if (isFirstRun) {
+            // Place your dialog code here to display the dialog
+
+
+            new AlertDialog.Builder(this).setTitle("Terms and conditions").setMessage("By installing this application by default you agree to the terms and conditions of this app").setNeutralButton("OK", null).show();
+
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("isFirstRun", false)
+                    .apply();
+
         }
     }
     //on back action
@@ -318,6 +337,8 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.issue) {
             // Handle the viewissue action
 
+
+
             Intent viewissue = new Intent(getApplicationContext(), ViewissueActivity.class);
             startActivity(viewissue);
 
@@ -328,8 +349,25 @@ public class HomeActivity extends AppCompatActivity
 
         }else if (id == R.id.admin) {
             // Handle the setting action
-            Intent settings = new Intent(getApplicationContext(), AdminviewActivity.class);
-            startActivity(settings);
+
+            HashMap<String, String> user = db.getUserDetails();
+
+
+            String useremail = user.get("imei");
+            if (!session.isLoggedIn()) {
+
+                navigationView = (NavigationView) findViewById(R.id.nav_view);
+                Menu nav_Menu = navigationView.getMenu();
+                nav_Menu.findItem(R.id.admin).setVisible(false);
+
+            }
+
+            else {
+
+
+                Intent settings = new Intent(getApplicationContext(), AdminviewActivity.class);
+                startActivity(settings);
+            }
 
         }
         else if (id == R.id.setting) {
@@ -419,7 +457,9 @@ public class HomeActivity extends AppCompatActivity
     private void logoutUser() {
         session.setLogin(false);
 
+
         db.deleteUsers();
+
 
         // Launching the login activity
         Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
@@ -483,7 +523,7 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permis
 
     private void proceedAfterPermission() {
 
-        Toast.makeText(getBaseContext(), "We got All Permissions", Toast.LENGTH_LONG).show();
+       // Toast.makeText(getBaseContext(), "We got All Permissions", Toast.LENGTH_LONG).show();
     }
 
     @Override

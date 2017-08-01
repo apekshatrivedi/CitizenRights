@@ -25,6 +25,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.adapter.CommentAdapter;
+import com.grid.appy.citizenrights.helper.SQLiteHandler;
+import com.grid.appy.citizenrights.helper.SessionManager;
 import com.grid.appy.citizenrights.model.CheckNetwork;
 import com.grid.appy.citizenrights.model.Comment;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
@@ -40,6 +42,9 @@ import static com.grid.appy.citizenrights.config.AppConfig.GET_ISSUE_DATA;
 
 public class IssuedetailActivity extends AppCompatActivity {
 
+
+    private SessionManager session;
+    private SQLiteHandler db;
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_USEREMAIL = "useremail";
@@ -67,35 +72,41 @@ public class IssuedetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_issuedetail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+
+        // session manager
+        session = new SessionManager(getApplicationContext());
+
 
         if(CheckNetwork.isInternetAvailable(this)) {
-
-
-
-
 
             getData();
 
 
-            //Floating fab
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showInputDialog();
 
-                }
-            });
+                //Floating fab
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                            showInputDialog();
+
+                    }
+                });
 
 
-            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-            cAdapter = new CommentAdapter(commentList);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-            recyclerView.setLayoutManager(mLayoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-            recyclerView.setAdapter(cAdapter);
-            prepareCommentData();
+                recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                cAdapter = new CommentAdapter(commentList);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+                recyclerView.setAdapter(cAdapter);
+                prepareCommentData();
+
+
         }
 
         else
@@ -176,30 +187,6 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void prepareCommentData() {
         Comment comment = new Comment("Department name", "\n" +"Reply-"+"\n"+
 
@@ -264,39 +251,49 @@ public class IssuedetailActivity extends AppCompatActivity {
 
     protected void showInputDialog() {
 
-        // get prompts.xml view
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View promptView = layoutInflater.inflate(R.layout.reply, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setView(promptView);
 
-        final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
-        // setup a dialog window
-        alertDialogBuilder.setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                       // resultText.setText("Hello, " + editText.getText());
+        if (!session.isLoggedIn()) {
+
+            Intent newissue = new Intent(getApplicationContext(), RegloginActivity.class);
+            startActivity(newissue);
+
+        }
+
+        else {
 
 
+            // get prompts.xml view
+            LayoutInflater layoutInflater = LayoutInflater.from(this);
+            View promptView = layoutInflater.inflate(R.layout.reply, null);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setView(promptView);
 
-                    }
-                })
-                .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+            final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
+            // setup a dialog window
+            alertDialogBuilder.setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // resultText.setText("Hello, " + editText.getText());
 
-        // create an alert dialog
-        AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
+
+                        }
+                    })
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+            // create an alert dialog
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        }
     }
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
-
 
 }

@@ -19,7 +19,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "citizenrights";
@@ -33,6 +33,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_PHONE = "phone";
     private static final String KEY_IMEI = "imei";
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_TYPE= "type";
 
 
     public SQLiteHandler(Context context) {
@@ -45,8 +46,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         String CREATE_LOGIN_TABLE = "CREATE TABLE " + TABLE_USER + "("
                 + KEY_AADHAR + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_PHONE + " INTEGER," + KEY_IMEI + " INTEGER,"
-                + KEY_EMAIL + " TEXT UNIQUE"
-                 + ")";
+                + KEY_EMAIL + " TEXT UNIQUE,"
+                 + KEY_TYPE + " TEXT" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
 
         Log.d(TAG, "Database tables created");
@@ -65,7 +66,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in database
      * */
-    public void addUser(String aadhar,String name, String email, String phone, String imei) {
+    public void addUser(String aadhar,String name, String email, String phone, String imei,String type) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -74,6 +75,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_PHONE, phone); // Phone
         values.put(KEY_IMEI, imei); // IMEI
         values.put(KEY_EMAIL, email); // Email
+        values.put(KEY_TYPE,type);
 
 
         // Inserting Row
@@ -100,6 +102,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             user.put("phone", cursor.getString(2));
             user.put("imei", cursor.getString(3));
             user.put("email", cursor.getString(4));
+            user.put("type",cursor.getString(5));
 
         }
         cursor.close();

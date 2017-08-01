@@ -85,7 +85,7 @@ public class DeptregistrationActivity extends AppCompatActivity
         //Initializing Spinner
         spinner = (Spinner) findViewById(R.id.spinner);
 
-        getData();
+
         et_empname = (EditText) findViewById(R.id.name);
         et_uniqueid = (EditText) findViewById(R.id.otp);
 
@@ -109,17 +109,17 @@ public class DeptregistrationActivity extends AppCompatActivity
         btn_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String empname = et_empname.getText().toString().trim();
+                String empname = et_empname.getText().toString();
                 String uniqueid = et_uniqueid.getText().toString().trim();
-               // String education= et_education.getText().toString().trim();
+                // String education= et_education.getText().toString().trim();
                 //String edu = et_edu.getText().toString().trim();
                 //String admin = et_admin.getText().toString().trim();
                 String phone = et_phone.getText().toString().trim();
                 String email = et_email.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
                 String retypepassword = et_retypepassword.getText().toString().trim();
-              //  String city = et_reg.getText().toString().trim();
-              //  String aadharrnum = et_aadharrnum.getText().toString().trim();
+                //  String city = et_reg.getText().toString().trim();
+                //  String aadharrnum = et_aadharrnum.getText().toString().trim();
 
                 String validEmailId = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@" + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\." + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" + ")+";
 
@@ -185,7 +185,7 @@ public class DeptregistrationActivity extends AppCompatActivity
 
                 TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 
-               String imei= mngr.getDeviceId();
+                String imei= mngr.getDeviceId();
 
                 registerUser( uniqueid, empname, phone, imei, email, password,"dname","desig","branch");
 
@@ -193,7 +193,7 @@ public class DeptregistrationActivity extends AppCompatActivity
             }
         });
 
-/*
+
         // Spinner element
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         Spinner spinner1=(Spinner)findViewById(R.id.spinner1);
@@ -202,18 +202,12 @@ public class DeptregistrationActivity extends AppCompatActivity
         spinner.setOnItemSelectedListener(DeptregistrationActivity.this);
         spinner1.setOnItemSelectedListener(DeptregistrationActivity.this);
         spinner2.setOnItemSelectedListener(DeptregistrationActivity.this);
-
-
-
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
-
         categories.add("Administrator");
         categories.add("Manager");
         categories.add("Intern");
         categories.add("Other");
-
-
         List<String> categories1 = new ArrayList<String>();
         categories1.add("Education");
         categories1.add("Work");
@@ -221,13 +215,10 @@ public class DeptregistrationActivity extends AppCompatActivity
         categories1.add("Bank");
         categories1.add("Retail");
         categories1.add("NGO");
-
         List<String> categories2 = new ArrayList<String>();
         categories2.add("Branch 1");
         categories2.add("Branch 2");
         categories2.add("Branch 3");
-
-
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories1);
@@ -241,95 +232,29 @@ public class DeptregistrationActivity extends AppCompatActivity
         spinner1.setAdapter(dataAdapter1);
         spinner2.setAdapter(dataAdapter2);
 
-        */
-    }
-        private void getData(){
-            //Creating a string request
-            StringRequest stringRequest = new StringRequest(GET_JSON_DATA_HTTP_URL,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            JSONObject j = null;
-                            try {
-                                //Parsing the fetched Json String to JSON Object
-                                j = new JSONObject(response);
-
-                                //Storing the Array of JSON String to our JSON Array
-                                result = j.getJSONArray(JSON_ARRAY);
-
-                                //Calling method getStudents to get the students from the JSON Array
-                                getStudents(result);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    });
-
-            //Creating a request queue
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-            //Adding request to the queue
-            requestQueue.add(stringRequest);
-        }
-
-
-    private void getStudents(JSONArray j){
-        //Traversing through all the items in the json array
-            for(int i=0;i<j.length();i++){
-                try {
-                //Getting json object
-JSONObject json = j.getJSONObject(i);
-
-                //Adding the name of the student to array list
-            dept.add(json.getString(TAG_DEPTNAME));
-                } catch (JSONException e) {
-            e.printStackTrace();
-        }
-}
-            //Setting adapter to show the items in the spinner
-        //Setting adapter to show the items in the spinner
-        spinner.setAdapter(new ArrayAdapter<String>(DeptregistrationActivity.this, android.R.layout.simple_spinner_dropdown_item, dept));
     }
 
 
-            //Method to get student name of a particular position
-        private String getName(int position){
-        String name="";
-            try {
-            //Getting object of given index
-    JSONObject json = result.getJSONObject(position);
-
-            //Fetching name from that object
-name = json.getString(TAG_DEPTNAME);
-} catch (JSONException e) {
-e.printStackTrace();
-}
-//Returning the name
-return name;
-}
 
 
 
 
-//this method will execute when we pic an item from the spinner
-@Override
-public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-    //Setting the values to textviews for a selected item
 
-}
 
-//When no item is selected this method would execute
-@Override
-public void onNothingSelected(AdapterView<?> parent) {
 
-}
+
+    //this method will execute when we pic an item from the spinner
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        //Setting the values to textviews for a selected item
+
+    }
+
+    //When no item is selected this method would execute
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 
 
 
@@ -363,8 +288,6 @@ public void onNothingSelected(AdapterView<?> parent) {
                         String phone = user.getString("phone");
                         String imei = user.getString("imei");
                         String email = user.getString("email");
-
-
                         // Inserting row in users table
                         db.addUser(aadhar,name,phone,imei, email);
 */

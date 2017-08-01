@@ -9,6 +9,8 @@ public class AppConfig {
     // Server user login url
     public static String URL_LOGIN = "http://192.168.1.6/grid/login.php";
 
+    public static String URL_LOGIN1 = "http://192.168.1.6/grid/loginreg.php";
+
     // Server user register url
     public static String URL_REGISTER = "http://192.168.1.6/grid/register.php";
 
