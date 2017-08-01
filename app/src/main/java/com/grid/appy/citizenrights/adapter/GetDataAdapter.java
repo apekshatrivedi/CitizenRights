@@ -16,8 +16,13 @@ public class GetDataAdapter {
     public String history_date;
     public String history_username;
     public String history_title;
+    public String dept_title;
+    public String dept_username;
+    public String dept_issueid;
+    public String dept_date;
 
 
+    //dept
     public String getImageServerUrl() {
         return ImageServerUrl;
     }
@@ -34,6 +39,7 @@ public class GetDataAdapter {
         this.ImageTitleName = Imagetitlename;
     }
 
+    //home
     public String getHome_title() {
         return home_title;
     }
@@ -65,6 +71,8 @@ public class GetDataAdapter {
         this.home_username = home_username;
     }
 
+    //history
+
     public String getHistory_issueid(){return  history_issueid;}
 
     public void setHistory_issueid(String history_issueid){this.history_issueid=history_issueid;}
@@ -80,6 +88,47 @@ public class GetDataAdapter {
     public String getHistory_date(){return  history_date;}
 
     public void setHistory_date(String history_date){this.history_date=history_date;}
+
+
+    //viewdept
+
+
+    public String getdept_title() {
+        return dept_title;
+    }
+
+    public String getdept_issueid() {
+        return dept_issueid;
+    }
+
+    public void setdept_issueid(String dept_issueid) {
+        this.dept_issueid = dept_issueid;
+    }
+    public void setdept_title(String dept_title) {
+        this.dept_title = dept_title;
+    }
+
+    public String getdept_date() {
+        return dept_date;
+    }
+
+    public void setdept_date(String dept_date) {
+        this.dept_date = dept_date;
+    }
+
+    public String getdept_username() {
+        return dept_username;
+    }
+
+    public void setdept_username(String dept_username) {
+        this.dept_username = dept_username;
+    }
+
+
+
+
+
+
 
 
 }

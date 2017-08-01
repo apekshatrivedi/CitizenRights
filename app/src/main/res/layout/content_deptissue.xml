@@ -9,47 +9,15 @@
     tools:showIn="@layout/activity_deptissue"
     tools:context=".activity.DeptissueActivity">
 
-    <LinearLayout
-        android:id="@+id/titlelay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="@drawable/lower_border"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
 
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:visibility="visible"
-            android:src="@drawable/dept"
-            android:background="@android:color/transparent"
-            />
-
-        <TextView
-            android:id="@+id/deptname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/bg"
-            android:hint="Department Name"
-            android:textColorHint="@color/colorTextSecondary"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:paddingLeft="10dp"
-            android:inputType="textCapWords"
-            android:textColor="@color/colorTextPrimary"
-            />
-    </LinearLayout>
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/recyclerview4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:layout_below="@+id/titlelay"
+
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

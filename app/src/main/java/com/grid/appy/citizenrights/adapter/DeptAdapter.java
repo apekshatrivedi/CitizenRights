@@ -1,7 +1,12 @@
 package com.grid.appy.citizenrights.adapter;
 
+/**
+ * Created by Appy on 27-Jul-17.
+ */
+
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,107 +14,97 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.grid.appy.citizenrights.R;
+import com.grid.appy.citizenrights.activity.DeptissueActivity;
 import com.grid.appy.citizenrights.activity.IssuedetailActivity;
+import com.grid.appy.citizenrights.activity.NewissueActivity;
+import com.grid.appy.citizenrights.activity.ViewdeptActivity;
 import com.grid.appy.citizenrights.interfaces.ItemClickListener;
-import com.grid.appy.citizenrights.model.Dept;
+import com.grid.appy.citizenrights.model.Yourissue;
 
 import java.util.List;
 
-/**
- * Created by Appy on 13-Jul-17.
- */
+public class DeptAdapter extends RecyclerView.Adapter<DeptAdapter.ViewHolder> {
 
-public class DeptAdapter extends RecyclerView.Adapter<DeptAdapter.MyViewHolder> {
-    private List<Dept> deptList;
-    Context context ;
+    Context context;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
-        public TextView title,  username,date;
+    List<GetDataAdapter> getDataAdapter;
 
-        private ItemClickListener itemClickListener;
-        public MyViewHolder(View view) {
-            super(view);
-            title = (TextView) view.findViewById(R.id.title);
-            username = (TextView) view.findViewById(R.id.username);
-            date=(TextView)view.findViewById(R.id.date);
+    public DeptAdapter(List<GetDataAdapter> getDataAdapter, Context context){
 
-            view.setOnClickListener(this);
-            view.setOnLongClickListener(this);
-
-        }
-
-        public void setItemClickListener(ItemClickListener itemClickListener){
-
-            this.itemClickListener=itemClickListener;
-
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            itemClickListener.onClick(v,getAdapterPosition(),false);
-            Intent intent = new Intent(context, IssuedetailActivity.class);
-            context.startActivity(intent);
-
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-
-            itemClickListener.onClick(v,getAdapterPosition(),true);
-            return true;
-        }
-    }
-
-
-    public DeptAdapter(List<Dept> deptList,Context context) {
-        this.deptList = deptList;
-        this.context=context;
+        super();
+        this.getDataAdapter = getDataAdapter;
+        this.context = context;
     }
 
     @Override
-    public DeptAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.dept_issue_list, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new DeptAdapter.MyViewHolder(itemView);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dept_issue_list, parent, false);
+
+        ViewHolder viewHolder = new ViewHolder(v);
+
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(DeptAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder Viewholder, int position) {
+
+        final GetDataAdapter getDataAdapter1 =  getDataAdapter.get(position);
 
 
-        Dept dept = deptList.get(position);
-        holder.title.setText(dept.getTitle());
-        holder.username.setText(dept.getUsername());
-        holder.date.setText(dept.getDate());
+        Viewholder.dept_title.setText(getDataAdapter1.getdept_title());
+        Viewholder.dept_username.setText(getDataAdapter1.getdept_username());
+        Viewholder.dept_date.setText(getDataAdapter1.getdept_date());
 
-
-        holder.setItemClickListener(new ItemClickListener() {
+        Viewholder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, int position, boolean isLongClick) {
+            public void onClick(View v) {
 
 
+                Intent intent = new Intent(context, IssuedetailActivity.class);
+                String message=getDataAdapter1.getdept_issueid();
+                intent.putExtra("message", message);
+                context.startActivity(intent);
 
-                if(isLongClick)
-                {
-                    Toast.makeText(context,"Long click" +deptList.get(position),Toast.LENGTH_SHORT).show();
 
-                }
-                else {
-                    Toast.makeText(context, "click" + deptList.get(position), Toast.LENGTH_SHORT).show();
-
-                }
             }
         });
+
 
     }
 
     @Override
     public int getItemCount() {
-        return deptList.size();
+
+        return getDataAdapter.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder{
+
+
+        public TextView dept_title;
+        public TextView dept_date;
+        public TextView dept_username;
+        public CardView cardView;
+
+
+        public ViewHolder(View itemView) {
+
+            super(itemView);
+
+            dept_title = (TextView) itemView.findViewById(R.id.dept_title) ;
+            dept_username = (TextView) itemView.findViewById(R.id.dept_username) ;
+            dept_date = (TextView) itemView.findViewById(R.id.dept_date) ;
+            cardView =(CardView)itemView.findViewById(R.id.cardview4);
+
+
+
+        }
+
+
+
     }
 }
-
-

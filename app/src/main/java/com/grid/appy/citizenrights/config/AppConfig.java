@@ -30,6 +30,9 @@ public class AppConfig {
     public static String GET_JSON_DATA_HTTP_URL1 = "http://192.168.1.100/Grid/homejson.php";
 
     public static String GET_JSON_DATA_HTTP_URL2 = "http://192.168.1.100/Grid/issuehistory.php?useremail=";
+
+
+    public static String GET_JSON_DATA_HTTP_URL3 = "http://192.168.1.100/Grid/viewdept.php?dept=";
             //Tags used in the JSON String
 
 

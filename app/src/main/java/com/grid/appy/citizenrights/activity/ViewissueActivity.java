@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL1;
+import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL2;
 
 //import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL2;
 
