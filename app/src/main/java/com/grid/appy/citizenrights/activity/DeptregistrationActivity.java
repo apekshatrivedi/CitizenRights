@@ -47,30 +47,20 @@ import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_UR
 public class DeptregistrationActivity extends AppCompatActivity
         implements Spinner.OnItemSelectedListener
 {
-    //Declaring an Spinner
-    private Spinner spinner;
-    //An ArrayList for Spinner Items
-    private ArrayList<String> dept;
-
-    //JSON Array
-    private JSONArray result;
 
 
 
-    String deptname;
+
 
     private static final String TAG = DeptregistrationActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
 
-    public static final String TAG_DEPTNAME = "deptname";
-    public static final String TAG_DEPTID = "deptid";
-
-    public static final String JSON_ARRAY = "result";
 
 
-    EditText et_empname,et_uniqueid,et_education,et_edu,et_admin,et_phone,et_email,et_password,et_retypepassword;
+
+    EditText et_empname,et_uniqueid,et_phone,et_email,et_password,et_retypepassword;
     Button btn_reg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +69,48 @@ public class DeptregistrationActivity extends AppCompatActivity
         //This method will fetch the data from the URL
 
 
-        //Initializing the ArrayList
-        dept = new ArrayList<String>();
 
-        //Initializing Spinner
-        spinner = (Spinner) findViewById(R.id.spinner);
+        // Spinner element
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner1=(Spinner)findViewById(R.id.spinner1);
+        Spinner spinner2=(Spinner)findViewById(R.id.spinner2);
+        // Spinner click listener
+
+
+        spinner.setOnItemSelectedListener(DeptregistrationActivity.this);
+        spinner1.setOnItemSelectedListener(DeptregistrationActivity.this);
+        spinner2.setOnItemSelectedListener(DeptregistrationActivity.this);
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("Administrator");
+        categories.add("Manager");
+        categories.add("Intern");
+        categories.add("Other");
+        List<String> categories1 = new ArrayList<String>();
+        categories1.add("Education");
+        categories1.add("Work");
+        categories1.add("Government");
+        categories1.add("Bank");
+        categories1.add("Retail");
+        categories1.add("NGO");
+        List<String> categories2 = new ArrayList<String>();
+        categories2.add("Branch 1");
+        categories2.add("Branch 2");
+        categories2.add("Branch 3");
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories1);
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories1);
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+        spinner1.setAdapter(dataAdapter1);
+        spinner2.setAdapter(dataAdapter2);
+
+       final String dname=categories.toString();
 
 
         et_empname = (EditText) findViewById(R.id.name);
@@ -111,15 +138,11 @@ public class DeptregistrationActivity extends AppCompatActivity
             public void onClick(View view) {
                 String empname = et_empname.getText().toString();
                 String uniqueid = et_uniqueid.getText().toString().trim();
-                // String education= et_education.getText().toString().trim();
-                //String edu = et_edu.getText().toString().trim();
-                //String admin = et_admin.getText().toString().trim();
                 String phone = et_phone.getText().toString().trim();
                 String email = et_email.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
                 String retypepassword = et_retypepassword.getText().toString().trim();
-                //  String city = et_reg.getText().toString().trim();
-                //  String aadharrnum = et_aadharrnum.getText().toString().trim();
+
 
                 String validEmailId = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@" + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\." + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" + ")+";
 
@@ -186,67 +209,24 @@ public class DeptregistrationActivity extends AppCompatActivity
                 TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 
                 String imei= mngr.getDeviceId();
+                String type="deptmember";
 
-                registerUser( uniqueid, empname, phone, imei, email, password,"dname","desig","branch");
+                registerUser( uniqueid, empname, phone, imei, email, password,type,dname,"desig","branch");
 
 
             }
         });
 
 
-        // Spinner element
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        Spinner spinner1=(Spinner)findViewById(R.id.spinner1);
-        Spinner spinner2=(Spinner)findViewById(R.id.spinner2);
-        // Spinner click listener
-        spinner.setOnItemSelectedListener(DeptregistrationActivity.this);
-        spinner1.setOnItemSelectedListener(DeptregistrationActivity.this);
-        spinner2.setOnItemSelectedListener(DeptregistrationActivity.this);
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("Administrator");
-        categories.add("Manager");
-        categories.add("Intern");
-        categories.add("Other");
-        List<String> categories1 = new ArrayList<String>();
-        categories1.add("Education");
-        categories1.add("Work");
-        categories1.add("Government");
-        categories1.add("Bank");
-        categories1.add("Retail");
-        categories1.add("NGO");
-        List<String> categories2 = new ArrayList<String>();
-        categories2.add("Branch 1");
-        categories2.add("Branch 2");
-        categories2.add("Branch 3");
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories1);
-        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories1);
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
-        spinner1.setAdapter(dataAdapter1);
-        spinner2.setAdapter(dataAdapter2);
-
     }
-
-
-
-
-
-
-
-
 
 
     //this method will execute when we pic an item from the spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //Setting the values to textviews for a selected item
+
+
 
     }
 
@@ -260,7 +240,7 @@ public class DeptregistrationActivity extends AppCompatActivity
 
 
     private void registerUser(final String aadhar,final String name,final String phone,final String imei, final String email,
-                              final String password,final String deptid,final String designation,final String branch) {
+                              final String password,final String type,final String dname,final String designation,final String branch) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
 
@@ -278,25 +258,29 @@ public class DeptregistrationActivity extends AppCompatActivity
                 try {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
-                    if (!error) {
-                        // User successfully stored in MySQL
-                        // Now store the user in sqlite
-/*
-                        JSONObject user = jObj.getJSONObject("user");
-                        String aadhar = user.getString("aadhar");
-                        String name = user.getString("name");
-                        String phone = user.getString("phone");
-                        String imei = user.getString("imei");
-                        String email = user.getString("email");
-                        // Inserting row in users table
-                        db.addUser(aadhar,name,phone,imei, email);
-*/
-                        Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
-                        // Launch login activity
+                        if (!error) {
+                            // User successfully stored in MySQL
+                            // Now store the user in sqlite
+
+                            JSONObject user = jObj.getJSONObject("user");
+                            String aadhar = user.getString("aadhar");
+                            String name = user.getString("name");
+                            String phone = user.getString("phone");
+                            String imei = user.getString("imei");
+                            String email = user.getString("email");
+                            String type=user.getString("type");
+
+
+                            // Inserting row in users table
+                            db.addUser(aadhar,name,phone,imei, email,type);
+
+                            Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
+
+                            // Launch login activity
                         Intent intent = new Intent(
                                 DeptregistrationActivity.this,
-                                LoginActivity.class);
+                                RegloginActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
@@ -335,8 +319,9 @@ public class DeptregistrationActivity extends AppCompatActivity
                 params.put("phone", phone);
                 params.put("imei", imei);
                 params.put("deptmail", email);
+                params.put("type",type);
                 params.put("password", password);
-                params.put("deptid", "deptid");
+                params.put("deptid", "dname");
                 params.put("designation", "designation");
                 params.put("branch", "branch");
 
