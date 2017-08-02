@@ -55,7 +55,7 @@
                         app:srcCompat="@drawable/user" />
 
                     <TextView
-                        android:id="@+id/name"
+                        android:id="@+id/name1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/bg"

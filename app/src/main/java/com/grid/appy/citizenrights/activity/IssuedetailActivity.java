@@ -148,39 +148,39 @@ public class IssuedetailActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void showJSON(String response){
-        String title="";
-        String useremail="";
-        String date = "";
-        String desc = "";
-        String imgpaths;
+        private void showJSON(String response){
+            String title="";
+            String useremail="";
+            String date = "";
+            String desc = "";
+            String imgpaths;
 
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray result = jsonObject.getJSONArray(JSON_ARRAY);
-            JSONObject issueData = result.getJSONObject(0);
-            title = issueData.getString(KEY_TITLE);
-            useremail = issueData.getString(KEY_USEREMAIL);
-            date = issueData.getString(KEY_issuedatetime);
-            desc = issueData.getString(KEY_desc);
-            imgpaths=issueData.getString(KEY_IMGPATH);
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray result = jsonObject.getJSONArray(JSON_ARRAY);
+                JSONObject issueData = result.getJSONObject(0);
+                title = issueData.getString(KEY_TITLE);
+                useremail = issueData.getString(KEY_USEREMAIL);
+                date = issueData.getString(KEY_issuedatetime);
+                desc = issueData.getString(KEY_desc);
+                imgpaths=issueData.getString(KEY_IMGPATH);
 
-            issue_title=(TextView)findViewById(R.id.issue_title);
-            issue_useremail=(TextView)findViewById(R.id.issue_useremail);
-            issue_datetime=(TextView)findViewById(R.id.issue_datetime);
-            issue_description=(TextView)findViewById(R.id.issue_description);
+                issue_title=(TextView)findViewById(R.id.issue_title);
+                issue_useremail=(TextView)findViewById(R.id.issue_useremail);
+                issue_datetime=(TextView)findViewById(R.id.issue_datetime);
+                issue_description=(TextView)findViewById(R.id.issue_description);
 
-            issue_title.setText(title);
-            issue_useremail.setText(useremail);
-            issue_datetime.setText(date);
-            issue_description.setText(desc);
+                issue_title.setText(title);
+                issue_useremail.setText(useremail);
+                issue_datetime.setText(date);
+                issue_description.setText(desc);
 
-            Toast.makeText(this,"imgpath"+imgpaths,Toast.LENGTH_LONG).show();
-
-
+                Toast.makeText(this,"imgpath"+imgpaths,Toast.LENGTH_LONG).show();
 
 
-        } catch (JSONException e) {
+
+
+            } catch (JSONException e) {
             e.printStackTrace();
         }
         //textViewResult.setText("Name:\t"+name+"\nAddress:\t" +address+ "\nVice Chancellor:\t"+ vc);

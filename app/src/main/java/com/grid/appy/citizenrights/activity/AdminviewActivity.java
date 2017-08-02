@@ -1,64 +1,137 @@
 package com.grid.appy.citizenrights.activity;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.grid.appy.citizenrights.R;
-
-import com.grid.appy.citizenrights.adapter.PeopleAdapter;
-
-import com.grid.appy.citizenrights.model.CheckNetwork;
+import com.grid.appy.citizenrights.adapter.AdminAdapter;
+import com.grid.appy.citizenrights.adapter.GetDataAdapter;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
-import com.grid.appy.citizenrights.model.People;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.grid.appy.citizenrights.config.AppConfig.GET_IMAGEJSON_HTTP_URL;
+
 public class AdminviewActivity extends AppCompatActivity {
-    private List<People> peopleList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private PeopleAdapter pAdapter;
+    List<GetDataAdapter> GetDataAdapter1;
+
+    RecyclerView recyclerView;
+
+    RecyclerView.LayoutManager recyclerViewlayoutManager;
+
+    RecyclerView.Adapter adminadapter;
+
+    //String GET_JSON_DATA_HTTP_URL = "http://androidblog.esy.es/ImageJsonData.php";
+
+    String JSON_IMAGE_TITLE_NAME = "deptmail";
+   String JSON_IMAGE_URL = "icon";
+
+    JsonArrayRequest jsonArrayRequest ;
+
+    RequestQueue requestQueue ;
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminview);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(CheckNetwork.isInternetAvailable(this)){
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view1);
-        pAdapter = new PeopleAdapter(peopleList,this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        GetDataAdapter1 = new ArrayList<>();
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview1);
+
+        recyclerView.setHasFixedSize(true);
+
+        recyclerViewlayoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setLayoutManager(recyclerViewlayoutManager);
+
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(pAdapter);
-        preparePeopleData();}
-        else
-        {
-            Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
-            startActivity(newissue);
-        }
 
-    }
-    private void preparePeopleData() {
-        People people = new People("Name", "Education");
-        peopleList.add(people);
 
-        people = new People("Name", "Work");
-        peopleList.add(people);
-        pAdapter.notifyDataSetChanged();
+
+
+
+        JSON_DATA_WEB_CALL();
+
+
+
+
     }
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp(){
         finish();
         return true;
     }
+
+
+    public void JSON_DATA_WEB_CALL(){
+
+        jsonArrayRequest = new JsonArrayRequest(GET_IMAGEJSON_HTTP_URL,
+
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        JSON_PARSE_DATA_AFTER_WEBCALL(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public void JSON_PARSE_DATA_AFTER_WEBCALL(JSONArray array){
+
+        for(int i = 0; i<array.length(); i++) {
+
+            GetDataAdapter GetDataAdapter2 = new GetDataAdapter();
+
+            JSONObject json = null;
+            try {
+
+                json = array.getJSONObject(i);
+
+                GetDataAdapter2.setimagetitlename2(json.getString(JSON_IMAGE_TITLE_NAME));
+
+               GetDataAdapter2.setImageServerUrl2(json.getString(JSON_IMAGE_URL));
+
+            } catch (JSONException e) {
+
+                e.printStackTrace();
+            }
+            GetDataAdapter1.add(GetDataAdapter2);
+        }
+
+        adminadapter = new AdminAdapter(GetDataAdapter1, this);
+
+        recyclerView.setAdapter(adminadapter);
+    }
+
 }
+
+
