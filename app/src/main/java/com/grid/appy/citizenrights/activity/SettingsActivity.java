@@ -1,41 +1,56 @@
 package com.grid.appy.citizenrights.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
+
 import com.grid.appy.citizenrights.R;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity
+
+
+{
+    public static final String myPref = "autologin";
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         //notification switch
         Switch notification = (Switch) findViewById(R.id.notification);
         notification.setChecked(true);
-        notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
+                                         boolean isChecked)
+            {
 
-                if (isChecked) {
+                if (isChecked)
+                {
 
                     Toast.makeText(getApplicationContext(), "Allow notification",
                             Toast.LENGTH_SHORT).show();
 
-                } else {
+                } else
+                    {
 
                     Toast.makeText(getApplicationContext(),
                             "Notification disabled", Toast.LENGTH_SHORT).show();
-                }
+                    }
             }
+
         });
+
 
         //new comment switch
         Switch newcomment = (Switch) findViewById(R.id.newcomment);

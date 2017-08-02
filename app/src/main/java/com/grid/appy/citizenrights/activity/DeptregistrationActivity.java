@@ -264,7 +264,7 @@ public class DeptregistrationActivity extends AppCompatActivity
                             // Now store the user in sqlite
 
                             JSONObject user = jObj.getJSONObject("user");
-                            String aadhar = user.getString("aadhar");
+                            String aadhar = user.getString("uniqueid");
                             String name = user.getString("name");
                             String phone = user.getString("phone");
                             String imei = user.getString("imei");

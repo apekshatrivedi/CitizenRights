@@ -50,6 +50,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     public static final String KEY_USEREMAIL = "useremail";
     public static final String KEY_issuedatetime = "issuedatetime";
     public static final String KEY_desc = "description";
+    public static final String KEY_IMGPATH= "proof";
     public static final String JSON_ARRAY = "result";
 
 
@@ -152,6 +153,7 @@ public class IssuedetailActivity extends AppCompatActivity {
         String useremail="";
         String date = "";
         String desc = "";
+        String imgpaths;
 
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -161,6 +163,7 @@ public class IssuedetailActivity extends AppCompatActivity {
             useremail = issueData.getString(KEY_USEREMAIL);
             date = issueData.getString(KEY_issuedatetime);
             desc = issueData.getString(KEY_desc);
+            imgpaths=issueData.getString(KEY_IMGPATH);
 
             issue_title=(TextView)findViewById(R.id.issue_title);
             issue_useremail=(TextView)findViewById(R.id.issue_useremail);
@@ -172,6 +175,7 @@ public class IssuedetailActivity extends AppCompatActivity {
             issue_datetime.setText(date);
             issue_description.setText(desc);
 
+            Toast.makeText(this,"imgpath"+imgpaths,Toast.LENGTH_LONG).show();
 
 
 
