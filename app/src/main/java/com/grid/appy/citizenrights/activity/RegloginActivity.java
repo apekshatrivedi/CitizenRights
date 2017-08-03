@@ -167,7 +167,7 @@ public class RegloginActivity extends Activity {
 
                         // Now store the user in SQLite
 
-/*
+
                         JSONObject user = jObj.getJSONObject("user");
                         String aadhar = user.getString("aadhar");
                         String name = user.getString("name");
@@ -180,11 +180,11 @@ public class RegloginActivity extends Activity {
 
                         // Inserting row in users table
                         db.addUser(aadhar, name, phone, imei, email,type);
-*/
+
                         // Launch main activity
-                        //Intent intent = new Intent(RegloginActivity.this,
-                               // IssuedetailActivity.class);
-                        //startActivity(intent);
+                        Intent intent = new Intent(RegloginActivity.this,
+                                IssuedetailActivity.class);
+                        startActivity(intent);
                         finish();
                     } else {
                         // Error in login. Get the error message

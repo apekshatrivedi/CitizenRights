@@ -1,10 +1,9 @@
 package com.grid.appy.citizenrights.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,14 +18,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.grid.appy.citizenrights.R;
 
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
 
 
 //import static com.grid.appy.citizenrights.R.id.btnreset;
@@ -36,6 +33,7 @@ public class ForgetpasswordActivity extends AppCompatActivity {
     Button Submit,OTPButton;
     TextView Textview,Otp;
     // [START declare_auth]
+
     private FirebaseAuth mAuth;
     // [END declare_auth]
 
