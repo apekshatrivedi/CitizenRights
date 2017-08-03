@@ -63,6 +63,7 @@ public class ForgetpasswordActivity extends AppCompatActivity {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+
                 Toast.makeText(ForgetpasswordActivity.this,"verifucation done"+ phoneAuthCredential,Toast.LENGTH_LONG).show();
             }
 
@@ -138,6 +139,8 @@ public class ForgetpasswordActivity extends AppCompatActivity {
                             Toast.makeText(ForgetpasswordActivity.this,"Verification done",Toast.LENGTH_LONG).show();
                             FirebaseUser user = task.getResult().getUser();
                             Intent newissue = new Intent(getApplicationContext(), ResetpasswordActivity.class);
+                            String message=MobileNumber.getText().toString();
+                            newissue.putExtra("message", message);
                             startActivity(newissue);
                             // ...
                         } else {

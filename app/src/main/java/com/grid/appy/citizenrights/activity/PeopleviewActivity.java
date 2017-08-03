@@ -2,20 +2,25 @@ package com.grid.appy.citizenrights.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.grid.appy.citizenrights.R;
+import com.grid.appy.citizenrights.config.AppConfig;
+import com.grid.appy.citizenrights.config.AppController;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
 import com.grid.appy.citizenrights.model.CheckNetwork;
@@ -23,6 +28,9 @@ import com.grid.appy.citizenrights.model.CheckNetwork;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.support.design.R.id.title;
 import static com.grid.appy.citizenrights.R.id.issue_title;
@@ -34,6 +42,9 @@ public class PeopleviewActivity extends AppCompatActivity {
     private SessionManager session;
     private SQLiteHandler db;
 
+    private ProgressDialog pDialog;
+
+    private static final String TAG = PeopleviewActivity.class.getSimpleName();
     public static final String KEY_NAME = "name";
     public static final String KEY_UID = "aadhar";
     public static final String KEY_DEPTID = "deptid";
@@ -79,25 +90,117 @@ public class PeopleviewActivity extends AppCompatActivity {
 
 
         ImageButton isvalid = (ImageButton) findViewById(R.id.valid);
-     /*   isvalid.setOnClickListener(new View.OnClickListener() {
+        isvalid.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // Switching to activity_forgetpassword screen
 
-                Toast.makeText(getApplicationContext(), "Department employee is validated", Toast.LENGTH_LONG).show();
+                updatemember("valid");
+
             }
-        });*/
+        });
         ImageButton invalid = (ImageButton) findViewById(R.id.invalid);
-       /* invalid.setOnClickListener(new View.OnClickListener() {
+        invalid.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // Switching to activity_forgetpassword screen
 
-                Toast.makeText(getApplicationContext(), "Department employee is deathorised", Toast.LENGTH_LONG).show();
+                updatemember("invalid");
+               // Toast.makeText(getApplicationContext(), "Department employee is deathorised", Toast.LENGTH_LONG).show();
             }
-        });*/
+        });
 
     }
+
+    private void updatemember(final String status)
+    {
+        String tag_string_req = "req_register";
+        // Progress dialog
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setMessage("Updating ...");
+        showDialog();
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.UPDATE_MEMBER, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Register Response: " + response.toString());
+                hideDialog();
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+
+                        Intent intent = new Intent(
+                                PeopleviewActivity.this,
+                                AdminviewActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+
+
+                Bundle bundle = getIntent().getExtras();
+                String message = bundle.getString("message");
+                String issueid = message;
+
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("deptmail",issueid);
+                params.put("status", status);
+
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    private void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
+
+
+
+
+
     private void getData() {
 
         Bundle bundle = getIntent().getExtras();

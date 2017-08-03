@@ -32,9 +32,13 @@ public class AppConfig {
 
     public  static  String PATH="http://192.168.1.101/Grid/uploads/";
 
-    public static String GET_MEMBERVIEW_DATA ="http://192.168.1.101/Grid/memberview.php";
+    public static String GET_MEMBERVIEW_DATA ="http://192.168.1.101/Grid/memberview.php?deptmail=";
 
     public static String GET_ISSUE_DATA = "http://192.168.1.101/Grid/issuedetails.php";
+
+    public static String UPDATE_MEMBER = "http://192.168.1.101/Grid/updatedeptmembers.php";
+
+    public static String PASS_RESET = "http://192.168.1.101/Grid/resetpassword.php";
 
 }
 
