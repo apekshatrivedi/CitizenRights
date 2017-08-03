@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
@@ -138,8 +139,8 @@
         </activity>
         <activity
             android:name=".activity.NointernetActivity"
-            android:label="No internet"></activity>
-        <activity android:name=".activity.RegloginActivity"></activity>
+            android:label="No internet" />
+        <activity android:name=".activity.RegloginActivity" />
     </application>
 
 </manifest>

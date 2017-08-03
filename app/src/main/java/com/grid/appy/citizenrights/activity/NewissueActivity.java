@@ -37,15 +37,21 @@ import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
 
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +59,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static android.R.attr.bitmap;
+import static android.R.attr.checkable;
 import static android.R.attr.description;
 import static android.R.attr.title;
 import static com.grid.appy.citizenrights.config.AppConfig.SERVER_URL;
@@ -63,7 +70,7 @@ public class NewissueActivity extends AppCompatActivity  {
 
 
     private static final int PICK_FILE_REQUEST = 1;
-    private static final String TAG = NewissueActivity.class.getSimpleName();
+    private static final String TAG = "message======";
     private String selectedFilePath;
     ProgressDialog dialog;
 
@@ -80,6 +87,8 @@ public class NewissueActivity extends AppCompatActivity  {
     public static final String KEY_TITLE = "title";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_PROOF = "proof";
+
+    StringBuilder proof = new StringBuilder(100);
 
 
 
@@ -145,6 +154,13 @@ public class NewissueActivity extends AppCompatActivity  {
                                @Override
                                public void run() {
                                    //creating new thread to handle Http Operations
+
+
+
+
+
+
+
                                    uploadFile(selectedFilePath);
                                }
                            }).start();
@@ -216,10 +232,6 @@ public class NewissueActivity extends AppCompatActivity  {
     //android upload file to server
     public int uploadFile(final String selectedFilePath){
 
-        HashMap<String, String> user = db.getUserDetails();
-
-
-        String useremail = user.get("imei");
 
 
 
@@ -232,11 +244,15 @@ public class NewissueActivity extends AppCompatActivity  {
         String boundary = "*****";
 
 
+        HashMap<String, String> user = db.getUserDetails();
+
+
+        String useremail = user.get("imei");
+
         int bytesRead,bytesAvailable,bufferSize;
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
         File selectedFile = new File(selectedFilePath);
-
 
 
 
@@ -269,14 +285,46 @@ public class NewissueActivity extends AppCompatActivity  {
                 connection.setRequestProperty("ENCTYPE", "multipart/form-data");
                 connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
                 connection.setRequestProperty("uploaded_file",selectedFilePath);
+                Log.e("selected====","selected file path-----======================"+selectedFilePath);
+
+
+                /*
+                OutputStream os = connection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString());
+
+                */
+
+
+
 
                 //creating new dataoutputstream
                 dataOutputStream = new DataOutputStream(connection.getOutputStream());
 
                 //writing bytes to data outputstream
+/*
+                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"file_name\"" + lineEnd);
+                //dos.writeBytes("Content-Type: text/plain; charset=UTF-8" + lineEnd);
+                //dos.writeBytes("Content-Length: " + description.length() + lineEnd);
+
+                dataOutputStream.writeBytes(lineEnd);
+                dataOutputStream.writeBytes("hellonew.pdf"); // mobile_no is String variable
+                dataOutputStream.writeBytes(lineEnd);
+                */
                 dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+
+
+                proof.append(useremail);
+                proof.append(fileName);
+
+
+                Log.e(TAG,"filename"+ proof);
                 dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
-                        + selectedFilePath + "\"" +lineEnd);
+                       +proof + "\"" +lineEnd);
+
+              //  dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+                       // +test + "\"" +lineEnd);
 
                 dataOutputStream.writeBytes(lineEnd);
 
@@ -305,7 +353,15 @@ public class NewissueActivity extends AppCompatActivity  {
                 serverResponseCode = connection.getResponseCode();
                 String serverResponseMessage = connection.getResponseMessage();
 
-                Log.i(TAG, "Server Response is: " + serverResponseMessage + ": " + serverResponseCode);
+                InputStreamReader reader=new InputStreamReader(connection.getInputStream());
+                StringBuffer sb=new StringBuffer();
+                int k=0;
+                while((k=reader.read())!=-1)
+
+                {
+                    sb.append((char)k);
+                }
+                Log.e(TAG, "Server Response is: " + serverResponseMessage + ": " + serverResponseCode+"======data======"+sb.toString());
 
                 //response code of 200 indicates the server status OK
                 if(serverResponseCode == 200){
@@ -314,8 +370,8 @@ public class NewissueActivity extends AppCompatActivity  {
                         public void run() {
 
 
-                            final String proof= fileName;
-                           uploadImage(proof);
+                            final String s = proof.toString();
+                           uploadImage(s);
 
 
 
@@ -353,7 +409,24 @@ public class NewissueActivity extends AppCompatActivity  {
 
     }
 
+    public String getPostDataString(){
 
+        StringBuilder result = new StringBuilder();
+            String key= "file_name";
+            Object value = "äbc123.pdf";
+
+        try {
+            result.append(URLEncoder.encode(key, "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(value.toString(), "UTF-8"));
+
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return result.toString();
+    }
 
 
     public void uploadImage(final String proof){
@@ -385,9 +458,6 @@ public class NewissueActivity extends AppCompatActivity  {
             protected String doInBackground(Void... params) {
 
                 // Fetching user details from sqlite
-
-
-
 
                 RequestHandler rh = new RequestHandler();
                 HashMap<String, String> param = new HashMap<String, String>();

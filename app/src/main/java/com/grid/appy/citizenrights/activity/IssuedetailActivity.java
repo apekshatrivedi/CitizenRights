@@ -1,20 +1,38 @@
 package com.grid.appy.citizenrights.activity;
 
+import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +43,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.adapter.CommentAdapter;
+
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
 import com.grid.appy.citizenrights.model.CheckNetwork;
@@ -35,16 +54,39 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.grid.appy.citizenrights.config.AppConfig.GET_ISSUE_DATA;
+import static com.grid.appy.citizenrights.config.AppConfig.PATH;
 
 public class IssuedetailActivity extends AppCompatActivity {
+
+ String paths;
+    ProgressBar pb;
+    Dialog dialog;
+    int downloadedSize = 0;
+    int totalSize = 0;
+    TextView cur_val;
+    //String dwnload_file_path = "http://coderzheaven.com/sample_folder/sample_file.png";
+
+
+
+
 
 
     private SessionManager session;
     private SQLiteHandler db;
+
+
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_USEREMAIL = "useremail";
@@ -52,12 +94,16 @@ public class IssuedetailActivity extends AppCompatActivity {
     public static final String KEY_desc = "description";
     public static final String KEY_IMGPATH= "proof";
     public static final String JSON_ARRAY = "result";
+     String imgpaths;
+
 
 
     TextView issue_title;
     TextView issue_useremail;
     TextView issue_datetime;
     TextView issue_description;
+
+    Button download;
 
 
     private ProgressDialog loading;
@@ -73,11 +119,17 @@ public class IssuedetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_issuedetail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
 
         // session manager
         session = new SessionManager(getApplicationContext());
+
+
+
+
 
 
         if(CheckNetwork.isInternetAvailable(this)) {
@@ -96,6 +148,11 @@ public class IssuedetailActivity extends AppCompatActivity {
 
                     }
                 });
+
+
+
+
+
 
 
                 recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -119,6 +176,16 @@ public class IssuedetailActivity extends AppCompatActivity {
         }
 
     }
+
+
+
+
+
+
+
+
+
+
 
     private void getData() {
 
@@ -148,43 +215,165 @@ public class IssuedetailActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-        private void showJSON(String response){
-            String title="";
-            String useremail="";
-            String date = "";
-            String desc = "";
-            String imgpaths;
-
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                JSONArray result = jsonObject.getJSONArray(JSON_ARRAY);
-                JSONObject issueData = result.getJSONObject(0);
-                title = issueData.getString(KEY_TITLE);
-                useremail = issueData.getString(KEY_USEREMAIL);
-                date = issueData.getString(KEY_issuedatetime);
-                desc = issueData.getString(KEY_desc);
-                imgpaths=issueData.getString(KEY_IMGPATH);
-
-                issue_title=(TextView)findViewById(R.id.issue_title);
-                issue_useremail=(TextView)findViewById(R.id.issue_useremail);
-                issue_datetime=(TextView)findViewById(R.id.issue_datetime);
-                issue_description=(TextView)findViewById(R.id.issue_description);
-
-                issue_title.setText(title);
-                issue_useremail.setText(useremail);
-                issue_datetime.setText(date);
-                issue_description.setText(desc);
-
-                Toast.makeText(this,"imgpath"+imgpaths,Toast.LENGTH_LONG).show();
+    private void showJSON(String response){
+        String title="";
+        String useremail="";
+        String date = "";
+        String desc = "";
 
 
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray result = jsonObject.getJSONArray(JSON_ARRAY);
+            JSONObject issueData = result.getJSONObject(0);
+            title = issueData.getString(KEY_TITLE);
+            useremail = issueData.getString(KEY_USEREMAIL);
+            date = issueData.getString(KEY_issuedatetime);
+            desc = issueData.getString(KEY_desc);
+            imgpaths=issueData.getString(KEY_IMGPATH);
+
+            issue_title=(TextView)findViewById(R.id.issue_title);
+            issue_useremail=(TextView)findViewById(R.id.issue_useremail);
+            issue_datetime=(TextView)findViewById(R.id.issue_datetime);
+            issue_description=(TextView)findViewById(R.id.issue_description);
+
+            issue_title.setText(title);
+            issue_useremail.setText(useremail);
+            issue_datetime.setText(date);
+            issue_description.setText(desc);
 
 
-            } catch (JSONException e) {
+           // imgpaths=PATH+imgpaths;
+
+
+
+           paths=PATH+imgpaths;
+            Log.e(paths,paths);
+
+            Button b = (Button) findViewById(R.id.download);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showProgress(paths);
+
+                    new Thread(new Runnable() {
+                        public void run() {
+                            downloadFile();
+                        }
+                    }).start();
+                }
+            });
+
+
+
+
+
+            Toast.makeText(this,"imgpath"+paths,Toast.LENGTH_LONG).show();
+
+
+
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         //textViewResult.setText("Name:\t"+name+"\nAddress:\t" +address+ "\nVice Chancellor:\t"+ vc);
     }
+
+
+
+
+    void downloadFile(){
+
+        try {
+            URL url = new URL(paths);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoOutput(true);
+
+            //connect
+            urlConnection.connect();
+
+            //set the path where we want to save the file
+            File SDCardRoot = Environment.getExternalStorageDirectory();
+            //create a new file, to save the downloaded file
+            File file = new File(SDCardRoot,imgpaths);
+
+            FileOutputStream fileOutput = new FileOutputStream(file);
+
+            //Stream used for reading the data from the internet
+            InputStream inputStream = urlConnection.getInputStream();
+
+            //this is the total size of the file which we are downloading
+            totalSize = urlConnection.getContentLength();
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    pb.setMax(totalSize);
+                }
+            });
+
+            //create a buffer...
+            byte[] buffer = new byte[1024];
+            int bufferLength = 0;
+
+            while ( (bufferLength = inputStream.read(buffer)) > 0 ) {
+                fileOutput.write(buffer, 0, bufferLength);
+                downloadedSize += bufferLength;
+                // update the progressbar //
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        pb.setProgress(downloadedSize);
+                        float per = ((float)downloadedSize/totalSize) * 100;
+                       // cur_val.setText("Downloaded " + downloadedSize + "KB / " + totalSize + "KB (" + (int)per + "%)" );
+                    }
+                });
+            }
+            //close the output stream when complete //
+            fileOutput.close();
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    // pb.dismiss(); // if you want close it..
+                }
+            });
+
+        } catch (final MalformedURLException e) {
+            showError("Error : MalformedURLException " + e);
+            e.printStackTrace();
+        } catch (final IOException e) {
+            showError("Error : IOException " + e);
+            e.printStackTrace();
+        }
+        catch (final Exception e) {
+            showError("Error : Please check your internet connection " + e);
+        }
+    }
+
+    void showError(final String err){
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(IssuedetailActivity.this, err, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    void showProgress(String file_path){
+        dialog = new Dialog(IssuedetailActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.myprogressdialog);
+        dialog.setTitle("Download Progress");
+
+//        TextView text = (TextView) dialog.findViewById(R.id.tv1);
+  //      text.setText("Downloading file from ... " + file_path);
+    //    cur_val = (TextView) dialog.findViewById(R.id.cur_pg_tv);
+      //  cur_val.setText("Starting download...");
+        dialog.show();
+
+        pb = (ProgressBar)dialog.findViewById(R.id.progress_bar);
+        pb.setProgress(0);
+        pb.setProgressDrawable(getResources().getDrawable(R.drawable.green_progress));
+    }
+
 
 
 
@@ -299,5 +488,6 @@ public class IssuedetailActivity extends AppCompatActivity {
         finish();
         return true;
     }
+
 
 }

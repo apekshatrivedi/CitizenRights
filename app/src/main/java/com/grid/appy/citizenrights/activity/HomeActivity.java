@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity
     private static final int PERMISSION_CALLBACK_CONSTANT = 100;
     private static final int REQUEST_PERMISSION_SETTING = 101;
     String[] permissionsRequired = new String[]{Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     private SharedPreferences permissionStatus;
     private boolean sentToSettings = false;
@@ -108,10 +108,12 @@ public class HomeActivity extends AppCompatActivity
 
             permissionStatus = getSharedPreferences("permissionStatus",MODE_PRIVATE);
             if(ActivityCompat.checkSelfPermission(HomeActivity.this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
-                    || ActivityCompat.checkSelfPermission(HomeActivity.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED)
+                    || ActivityCompat.checkSelfPermission(HomeActivity.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED
+                    || ActivityCompat.checkSelfPermission(HomeActivity.this, permissionsRequired[2]) != PackageManager.PERMISSION_GRANTED)
             {
                 if(ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this,permissionsRequired[0])
                         || ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this,permissionsRequired[1])
+                        || ActivityCompat.shouldShowRequestPermissionRationale(HomeActivity.this,permissionsRequired[2])
                         ){
                     //Show Information about why you need the permission
                     AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
