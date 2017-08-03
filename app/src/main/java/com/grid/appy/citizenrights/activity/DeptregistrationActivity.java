@@ -263,7 +263,7 @@ public class DeptregistrationActivity extends AppCompatActivity
                             // User successfully stored in MySQL
                             // Now store the user in sqlite
 
-                            JSONObject user = jObj.getJSONObject("user");
+                         /*   JSONObject user = jObj.getJSONObject("user");
                             String aadhar = user.getString("uniqueid");
                             String name = user.getString("name");
                             String phone = user.getString("phone");
@@ -277,7 +277,7 @@ public class DeptregistrationActivity extends AppCompatActivity
 
                             Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
-                            // Launch login activity
+                            // Launch login activity */
                         Intent intent = new Intent(
                                 DeptregistrationActivity.this,
                                 RegloginActivity.class);

@@ -36,6 +36,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -44,6 +45,8 @@ import com.android.volley.toolbox.Volley;
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.adapter.CommentAdapter;
 
+import com.grid.appy.citizenrights.config.AppConfig;
+import com.grid.appy.citizenrights.config.AppController;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
 import com.grid.appy.citizenrights.model.CheckNetwork;
@@ -63,7 +66,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.grid.appy.citizenrights.config.AppConfig.GET_ISSUE_DATA;
 import static com.grid.appy.citizenrights.config.AppConfig.PATH;
@@ -79,15 +84,23 @@ public class IssuedetailActivity extends AppCompatActivity {
     //String dwnload_file_path = "http://coderzheaven.com/sample_folder/sample_file.png";
 
 
+    String title="";
+    String useremail="";
+    String date = "";
+    String desc = "";
+    String issueid="";
 
 
+    private ProgressDialog pDialog;
+
+    private static final String TAG = IssuedetailActivity.class.getSimpleName();
 
 
     private SessionManager session;
     private SQLiteHandler db;
 
 
-
+    public static  final String KEY_ISSUEID= "issueid";
     public static final String KEY_TITLE = "title";
     public static final String KEY_USEREMAIL = "useremail";
     public static final String KEY_issuedatetime = "issuedatetime";
@@ -216,10 +229,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     }
 
     private void showJSON(String response){
-        String title="";
-        String useremail="";
-        String date = "";
-        String desc = "";
+
 
 
         try {
@@ -231,6 +241,7 @@ public class IssuedetailActivity extends AppCompatActivity {
             date = issueData.getString(KEY_issuedatetime);
             desc = issueData.getString(KEY_desc);
             imgpaths=issueData.getString(KEY_IMGPATH);
+            issueid=issueData.getString(KEY_ISSUEID);
 
             issue_title=(TextView)findViewById(R.id.issue_title);
             issue_useremail=(TextView)findViewById(R.id.issue_useremail);
@@ -435,11 +446,20 @@ public class IssuedetailActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
+
+
+            deleteissue(issueid);
             return true;
         }
         if(id==R.id.action_edit)
         {
             Intent newedit = new Intent(getApplicationContext(), EditissueActivity.class);
+            String message=title;
+            String message1=desc;
+            String message2=issueid;
+            newedit.putExtra("message", message);
+            newedit.putExtra("message1",message1);
+            newedit.putExtra("message2",message2);
             startActivity(newedit);
             return true;
         }
@@ -492,6 +512,86 @@ public class IssuedetailActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+
+    private void deleteissue(final String issueid)
+    {
+        String tag_string_req = "req_register";
+        // Progress dialog
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setMessage("Deleting ...");
+        showDialog();
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.DELETE_ISSUE, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Register Response: " + response.toString());
+                hideDialog();
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+
+                        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
+
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+
+
+
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("issueid",issueid);
+
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    private void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
     }
 
 

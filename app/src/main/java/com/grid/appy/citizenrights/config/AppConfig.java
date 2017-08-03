@@ -5,12 +5,10 @@ package com.grid.appy.citizenrights.config;
  */
 
 public class AppConfig {
-
     // Server user login url
     public static String URL_LOGIN = "http://192.168.1.101/grid/login.php";
 
     public static String URL_LOGIN1 = "http://192.168.1.101/grid/loginreg.php";
-
     // Server user register url
     public static String URL_REGISTER = "http://192.168.1.101/grid/register.php";
 
@@ -39,6 +37,10 @@ public class AppConfig {
     public static String UPDATE_MEMBER = "http://192.168.1.101/Grid/updatedeptmembers.php";
 
     public static String PASS_RESET = "http://192.168.1.101/Grid/resetpassword.php";
+
+    public static String EDIT_ISSUE = "http://192.168.1.101/Grid/editissue.php";
+
+    public static String DELETE_ISSUE="http://192.168.1.101/Grid/deleteissue.php";
 
 }
 

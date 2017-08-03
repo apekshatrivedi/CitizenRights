@@ -182,10 +182,11 @@ public class RegloginActivity extends Activity {
                         db.addUser(aadhar, name, phone, imei, email,type);
 */
                         // Launch main activity
-                        //Intent intent = new Intent(RegloginActivity.this,
-                               // IssuedetailActivity.class);
-                        //startActivity(intent);
+                    /*    Intent intent = new Intent(RegloginActivity.this,
+                                IssuedetailActivity.class);
+                       // startActivity(intent);
                         finish();
+                        */
                     } else {
                         // Error in login. Get the error message
                         String errorMsg = jObj.getString("error_msg");
