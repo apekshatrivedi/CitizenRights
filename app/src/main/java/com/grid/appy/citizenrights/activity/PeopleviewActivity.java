@@ -41,19 +41,20 @@ public class PeopleviewActivity extends AppCompatActivity {
     public static final String KEY_DESIGNATION= "designation";
     public static final String KEY_PHONE = "phone";
     public static final String KEY_EMAIL= "deptmail";
-    public  static final String KEY_IMEI="imei";
-    public static final  String KEY_STATUS="status";
+ //   public  static final String KEY_IMEI="imei";
+   public static final  String KEY_STATUS="status";
 
     public static final String JSON_ARRAY = "result";
 
 
-    TextView name;
+    TextView  name;
     TextView aadhar;
     TextView deptid;
     TextView branch;
     TextView designation;
     TextView phone;
     TextView deptmail;
+    TextView status;
     private ProgressDialog loading;
 
 
@@ -103,16 +104,16 @@ public class PeopleviewActivity extends AppCompatActivity {
         String message = bundle.getString("message");
         String issueid = message;
 
-      //  loading = ProgressDialog.show(this,"Please wait...","Fetching...",false,false);
+        loading = ProgressDialog.show(this,"Please wait...","Fetching...",false,false);
 
-        String url = GET_MEMBERVIEW_DATA+"?deptmail="+deptmail;
+        String url = GET_MEMBERVIEW_DATA+issueid;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-               // loading.dismiss();
-                //showJSON(response);
-                Toast.makeText(PeopleviewActivity.this, "got the response==="+response, Toast.LENGTH_SHORT).show();
+                loading.dismiss();
+                showJSON(response);
+               //Toast.makeText(PeopleviewActivity.this, "got the response==="+response, Toast.LENGTH_SHORT).show();
             }
         },
                 new Response.ErrorListener() {
@@ -128,29 +129,28 @@ public class PeopleviewActivity extends AppCompatActivity {
 
 
     private void showJSON(String response){
-        String Name;
-        String UID;
-        String DEPTNAME;
-        String Branch;
-        String Designation;
-        String Phone;
-        String Email;
+        String Name="";
+        String UID="";
+        String DEPTNAME="";
+        String Branch="";
+        String Designation="";
+        String Phone="";
+        String Email="";
        // String imei;
-        //String status;
+     String Status="";
 
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray result = jsonObject.getJSONArray(JSON_ARRAY);
-            JSONObject issueData = result.getJSONObject(0);
-           Name = issueData.getString(KEY_NAME);
-           UID = issueData.getString(KEY_UID);
-          DEPTNAME = issueData.getString(KEY_DEPTID);
-            Branch=issueData.getString(KEY_BRANCH);
-            Designation = issueData.getString(KEY_DESIGNATION);
-            Phone=issueData.getString(KEY_PHONE);
-            Email=issueData.getString(KEY_EMAIL);
-           // imei=issueData.getString(KEY_IMEI);
-          //  status=issueData.getString(KEY_STATUS);
+            JSONObject pissueData = result.getJSONObject(0);
+           Name = pissueData.getString(KEY_NAME);
+           UID = pissueData.getString(KEY_UID);
+          DEPTNAME = pissueData.getString(KEY_DEPTID);
+            Branch=pissueData.getString(KEY_BRANCH);
+            Designation = pissueData.getString(KEY_DESIGNATION);
+            Phone=pissueData.getString(KEY_PHONE);
+            Email=pissueData.getString(KEY_EMAIL);
+            Status=pissueData.getString(KEY_STATUS);
 
 
 
@@ -165,17 +165,21 @@ public class PeopleviewActivity extends AppCompatActivity {
             designation=(TextView)findViewById(R.id.designation);
             phone=(TextView)findViewById(R.id.phone);
             deptmail=(TextView)findViewById(R.id.email);
+            status=(TextView)findViewById(R.id.status1);
 
 
-         name.setText(Name);
+
+
+            name.setText(Name);
            aadhar.setText(UID);
             deptid.setText(DEPTNAME);
             branch.setText(Branch);
            designation.setText(Designation);
             phone.setText(Phone);
            deptmail.setText(Email);
+            status.setText(Status);
 
-           // Toast.makeText(this,"imgpath"+imgpaths,Toast.LENGTH_LONG).show();
+           // Toast.makeText(this,"name"+Name,Toast.LENGTH_LONG).show();
 
 
 
