@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,11 +18,9 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.adapter.GetDataAdapter;
-import com.grid.appy.citizenrights.adapter.HomeAdapter;
 import com.grid.appy.citizenrights.adapter.YourissueAdapter;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
-import com.grid.appy.citizenrights.model.Yourissue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL1;
 import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL2;
 
 //import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL2;

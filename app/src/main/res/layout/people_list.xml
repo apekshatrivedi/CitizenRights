@@ -29,10 +29,11 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:text="Image Name"
-            android:id="@+id/textView_item1"
+            android:id="@+id/textView_item2"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/VollyNetworkImageView1"
-            android:layout_toEndOf="@+id/VollyNetworkImageView1"
+            android:layout_toRightOf="@+id/VollyNetworkImageView2"
+            android:layout_toEndOf="@+id/VollyNetworkImageView2"
             android:layout_marginLeft="5dp"/>
 
     </RelativeLayout>

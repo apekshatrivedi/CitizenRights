@@ -20,6 +20,9 @@ public class GetDataAdapter {
     public String dept_username;
     public String dept_issueid;
     public String dept_date;
+    public  String imagetitlename2;
+    public  String ImageServerUrl2;
+    public String imageserverUrl2;
 
 
     //dept
@@ -123,6 +126,27 @@ public class GetDataAdapter {
     public void setdept_username(String dept_username) {
         this.dept_username = dept_username;
     }
+    //
+
+    public String getimagetitlename2() {
+
+        return imagetitlename2;
+    }
+
+    public String getImageServerUrl2() {
+        return ImageServerUrl2;
+    }
+
+    public void setImageServerUrl2 (String ImageServerUrl2) {
+        this.ImageServerUrl2 = ImageServerUrl2;
+    }
+    public void setimagetitlename2 (String imagetitlename2) {
+        this.imagetitlename2 = imagetitlename2;
+    }
+
+
+
+
 
 
 

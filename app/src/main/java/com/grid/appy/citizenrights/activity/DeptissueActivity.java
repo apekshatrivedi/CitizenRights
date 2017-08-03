@@ -4,15 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,10 +19,8 @@ import com.android.volley.toolbox.Volley;
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.adapter.DeptAdapter;
 import com.grid.appy.citizenrights.adapter.GetDataAdapter;
-import com.grid.appy.citizenrights.adapter.YourissueAdapter;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.model.CheckNetwork;
-import com.grid.appy.citizenrights.model.Dept;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
 
@@ -34,11 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import static android.R.id.message;
-import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL2;
 import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL3;
 
 public class DeptissueActivity extends AppCompatActivity {
