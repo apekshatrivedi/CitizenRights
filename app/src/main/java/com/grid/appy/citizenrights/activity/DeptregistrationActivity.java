@@ -285,9 +285,6 @@ public class DeptregistrationActivity extends AppCompatActivity
                         finish();
                     } else {
 
-
-
-
                         // Error occurred in registration. Get the error
                         // message
                         String errorMsg = jObj.getString("error_msg");

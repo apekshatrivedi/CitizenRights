@@ -75,16 +75,6 @@ String imei,type;
         //    finish();
       //  }
 
-        Button loginScreen = (Button) findViewById(R.id.btnLinkToLoginScreen);
-        // Listening to Login Screen link
-        loginScreen.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View arg0) {
-                // Closing registration screen
-                // Switching to Login Screen/closing register screen
-                finish();
-            }
-        });
         Button deptrScreen = (Button) findViewById(R.id.deptregister);
         // Listening to Login Screen link
         deptrScreen.setOnClickListener(new View.OnClickListener() {
