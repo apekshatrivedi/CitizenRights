@@ -282,6 +282,11 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
     void downloadFile(){
 
         try {
