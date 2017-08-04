@@ -106,7 +106,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             ImageTitleNameView = (TextView) itemView.findViewById(R.id.textView_item2) ;
 
-            networkImageView = (NetworkImageView) itemView.findViewById(R.id.VollyNetworkImageView2) ;
+            networkImageView = (NetworkImageView) itemView.findViewById(R.id.VollyNetworkImageView1) ;
 
             cardView =(CardView)itemView.findViewById(R.id.cardview1);
 

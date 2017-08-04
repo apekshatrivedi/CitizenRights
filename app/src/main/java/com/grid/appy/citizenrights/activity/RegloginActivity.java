@@ -166,7 +166,7 @@ public class RegloginActivity extends Activity {
                         session.setLogin(true);
 
                         // Now store the user in SQLite
-
+/*
 
                         JSONObject user = jObj.getJSONObject("user");
                         String aadhar = user.getString("aadhar");
@@ -174,8 +174,8 @@ public class RegloginActivity extends Activity {
                         String phone = user.getString("phone");
                         String imei = user.getString("imei");
                         String email = user.getString("email");
-                        //String type= user.getString("type");
-                        String type= "dept";
+                        String type= user.getString("type");
+
 
 
                         // Inserting row in users table
@@ -183,9 +183,10 @@ public class RegloginActivity extends Activity {
 
                         // Launch main activity
                         Intent intent = new Intent(RegloginActivity.this,
-                                IssuedetailActivity.class);
-                        startActivity(intent);
+                                HomeActivity.class);
+                       // startActivity(intent);
                         finish();
+*/
                     } else {
                         // Error in login. Get the error message
                         String errorMsg = jObj.getString("error_msg");
