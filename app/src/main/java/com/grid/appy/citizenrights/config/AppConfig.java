@@ -47,6 +47,15 @@ public class AppConfig {
 
     public static String DELETE_ISSUE=ipaddress+"deleteissue.php";
 
+    public static String GET_DESIG=ipaddress+"designationdm.php";
+
+   public static String GET_DEPTNAME=ipaddress+"deptspinner.php";
+
+ public static String REPLY=ipaddress+"replyview.php?issueid=";
+
+ public static String ADDREPLY=ipaddress+"addreply.php";
+
+
 }
 
 

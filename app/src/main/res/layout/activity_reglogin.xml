@@ -29,6 +29,17 @@
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
                 />
+            <Button
+                android:id="@+id/text"
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@null"
+                android:text="Department member login"
+                android:textAllCaps="false"
+                android:clickable="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10dp" />
 
 
 
@@ -129,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@null"
-                    android:text="@string/btn_link_to_register"
+                    android:text="Register as a department member"
                     android:textAllCaps="false"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="15dp" />

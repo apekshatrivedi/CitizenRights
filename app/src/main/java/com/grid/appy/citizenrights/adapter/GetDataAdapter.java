@@ -22,7 +22,10 @@ public class GetDataAdapter {
     public String dept_date;
     public  String imagetitlename2;
     public  String ImageServerUrl2;
-    public String imageserverUrl2;
+    public String reply_email;
+    public String reply_reply;
+    public String reply_date;
+    public String reply_issueid;
 
 
     //dept
@@ -146,6 +149,24 @@ public class GetDataAdapter {
 
 
 
+
+//reply
+
+    public String getReply_issueid(){return  reply_issueid;}
+
+    public void setReply_issueid(String reply_issueid){this.reply_issueid=reply_issueid;}
+
+    public String getReply_email(){return  reply_email;}
+
+    public void setReply_email(String reply_email){this.reply_email=reply_email;}
+
+    public String getReply_reply(){return  reply_reply;}
+
+    public void setReply_reply(String reply_reply){this.reply_reply=reply_reply;}
+
+    public String getReply_date(){return  reply_date;}
+
+    public void setReply_date(String reply_date){this.reply_date=reply_date;}
 
 
 
