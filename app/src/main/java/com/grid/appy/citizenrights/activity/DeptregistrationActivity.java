@@ -257,10 +257,11 @@ public class DeptregistrationActivity extends AppCompatActivity
 
                 try {
                     JSONObject jObj = new JSONObject(response);
+                    Log.e("response",response);
                     boolean error = jObj.getBoolean("error");
 
                         if (!error) {
-                            /*
+
                             // User successfully stored in MySQL
                             // Now store the user in sqlite
 
@@ -271,7 +272,7 @@ public class DeptregistrationActivity extends AppCompatActivity
                             String imei = user.getString("imei");
                             String email = user.getString("email");
                             String type=user.getString("type");
-
+                            Log.e("response",aadhar+name+phone+imei+email+type);
 
                             // Inserting row in users table
                             db.addUser(aadhar,name,phone,imei, email,type);
@@ -283,7 +284,7 @@ public class DeptregistrationActivity extends AppCompatActivity
                                 DeptregistrationActivity.this,
                                 RegloginActivity.class);
                         startActivity(intent);
-                        finish();*/
+                        finish();
                     } else {
 
                         // Error occurred in registration. Get the error
