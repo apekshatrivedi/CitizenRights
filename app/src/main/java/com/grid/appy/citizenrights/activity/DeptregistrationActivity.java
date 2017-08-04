@@ -260,11 +260,12 @@ public class DeptregistrationActivity extends AppCompatActivity
                     boolean error = jObj.getBoolean("error");
 
                         if (!error) {
+                            /*
                             // User successfully stored in MySQL
                             // Now store the user in sqlite
 
-                         /*   JSONObject user = jObj.getJSONObject("user");
-                            String aadhar = user.getString("uniqueid");
+                            JSONObject user = jObj.getJSONObject("user");
+                            String aadhar = user.getString("aadhar");
                             String name = user.getString("name");
                             String phone = user.getString("phone");
                             String imei = user.getString("imei");
@@ -277,12 +278,12 @@ public class DeptregistrationActivity extends AppCompatActivity
 
                             Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
-                            // Launch login activity */
+                            // Launch login activity
                         Intent intent = new Intent(
                                 DeptregistrationActivity.this,
                                 RegloginActivity.class);
                         startActivity(intent);
-                        finish();
+                        finish();*/
                     } else {
 
                         // Error occurred in registration. Get the error

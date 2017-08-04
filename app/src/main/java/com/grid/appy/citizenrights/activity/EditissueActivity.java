@@ -76,6 +76,7 @@ public class EditissueActivity extends AppCompatActivity {
                 //key listening stuff
 
                 title=et_title.getText().toString();
+                Log.e("title",title);
 
                 return false;
             }
@@ -88,6 +89,7 @@ public class EditissueActivity extends AppCompatActivity {
                 //key listening stuff
 
                 desc=et_description.getText().toString();
+                Log.e("desc",desc);
 
                 return false;
             }
