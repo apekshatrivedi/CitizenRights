@@ -166,7 +166,7 @@ public class RegloginActivity extends Activity {
                         session.setLogin(true);
 
                         // Now store the user in SQLite
-/*
+
 
                         JSONObject user = jObj.getJSONObject("user");
                         String aadhar = user.getString("aadhar");
@@ -186,7 +186,7 @@ public class RegloginActivity extends Activity {
                                 HomeActivity.class);
                        // startActivity(intent);
                         finish();
-*/
+
                     } else {
                         // Error in login. Get the error message
                         String errorMsg = jObj.getString("error_msg");
