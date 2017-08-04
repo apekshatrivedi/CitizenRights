@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -248,6 +249,22 @@ public class HomeActivity extends AppCompatActivity
             Menu nav_Menu = navigationView.getMenu();
             nav_Menu.findItem(R.id.admin).setVisible(false);}
 
+        HashMap<String, String> user = db.getUserDetails();
+        String type = user.get("type");
+
+
+        if(type.trim().equals("user")){
+
+
+            navigationView = (NavigationView) findViewById(R.id.nav_view);
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.admin).setVisible(false);
+
+        }
+
+
+
+
         // load nav menu header data
        // loadNavHeader();
 
@@ -330,6 +347,8 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
+
         if (id == R.id.home) {
             // Handle the home action
 
@@ -352,23 +371,26 @@ public class HomeActivity extends AppCompatActivity
         }else if (id == R.id.admin) {
             // Handle the setting action
 
-            HashMap<String, String> user = db.getUserDetails();
 
 
-            String useremail = user.get("imei");
             if (!session.isLoggedIn()) {
 
+                //Incase admin has not logged in
                 navigationView = (NavigationView) findViewById(R.id.nav_view);
                 Menu nav_Menu = navigationView.getMenu();
                 nav_Menu.findItem(R.id.admin).setVisible(false);
 
             }
 
+
+
             else {
 
 
-                Intent settings = new Intent(getApplicationContext(), AdminviewActivity.class);
-                startActivity(settings);
+
+                       Intent settings = new Intent(getApplicationContext(), AdminviewActivity.class);
+                       startActivity(settings);
+
             }
 
         }

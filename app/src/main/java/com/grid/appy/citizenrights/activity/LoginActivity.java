@@ -174,7 +174,7 @@ public class LoginActivity extends Activity {
                         String phone = user.getString("phone");
                         String imei = user.getString("imei");
                         String email = user.getString("email");
-                        String type="user";
+                        String type=user.getString("type");
 
 
                         // Inserting row in users table

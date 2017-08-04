@@ -44,7 +44,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_LOGIN_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_USER + "("
-                + KEY_AADHAR + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
+                + KEY_AADHAR + " INTEGER," + KEY_NAME + " TEXT,"
                 + KEY_PHONE + " INTEGER," + KEY_IMEI + " INTEGER,"
                 + KEY_EMAIL + " TEXT,"
                  + KEY_TYPE + " TEXT" + ")";
