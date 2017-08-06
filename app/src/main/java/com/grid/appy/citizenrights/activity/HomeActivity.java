@@ -244,23 +244,31 @@ public class HomeActivity extends AppCompatActivity
        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+
         if(!session.isLoggedIn()){
             navigationView = (NavigationView) findViewById(R.id.nav_view);
             Menu nav_Menu = navigationView.getMenu();
-            nav_Menu.findItem(R.id.admin).setVisible(false);}
-
-        HashMap<String, String> user = db.getUserDetails();
-        String type = user.get("type");
-
-
-        if(type.trim().equals("user")){
-
-
-            navigationView = (NavigationView) findViewById(R.id.nav_view);
-            Menu nav_Menu = navigationView.getMenu();
             nav_Menu.findItem(R.id.admin).setVisible(false);
-
         }
+
+        else{
+            HashMap<String, String> user = db.getUserDetails();
+            String type = user.get("type");
+            if(!(type.trim().equals("admin"))){
+
+
+                navigationView = (NavigationView) findViewById(R.id.nav_view);
+                Menu nav_Menu = navigationView.getMenu();
+                nav_Menu.findItem(R.id.admin).setVisible(false);
+
+            }
+        }
+
+
+
+
+
 
 
 
@@ -488,7 +496,7 @@ public class HomeActivity extends AppCompatActivity
         // Launching the login activity
         Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
         startActivity(intent);
-        finish();
+       // finish();
     }
 
 @Override

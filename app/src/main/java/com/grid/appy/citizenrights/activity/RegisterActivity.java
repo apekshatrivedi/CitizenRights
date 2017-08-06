@@ -228,6 +228,7 @@ String imei,type;
                         String imei = user.getString("imei");
                         String email = user.getString("email");
                         String type=user.getString("type");
+                        Log.e("values================",aadhar+name+phone+imei+email+type);
 
 
                         // Inserting row in users table
@@ -276,6 +277,8 @@ String imei,type;
                 params.put("email", email);
                 params.put("password", password);
                 params.put("type",type);
+
+                Log.e("post---------------",aadhar+name+phone+imei+email+password+type);
 
                 return params;
             }

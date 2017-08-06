@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -141,7 +142,12 @@ public class IssuedetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issuedetail);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
 
 
 
@@ -504,7 +510,26 @@ public class IssuedetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.issue_menu, menu);
-        return true;
+
+       /* HashMap<String, String> user = db.getUserDetails();
+        String email = user.get("imei");
+
+        if(email.trim().equals(useremail))
+        {
+
+            menu.findItem(R.id.action_delete).setVisible(true);
+            menu.findItem(R.id.action_edit).setVisible(true);
+        }
+        else
+        {
+            Log.e("---------------","email"+email+"useremail"+useremail);
+            menu.findItem(R.id.action_delete).setVisible(true);
+            menu.findItem(R.id.action_edit).setVisible(false);
+        }
+        */
+
+    return true;
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -512,24 +537,43 @@ public class IssuedetailActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        HashMap<String, String> user = db.getUserDetails();
+        String email = user.get("imei");
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
 
 
-            deleteissue(issueid);
+
+            if(email.trim().equals(useremail)) {
+
+                deleteissue(issueid);
+            }
+
+            else{
+                Toast.makeText(getApplicationContext(),
+                        "You do not have permission to perform this action!", Toast.LENGTH_LONG).show();
+            }
             return true;
         }
         if(id==R.id.action_edit)
         {
-            Intent newedit = new Intent(getApplicationContext(), EditissueActivity.class);
-            String message=title;
-            String message1=desc;
-            String message2=issueid;
-            newedit.putExtra("message", message);
-            newedit.putExtra("message1",message1);
-            newedit.putExtra("message2",message2);
-            startActivity(newedit);
+
+            if(email.trim().equals(useremail)) {
+                Intent newedit = new Intent(getApplicationContext(), EditissueActivity.class);
+                String message = title;
+                String message1 = desc;
+                String message2 = issueid;
+                newedit.putExtra("message", message);
+                newedit.putExtra("message1", message1);
+                newedit.putExtra("message2", message2);
+                startActivity(newedit);
+            }
+
+            else{
+                Toast.makeText(getApplicationContext(),
+                        "You do not have permission to perform this action!", Toast.LENGTH_LONG).show();
+            }
             return true;
         }
 
@@ -548,35 +592,46 @@ public class IssuedetailActivity extends AppCompatActivity {
 
         else {
 
-
-            // get prompts.xml view
-            LayoutInflater layoutInflater = LayoutInflater.from(this);
-            View promptView = layoutInflater.inflate(R.layout.reply, null);
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setView(promptView);
-            final  EditText editText = (EditText) promptView.findViewById(R.id.edittext);
+            HashMap<String, String> user = db.getUserDetails();
+            String e= user.get("imei");
+            if(e.trim().equals(useremail)) {
 
 
-            // setup a dialog window
-            alertDialogBuilder.setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // resultText.setText("Hello, " + editText.getText());
+                // get prompts.xml view
+                LayoutInflater layoutInflater = LayoutInflater.from(this);
+                View promptView = layoutInflater.inflate(R.layout.reply, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setView(promptView);
+                final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
 
-                            addreply(editText.getText().toString());
 
-                        }
-                    })
-                    .setNegativeButton("Cancel",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
+                // setup a dialog window
+                alertDialogBuilder.setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // resultText.setText("Hello, " + editText.getText());
 
-            // create an alert dialog
-            AlertDialog alert = alertDialogBuilder.create();
-            alert.show();
+                                addreply(editText.getText().toString());
+
+                            }
+                        })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create an alert dialog
+                AlertDialog alert = alertDialogBuilder.create();
+                alert.show();
+            }
+            else
+            {
+
+                Toast.makeText(getApplicationContext(),
+                        "You do not have permission to reply!", Toast.LENGTH_LONG).show();
+            }
         }
     }
     @Override

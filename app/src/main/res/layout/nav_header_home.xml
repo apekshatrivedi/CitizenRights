@@ -25,7 +25,7 @@
         android:id="@+id/username_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Username"
+        android:text="Citizen Rights"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/white"/>
 
@@ -34,7 +34,7 @@
         android:id="@+id/email_nav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="users@email.com"
+        android:text="@string/copyright"
         android:textColor="@color/white"/>
 
 </LinearLayout>
