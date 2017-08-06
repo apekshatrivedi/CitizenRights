@@ -2,6 +2,7 @@ package com.grid.appy.citizenrights.activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -42,6 +43,7 @@ import com.grid.appy.citizenrights.config.AppController;
 import com.grid.appy.citizenrights.helper.RequestHandler;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
+import com.grid.appy.citizenrights.interfaces.FileOpen;
 import com.grid.appy.citizenrights.model.CheckNetwork;
 import com.grid.appy.citizenrights.model.Comment;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
@@ -76,7 +78,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     Dialog dialog;
     int downloadedSize = 0;
     int totalSize = 0;
-    TextView cur_val;
+   // TextView cur_val;
 
 
     String title="";
@@ -391,13 +393,6 @@ public class IssuedetailActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
     void downloadFile(){
 
         try {
@@ -447,9 +442,32 @@ public class IssuedetailActivity extends AppCompatActivity {
             }
             //close the output stream when complete //
             fileOutput.close();
+
+
+
             runOnUiThread(new Runnable() {
                 public void run() {
                     // pb.dismiss(); // if you want close it..
+/*
+                    Button open=(Button)findViewById(R.id.btnOpen);
+                    // open.setVisibility(View.VISIBLE);
+                    open.setOnClickListener(new View.OnClickListener() {
+
+                        public void onClick(View arg0) {
+                            // reset email button
+                            File myFile = new File(paths);
+                            try {
+                                FileOpen.openFile(IssuedetailActivity.this, myFile);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+
+                    */
+
+
                 }
             });
 

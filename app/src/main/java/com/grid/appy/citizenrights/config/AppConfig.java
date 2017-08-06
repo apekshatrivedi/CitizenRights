@@ -55,6 +55,8 @@ public class AppConfig {
 
  public static String ADDREPLY=ipaddress+"addreply.php";
 
+ public static String PHONECHECK=ipaddress+"phonecheck.php";
+
 
 }
 
