@@ -253,6 +253,7 @@ public class HomeActivity extends AppCompatActivity
             navigationView = (NavigationView) findViewById(R.id.nav_view);
             Menu nav_Menu = navigationView.getMenu();
             nav_Menu.findItem(R.id.admin).setVisible(false);
+            nav_Menu.findItem(R.id.issue).setVisible(false);
         }
 
         else{

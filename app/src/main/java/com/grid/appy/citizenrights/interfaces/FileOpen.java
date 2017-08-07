@@ -28,7 +28,8 @@ public class FileOpen {
         } else if(url.toString().contains(".pdf")) {
             // PDF file
             intent.setDataAndType(uri, "application/pdf");
-        } else if(url.toString().contains(".ppt") || url.toString().contains(".pptx")) {
+        }
+        else if(url.toString().contains(".ppt") || url.toString().contains(".pptx")) {
             // Powerpoint file
             intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
         } else if(url.toString().contains(".xls") || url.toString().contains(".xlsx")) {

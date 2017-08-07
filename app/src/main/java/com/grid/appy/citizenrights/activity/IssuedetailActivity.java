@@ -87,7 +87,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     String date = "";
     String desc = "";
     String issueid="";
-    String dept="";
+
 
 
     private ProgressDialog pDialog;
@@ -109,7 +109,6 @@ public class IssuedetailActivity extends AppCompatActivity {
     RecyclerView.Adapter replyadapter;
 
     String JSON_EMAIL = "email";
-    String JSON_DEPT= "deptid";
     String JSON_REPLY = "reply";
     String JSON_REPLYDATETIME = "replydatetime";
     String JSON_ISSUEID ="issueid";
@@ -127,7 +126,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     public static final String KEY_desc = "description";
     public static final String KEY_IMGPATH= "proof";
     public static final String JSON_ARRAY = "result";
-    public static final String ARRAY = "result";
+
      String imgpaths;
 
 
@@ -367,11 +366,15 @@ public class IssuedetailActivity extends AppCompatActivity {
            paths=PATH+imgpaths;
             Log.e(paths,paths);
 
-            Button b = (Button) findViewById(R.id.download);
+          final  Button b = (Button) findViewById(R.id.download);
+         // final  Button open=(Button)findViewById(R.id.btnOpen);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showProgress(paths);
+                   // open.setVisibility(View.VISIBLE);
+                   // b.setVisibility(View.INVISIBLE);
+
 
                     new Thread(new Runnable() {
                         public void run() {
@@ -382,10 +385,25 @@ public class IssuedetailActivity extends AppCompatActivity {
             });
 
 
+/*
+            open.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View arg0) {
+                    // reset email button
+                    File myFile = new File(paths);
+                    try {
+                        FileOpen.openFile(IssuedetailActivity.this, myFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+*/
 
 
-
-            Toast.makeText(this,"imgpath"+paths,Toast.LENGTH_LONG).show();
+         //   Toast.makeText(this,"imgpath"+paths,Toast.LENGTH_LONG).show();
 
 
 
@@ -393,7 +411,7 @@ public class IssuedetailActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //textViewResult.setText("Name:\t"+name+"\nAddress:\t" +address+ "\nVice Chancellor:\t"+ vc);
+
     }
 
 
@@ -449,31 +467,6 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
 
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    // pb.dismiss(); // if you want close it..
-/*
-                    Button open=(Button)findViewById(R.id.btnOpen);
-                    // open.setVisibility(View.VISIBLE);
-                    open.setOnClickListener(new View.OnClickListener() {
-
-                        public void onClick(View arg0) {
-                            // reset email button
-                            File myFile = new File(paths);
-                            try {
-                                FileOpen.openFile(IssuedetailActivity.this, myFile);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    });
-
-                    */
-
-
-                }
-            });
 
         } catch (final MalformedURLException e) {
             showError("Error : MalformedURLException " + e);
