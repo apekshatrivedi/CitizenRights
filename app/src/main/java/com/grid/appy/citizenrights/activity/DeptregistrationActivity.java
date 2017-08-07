@@ -156,6 +156,11 @@ public class DeptregistrationActivity extends AppCompatActivity
                 if (TextUtils.isEmpty(uniqueid)) {
                     et_uniqueid.setError("This field is required");
                     return;
+                }  if(!(uniqueid.length()==12))
+
+                {
+                    Toast.makeText(getApplicationContext(), "Incorrect Aadhar Number", Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 if (TextUtils.isEmpty(phone))

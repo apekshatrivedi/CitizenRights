@@ -36,6 +36,8 @@ import com.grid.appy.citizenrights.helper.SessionManager;
         import java.util.regex.Matcher;
         import java.util.regex.Pattern;
 
+import static com.grid.appy.citizenrights.R.id.aadhar1;
+
 public class RegisterActivity extends Activity {
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
@@ -125,8 +127,8 @@ String imei,type;
 
 
                 //imei="1234";
-                EditText aadhar;
-                aadhar = (EditText) findViewById(R.id.aadhar1);
+                EditText aadharedit;
+                aadharedit = (EditText) findViewById(aadhar1);
                 EditText nameedit;
                 nameedit = (EditText) findViewById(R.id.name);
                 EditText phoneedit;
@@ -138,31 +140,53 @@ String imei,type;
                 EditText repass;
                 repass = (EditText) findViewById(R.id.repassword);
 
-                final String aadhar1 = aadhar.getText().toString();
+                String aadhar= aadharedit.getText().toString().trim();
                 final String email = emailedit.getText().toString();
                 final String name = nameedit.getText().toString();
                 final String phone = phoneedit.getText().toString();
                 final String password = pass.getText().toString();
                 final String repassword = repass.getText().toString();
+                if (!isValidaadhar(aadhar)){
+                    aadharedit.setError("Invalid Aadharr Number");
+                }
 
                 if (!isValidName(name)) {
                     nameedit.setError("Invalid Name");
-                } else if (!isValidPhone(phone)) {
+                }
+                if (!isValidPhone(phone)) {
                     phoneedit.setError("Invalid Phone");
-                } else if (!isValidEmail(email)) {
+                }
+             if (!isValidEmail(email)) {
                     emailedit.setError("Invalid Email");
-                } else if (!isValidPassword(password)) {
+                }
+              if (!isValidPassword(password)) {
                     pass.setError("Password must be greater than 4 characters");
-                } else if (!isValidrePassword(repassword, password)) {
+                }
+                if (!isValidrePassword(repassword, password)) {
                     repass.setError("Password does not match");
-                } else {
+                }
+
+
+                else {
                     //switching to home activity
-                    registerUser(aadhar1, name, phone, imei, email, password,type);
+                    registerUser(aadhar, name, phone, imei, email, password,type);
                 }
             }
         });
     }
+    //Validating Aadharr number
+    private boolean isValidaadhar (String aadhar) {
+        if (!(aadhar.length() == 12)) {
 
+
+            Toast.makeText(getApplicationContext(), "Incorrect Aadhar Number", Toast.LENGTH_LONG).show();
+            return false;
+
+        } else {
+            return  true;
+
+        }
+    }
     // validating email id
     private boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
