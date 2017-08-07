@@ -491,8 +491,6 @@ public class HomeActivity extends AppCompatActivity
 
     private void logoutUser() {
         session.setLogin(false);
-
-
         db.deleteUsers();
 
 
