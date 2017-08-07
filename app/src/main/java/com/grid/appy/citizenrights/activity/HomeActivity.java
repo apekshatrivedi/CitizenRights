@@ -103,6 +103,9 @@ public class HomeActivity extends AppCompatActivity
 
 
 
+
+
+
         if (CheckNetwork.isInternetAvailable(this)) {
             checkFirstRun();
 
