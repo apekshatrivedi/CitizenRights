@@ -84,12 +84,12 @@ public class ForgetpasswordActivity extends AppCompatActivity {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
 
-                Toast.makeText(ForgetpasswordActivity.this,"verifucation done"+ phoneAuthCredential,Toast.LENGTH_LONG).show();
+                Toast.makeText(ForgetpasswordActivity.this,"verification done"+ phoneAuthCredential,Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                Toast.makeText(ForgetpasswordActivity.this,"verifucation fail",Toast.LENGTH_LONG).show();
+                Toast.makeText(ForgetpasswordActivity.this,"verification fail",Toast.LENGTH_LONG).show();
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
                     // [START_EXCLUDE]
