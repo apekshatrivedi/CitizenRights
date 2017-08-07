@@ -107,13 +107,6 @@
                 android:value=".activity.HomeActivity" />
         </activity>
         <activity
-            android:name=".activity.OtpActivity"
-            android:label="OTP">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.HomeActivity" />
-        </activity>
-        <activity
             android:name=".activity.ResetpasswordActivity"
             android:label="Password Reset">
             <meta-data
