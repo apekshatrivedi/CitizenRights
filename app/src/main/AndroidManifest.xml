@@ -141,6 +141,13 @@
             android:name=".activity.NointernetActivity"
             android:label="No internet" />
         <activity android:name=".activity.RegloginActivity" />
+
+        <activity android:name=".activity.Chooselogin">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.HomeActivity" />
+        </activity>
+
     </application>
 
 </manifest>

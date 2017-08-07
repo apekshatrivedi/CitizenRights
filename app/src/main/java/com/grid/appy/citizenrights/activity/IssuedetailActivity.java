@@ -603,7 +603,7 @@ public class IssuedetailActivity extends AppCompatActivity {
 
         if (!session.isLoggedIn()) {
 
-            Intent newissue = new Intent(getApplicationContext(), RegloginActivity.class);
+            Intent newissue = new Intent(getApplicationContext(), Chooselogin.class);
             startActivity(newissue);
 
         }

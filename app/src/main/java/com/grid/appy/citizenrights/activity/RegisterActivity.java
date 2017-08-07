@@ -52,14 +52,25 @@ String imei,type;
        TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 
 
+
         imei= mngr.getDeviceId();
 
         type="user";
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
-        pDialog.setCancelable(false);
 
+        Button login = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        // Listening to Login Screen link
+     login.setOnClickListener(new View.OnClickListener() {
+
+                                           public void onClick(View arg0) {
+                                               // Closing registration screen
+                                               // Switching to Login Screen/closing register screen
+                                               Intent logout = new Intent(getApplicationContext(), LoginActivity.class);
+                                               startActivity(logout);
+                                           }
+                                       });
         // Session manager
         session = new SessionManager(getApplicationContext());
 
@@ -84,6 +95,7 @@ String imei,type;
                 // Switching to Login Screen/closing register screen
                 Intent logout = new Intent(getApplicationContext(), DeptregistrationActivity.class);
                 startActivity(logout);
+
             }
         });
 

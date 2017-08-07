@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.id;
 import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL3;
 
 public class DeptissueActivity extends AppCompatActivity {
@@ -64,11 +65,19 @@ public class DeptissueActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (id == R.id.action_search) {
+
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
+
 
         if(CheckNetwork.isInternetAvailable(this)) {
 
 
             db = new SQLiteHandler(getApplicationContext());
+
 
 
 
