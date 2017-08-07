@@ -51,14 +51,7 @@
         android:background="@drawable/curve"
         android:text="Reset to default"
         android:textColor="@color/white" />
-    <Button
-        android:id="@+id/clearissuehistory"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dip"
-        android:background="@drawable/curve"
-        android:text="Clear issue history"
-        android:textColor="@color/white" />
+
 
 </LinearLayout>
 
