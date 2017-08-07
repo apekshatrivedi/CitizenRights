@@ -288,13 +288,6 @@ public class NewissueActivity extends AppCompatActivity  {
                 Log.e("selected====","selected file path-----======================"+selectedFilePath);
 
 
-                /*
-                OutputStream os = connection.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(getPostDataString());
-
-                */
 
 
 
@@ -302,16 +295,7 @@ public class NewissueActivity extends AppCompatActivity  {
                 //creating new dataoutputstream
                 dataOutputStream = new DataOutputStream(connection.getOutputStream());
 
-                //writing bytes to data outputstream
-/*
-                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"file_name\"" + lineEnd);
-                //dos.writeBytes("Content-Type: text/plain; charset=UTF-8" + lineEnd);
-                //dos.writeBytes("Content-Length: " + description.length() + lineEnd);
 
-                dataOutputStream.writeBytes(lineEnd);
-                dataOutputStream.writeBytes("hellonew.pdf"); // mobile_no is String variable
-                dataOutputStream.writeBytes(lineEnd);
-                */
                 dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
 
 
@@ -323,8 +307,7 @@ public class NewissueActivity extends AppCompatActivity  {
                 dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
                        +proof + "\"" +lineEnd);
 
-              //  dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
-                       // +test + "\"" +lineEnd);
+
 
                 dataOutputStream.writeBytes(lineEnd);
 
@@ -409,24 +392,7 @@ public class NewissueActivity extends AppCompatActivity  {
 
     }
 
-    public String getPostDataString(){
 
-        StringBuilder result = new StringBuilder();
-            String key= "file_name";
-            Object value = "äbc123.pdf";
-
-        try {
-            result.append(URLEncoder.encode(key, "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(value.toString(), "UTF-8"));
-
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return result.toString();
-    }
 
 
     public void uploadImage(final String proof){

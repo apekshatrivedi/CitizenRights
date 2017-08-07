@@ -48,8 +48,7 @@ public class PeopleviewActivity extends AppCompatActivity {
     public static final String KEY_NAME = "name";
     public static final String KEY_UID = "aadhar";
     public static final String KEY_DEPTID = "deptid";
-    public static final String KEY_BRANCH = "branch";
-    public static final String KEY_DESIGNATION= "designation";
+   public static final String KEY_DESIGNATION= "designation";
     public static final String KEY_PHONE = "phone";
     public static final String KEY_EMAIL= "deptmail";
  //   public  static final String KEY_IMEI="imei";
@@ -61,7 +60,6 @@ public class PeopleviewActivity extends AppCompatActivity {
     TextView  name;
     TextView aadhar;
     TextView deptid;
-    TextView branch;
     TextView designation;
     TextView phone;
     TextView deptmail;
@@ -235,7 +233,6 @@ public class PeopleviewActivity extends AppCompatActivity {
         String Name="";
         String UID="";
         String DEPTNAME="";
-        String Branch="";
         String Designation="";
         String Phone="";
         String Email="";
@@ -249,8 +246,7 @@ public class PeopleviewActivity extends AppCompatActivity {
            Name = pissueData.getString(KEY_NAME);
            UID = pissueData.getString(KEY_UID);
           DEPTNAME = pissueData.getString(KEY_DEPTID);
-            Branch=pissueData.getString(KEY_BRANCH);
-            Designation = pissueData.getString(KEY_DESIGNATION);
+           Designation = pissueData.getString(KEY_DESIGNATION);
             Phone=pissueData.getString(KEY_PHONE);
             Email=pissueData.getString(KEY_EMAIL);
             Status=pissueData.getString(KEY_STATUS);
@@ -264,7 +260,7 @@ public class PeopleviewActivity extends AppCompatActivity {
 
             deptid=(TextView)findViewById(R.id.deptname);
 
-            branch=(TextView)findViewById(R.id.branchname);
+
             designation=(TextView)findViewById(R.id.designation);
             phone=(TextView)findViewById(R.id.phone);
             deptmail=(TextView)findViewById(R.id.email);
@@ -276,8 +272,7 @@ public class PeopleviewActivity extends AppCompatActivity {
             name.setText(Name);
            aadhar.setText(UID);
             deptid.setText(DEPTNAME);
-            branch.setText(Branch);
-           designation.setText(Designation);
+            designation.setText(Designation);
             phone.setText(Phone);
            deptmail.setText(Email);
             status.setText(Status);

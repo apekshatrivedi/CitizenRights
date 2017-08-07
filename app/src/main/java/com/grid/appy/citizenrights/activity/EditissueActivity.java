@@ -68,42 +68,13 @@ public class EditissueActivity extends AppCompatActivity {
         et_title.setText(title);
         et_description.setText(desc);
 
-
-        et_title.setOnKeyListener(new View.OnKeyListener() {
-
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                //key listening stuff
-
-                title=et_title.getText().toString();
-                Log.e("title",title);
-
-                return false;
-            }
-        });
-
-        et_description.setOnKeyListener(new View.OnKeyListener() {
-
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                //key listening stuff
-
-                desc=et_description.getText().toString();
-                Log.e("desc",desc);
-
-                return false;
-            }
-        });
-
-
-
         Button edit=(Button)findViewById(R.id.editpost);
         edit.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
                 // reset email button
 
-                editissue(issueid,"bankghsj",desc);
+                editissue(issueid,et_title.getText().toString(),et_description.getText().toString());
 
             }
         });

@@ -1,5 +1,6 @@
 package com.grid.appy.citizenrights.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -25,10 +31,23 @@ import com.grid.appy.citizenrights.R;
 import java.util.concurrent.TimeUnit;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.grid.appy.citizenrights.config.AppConfig.GET_ISSUE_DATA;
+import static com.grid.appy.citizenrights.config.AppConfig.PHONECHECK;
+
 
 //import static com.grid.appy.citizenrights.R.id.btnreset;
 
 public class ForgetpasswordActivity extends AppCompatActivity {
+
+    String num="";
+    String JSON_PHONE = "phone";
+    public static final String JSON_ARRAY = "result";
+    private ProgressDialog loading;
+
     EditText MobileNumber,OTPEditview;
     Button Submit,OTPButton;
     TextView Textview,Otp;
@@ -53,6 +72,7 @@ public class ForgetpasswordActivity extends AppCompatActivity {
         OTPButton = (Button) findViewById(R.id.otp_button);
         Textview = (TextView) findViewById(R.id.textView);
         Otp = (TextView) findViewById(R.id.otp);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -108,6 +128,12 @@ public class ForgetpasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
+
+                     //   getphone();
+
+
+
+
                         "+91"+MobileNumber.getText().toString(),        // Phone number to verify
                         60,                 // Timeout duration
                         TimeUnit.SECONDS,   // Unit of timeout
@@ -134,10 +160,10 @@ public class ForgetpasswordActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             //Log.d(TAG, "signInWithCredential:success");
-                            Toast.makeText(ForgetpasswordActivity.this,"Verification done",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ForgetpasswordActivity.this, "Verification done", Toast.LENGTH_LONG).show();
                             FirebaseUser user = task.getResult().getUser();
                             Intent newissue = new Intent(getApplicationContext(), ResetpasswordActivity.class);
-                            String message=MobileNumber.getText().toString();
+                            String message = MobileNumber.getText().toString();
                             newissue.putExtra("message", message);
                             startActivity(newissue);
                             // ...
@@ -146,10 +172,52 @@ public class ForgetpasswordActivity extends AppCompatActivity {
                             //Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
-                                Toast.makeText(ForgetpasswordActivity.this,"Verification failed code invalid",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ForgetpasswordActivity.this, "Verification failed code invalid", Toast.LENGTH_LONG).show();
                             }
                         }
                     }
                 });
     }
-}
+
+
+    public void getphone() {
+
+        loading = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
+
+        String url = PHONECHECK + "?phone=" + MobileNumber.getText().toString() ;
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loading.dismiss();
+                showJSON(response);
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(ForgetpasswordActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+
+    private void showJSON(String response) {
+
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray result = jsonObject.getJSONArray(JSON_ARRAY);
+            JSONObject issueData = result.getJSONObject(0);
+            num = issueData.getString(JSON_PHONE);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    }

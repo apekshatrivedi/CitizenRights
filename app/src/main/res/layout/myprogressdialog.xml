@@ -36,4 +36,13 @@
         android:minHeight="10dip"
         />
 
+    <Button
+        android:id="@+id/btnOpen"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/curve"
+        android:text="Open file"
+        android:textColor="@color/white" />
+
 </LinearLayout>

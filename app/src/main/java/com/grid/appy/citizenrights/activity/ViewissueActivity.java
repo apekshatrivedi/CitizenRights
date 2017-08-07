@@ -66,7 +66,7 @@ public class ViewissueActivity extends AppCompatActivity {
 
         db = new SQLiteHandler(getApplicationContext());
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
 
 
         GetDataAdapter1 = new ArrayList<>();

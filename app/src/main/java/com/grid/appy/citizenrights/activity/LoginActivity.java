@@ -57,15 +57,6 @@ public class LoginActivity extends Activity {
         session = new SessionManager(getApplicationContext());
 
 
-        // Check if user is already logged in or not
-       // if (session.isLoggedIn()) {
-            // User is already logged in. Take him to main activity
-          //  Intent intent = new Intent(LoginActivity.this, NewissueActivity.class);
-          //  startActivity(intent);
-           // finish();
-      //  }
-
-
         //Forget Screen
         Button forgetScreen = (Button) findViewById(R.id.btnLinkToForgetScreen);
         // Listening to forgetpassword link
@@ -174,7 +165,7 @@ public class LoginActivity extends Activity {
                         String phone = user.getString("phone");
                         String imei = user.getString("imei");
                         String email = user.getString("email");
-                        String type="user";
+                        String type=user.getString("type");
 
 
                         // Inserting row in users table

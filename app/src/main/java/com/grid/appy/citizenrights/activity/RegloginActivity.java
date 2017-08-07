@@ -113,7 +113,7 @@ public class RegloginActivity extends Activity {
 
             public void onClick(View v) {
                 // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                Intent i = new Intent(getApplicationContext(), DeptregistrationActivity.class);
                 startActivity(i);
             }
         });

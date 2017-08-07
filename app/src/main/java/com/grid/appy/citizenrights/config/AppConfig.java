@@ -9,7 +9,7 @@ public class AppConfig {
 
 
 
-   public static String ipaddress="http://192.168.1.101/Grid/";
+   public static String ipaddress="http://192.168.1.102/Grid/";
 
     public static String URL_LOGIN = ipaddress+"login.php";
 
@@ -46,6 +46,17 @@ public class AppConfig {
     public static String EDIT_ISSUE = ipaddress+"editissue.php";
 
     public static String DELETE_ISSUE=ipaddress+"deleteissue.php";
+
+    public static String GET_DESIG=ipaddress+"designationdm.php";
+
+   public static String GET_DEPTNAME=ipaddress+"deptspinner.php";
+
+ public static String REPLY=ipaddress+"replyview.php?issueid=";
+
+ public static String ADDREPLY=ipaddress+"addreply.php";
+
+ public static String PHONECHECK=ipaddress+"phonecheck.php";
+
 
 }
 

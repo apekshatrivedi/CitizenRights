@@ -3,7 +3,7 @@ package com.grid.appy.citizenrights.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -34,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,8 +41,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.grid.appy.citizenrights.R.id.spinner;
-import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL;
+
+import static com.grid.appy.citizenrights.config.AppConfig.GET_DEPTNAME;
+import static com.grid.appy.citizenrights.config.AppConfig.GET_DESIG;
 
 public class DeptregistrationActivity extends AppCompatActivity
         implements Spinner.OnItemSelectedListener
@@ -51,6 +52,31 @@ public class DeptregistrationActivity extends AppCompatActivity
 
 
 
+
+    public static final String JSON_ARRAY = "result";
+    public static final String JSON_ARRAY1 ="result";
+
+    //Declaring a spinner
+    private Spinner spinnerdesignation;
+    private Spinner spinnerdept;
+
+    //An ArrayList for Spinner Items
+    private ArrayList<String> designation;
+    private ArrayList<String> departmentname;
+
+    //JSON Array
+    private JSONArray result;
+    private JSONArray result1;
+
+
+    String dname="";
+    String desig="";
+
+
+
+
+    public static final String TAG_DESIG = "desig";
+    public static final String TAG_DEPT = "deptname";
 
     private static final String TAG = DeptregistrationActivity.class.getSimpleName();
     private ProgressDialog pDialog;
@@ -66,51 +92,22 @@ public class DeptregistrationActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deptregistration);
-        //This method will fetch the data from the URL
 
 
+        designation = new ArrayList<String>();
+        departmentname=new ArrayList<String>();
 
-        // Spinner element
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        Spinner spinner1=(Spinner)findViewById(R.id.spinner1);
-        Spinner spinner2=(Spinner)findViewById(R.id.spinner2);
-        // Spinner click listener
+        //Initializing Spinner
+        spinnerdesignation = (Spinner) findViewById(R.id.spin_desig);
+        spinnerdept=(Spinner)findViewById(R.id.spin_dept);
+        //Adding an Item Selected Listener to our Spinner
+        //As we have implemented the class Spinner.OnItemSelectedListener to this class iteself we are passing this to setOnItemSelectedListener
+        spinnerdesignation.setOnItemSelectedListener(this);
+        spinnerdept.setOnItemSelectedListener(this);
 
+        getData();
+        getData1();
 
-        spinner.setOnItemSelectedListener(DeptregistrationActivity.this);
-        spinner1.setOnItemSelectedListener(DeptregistrationActivity.this);
-        spinner2.setOnItemSelectedListener(DeptregistrationActivity.this);
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("Administrator");
-        categories.add("Manager");
-        categories.add("Intern");
-        categories.add("Other");
-        List<String> categories1 = new ArrayList<String>();
-        categories1.add("Education");
-        categories1.add("Work");
-        categories1.add("Government");
-        categories1.add("Bank");
-        categories1.add("Retail");
-        categories1.add("NGO");
-        List<String> categories2 = new ArrayList<String>();
-        categories2.add("Branch 1");
-        categories2.add("Branch 2");
-        categories2.add("Branch 3");
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories1);
-        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories1);
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
-        spinner1.setAdapter(dataAdapter1);
-        spinner2.setAdapter(dataAdapter2);
-
-       final String dname=categories.toString();
 
 
         et_empname = (EditText) findViewById(R.id.name);
@@ -211,7 +208,10 @@ public class DeptregistrationActivity extends AppCompatActivity
                 String imei= mngr.getDeviceId();
                 String type="deptmember";
 
-                registerUser( uniqueid, empname, phone, imei, email, password,type,dname,"desig","branch");
+
+
+
+                registerUser( uniqueid, empname, phone, imei, email, password,type,dname,desig);
 
 
             }
@@ -220,7 +220,7 @@ public class DeptregistrationActivity extends AppCompatActivity
 
     }
 
-
+/*
     //this method will execute when we pic an item from the spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -235,12 +235,12 @@ public class DeptregistrationActivity extends AppCompatActivity
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
+*/
 
 
 
     private void registerUser(final String aadhar,final String name,final String phone,final String imei, final String email,
-                              final String password,final String type,final String dname,final String designation,final String branch) {
+                              final String password,final String type,final String dname,final String designation) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
 
@@ -320,9 +320,8 @@ public class DeptregistrationActivity extends AppCompatActivity
                 params.put("deptmail", email);
                 params.put("type",type);
                 params.put("password", password);
-                params.put("deptid", "dname");
-                params.put("designation", "designation");
-                params.put("branch", "branch");
+                params.put("deptid", dname);
+                params.put("designation", designation);
 
                 return params;
             }
@@ -342,6 +341,160 @@ public class DeptregistrationActivity extends AppCompatActivity
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
+
+
+
+    private void getData(){
+        //Creating a string request
+        StringRequest stringRequest = new StringRequest(GET_DESIG,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject j = null;
+                        try {
+                            //Parsing the fetched Json String to JSON Object
+                            j = new JSONObject(response);
+
+                            //Storing the Array of JSON String to our JSON Array
+                            result = j.getJSONArray(JSON_ARRAY);
+
+                            //Calling method getStudents to get the students from the JSON Array
+                            getdesignation(result);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        //Creating a request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
+
+    private void getdesignation(JSONArray j){
+        //Traversing through all the items in the json array
+        for(int i=0;i<j.length();i++){
+            try {
+                //Getting json object
+                JSONObject json = j.getJSONObject(i);
+
+                //Adding the name of the student to array list
+                designation.add(json.getString(TAG_DESIG));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //Setting adapter to show the items in the spinner
+        spinnerdesignation.setAdapter(new ArrayAdapter<String>(DeptregistrationActivity.this, android.R.layout.simple_spinner_dropdown_item, designation));
+    }
+
+
+
+    private void getData1(){
+        //Creating a string request
+        StringRequest stringRequest = new StringRequest(GET_DEPTNAME,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject j = null;
+                        try {
+                            //Parsing the fetched Json String to JSON Object
+                            j = new JSONObject(response);
+
+                            //Storing the Array of JSON String to our JSON Array
+                            result1 = j.getJSONArray(JSON_ARRAY1);
+
+                            //Calling method getStudents to get the students from the JSON Array
+                            getdept(result1);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        //Creating a request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
+
+    private void getdept(JSONArray j){
+        //Traversing through all the items in the json array
+        for(int i=0;i<j.length();i++){
+            try {
+                //Getting json object
+                JSONObject json = j.getJSONObject(i);
+
+                //Adding the name of the student to array list
+                departmentname.add(json.getString(TAG_DEPT));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //Setting adapter to show the items in the spinner
+        spinnerdept.setAdapter(new ArrayAdapter<String>(DeptregistrationActivity.this, android.R.layout.simple_spinner_dropdown_item, departmentname));
+    }
+
+    //this method will execute when we pic an item from the spinner
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        //Setting the values to textviews for a selected item
+        switch(parent.getId()) {
+            case R.id.spin_desig: {
+               // Toast.makeText(
+                       // getApplicationContext(),
+                       // parent.getItemAtPosition(position).toString() + " Selected",
+                       // Toast.LENGTH_LONG).show();
+                desig = parent.getItemAtPosition(position).toString();
+            return;
+            }
+
+            case R.id.spin_dept:{
+
+                Toast.makeText(
+                        getApplicationContext(),
+                        parent.getItemAtPosition(position).toString() + " Selected",
+                        Toast.LENGTH_LONG).show();
+                dname = parent.getItemAtPosition(position).toString();
+
+
+            }
+
+
+
+
+
+
+
+
+        }
+
+    }
+
+    //When no item is selected this method would execute
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
 
 
 
