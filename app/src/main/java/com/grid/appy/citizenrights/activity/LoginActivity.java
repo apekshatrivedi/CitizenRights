@@ -172,10 +172,9 @@ public class LoginActivity extends Activity {
                         db.addUser(aadhar, name, phone, imei, email,type);
 
                         // Launch main activity
-                        Intent intent = new Intent(LoginActivity.this,
-                                NewissueActivity.class);
-                        startActivity(intent);
-                        finish();
+                        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
                     } else {
                         // Error in login. Get the error message
                         String errorMsg = jObj.getString("error_msg");
