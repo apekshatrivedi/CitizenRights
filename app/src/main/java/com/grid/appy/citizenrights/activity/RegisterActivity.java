@@ -187,6 +187,7 @@ String imei,type;
 
         }
     }
+
     // validating email id
     private boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
