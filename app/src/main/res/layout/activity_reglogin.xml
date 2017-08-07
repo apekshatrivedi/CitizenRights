@@ -118,16 +118,7 @@
                     android:text="@string/btn_login"
                     android:textColor="@color/white" />
 
-                <Button
-                    android:id="@+id/btnLinkToForgetScreen"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@null"
-                    android:text="Forgot password?"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="15dp" />
+
 
 
 

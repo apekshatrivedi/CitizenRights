@@ -66,17 +66,7 @@ public class RegloginActivity extends Activity {
         //  }
 
 
-        //Forget Screen
-        Button forgetScreen = (Button) findViewById(R.id.btnLinkToForgetScreen);
-        // Listening to forgetpassword link
-        forgetScreen.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v) {
-                // Switching to activity_forgetpassword screen
-                Intent i1 = new Intent(getApplicationContext(), ForgetpasswordActivity.class);
-                startActivity(i1);
-            }
-        });
 
         //Home page
         Button login = (Button) findViewById(R.id.btnLogin);

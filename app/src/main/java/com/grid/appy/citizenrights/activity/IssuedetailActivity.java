@@ -65,6 +65,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.grid.appy.citizenrights.config.AppConfig.ADDREPLY;
+
 import static com.grid.appy.citizenrights.config.AppConfig.GET_ISSUE_DATA;
 import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL2;
 import static com.grid.appy.citizenrights.config.AppConfig.PATH;
@@ -86,6 +87,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     String date = "";
     String desc = "";
     String issueid="";
+    String dept="";
 
 
     private ProgressDialog pDialog;
@@ -107,6 +109,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     RecyclerView.Adapter replyadapter;
 
     String JSON_EMAIL = "email";
+    String JSON_DEPT= "deptid";
     String JSON_REPLY = "reply";
     String JSON_REPLYDATETIME = "replydatetime";
     String JSON_ISSUEID ="issueid";
@@ -124,6 +127,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     public static final String KEY_desc = "description";
     public static final String KEY_IMGPATH= "proof";
     public static final String JSON_ARRAY = "result";
+    public static final String ARRAY = "result";
      String imgpaths;
 
 
@@ -612,6 +616,7 @@ public class IssuedetailActivity extends AppCompatActivity {
 
             HashMap<String, String> user = db.getUserDetails();
             String e= user.get("imei");
+            String t=user.get("type");
             if(e.trim().equals(useremail)) {
 
 
@@ -644,12 +649,49 @@ public class IssuedetailActivity extends AppCompatActivity {
                 AlertDialog alert = alertDialogBuilder.create();
                 alert.show();
             }
+            else if(t.trim().equals("deptmember")){
+
+
+                LayoutInflater layoutInflater = LayoutInflater.from(IssuedetailActivity.this);
+                View promptView = layoutInflater.inflate(R.layout.reply, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(IssuedetailActivity.this);
+                alertDialogBuilder.setView(promptView);
+                final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
+
+
+                // setup a dialog window
+                alertDialogBuilder.setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // resultText.setText("Hello, " + editText.getText());
+
+                                addreply(editText.getText().toString());
+
+                            }
+                        })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create an alert dialog
+                AlertDialog alert = alertDialogBuilder.create();
+                alert.show();
+
+
+
+
+
+            }
             else
             {
 
                 Toast.makeText(getApplicationContext(),
                         "You do not have permission to reply!", Toast.LENGTH_LONG).show();
             }
+
         }
     }
     @Override
@@ -792,6 +834,10 @@ public class IssuedetailActivity extends AppCompatActivity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
+
+
+
+
 
 
 }

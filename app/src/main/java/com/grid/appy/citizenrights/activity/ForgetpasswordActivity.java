@@ -36,7 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.grid.appy.citizenrights.config.AppConfig.GET_ISSUE_DATA;
-import static com.grid.appy.citizenrights.config.AppConfig.PHONECHECK;
+//import static com.grid.appy.citizenrights.config.AppConfig.PHONECHECK;
 
 
 //import static com.grid.appy.citizenrights.R.id.btnreset;
@@ -179,12 +179,12 @@ public class ForgetpasswordActivity extends AppCompatActivity {
                 });
     }
 
-
+/*
     public void getphone() {
 
         loading = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
 
-        String url = PHONECHECK + "?phone=" + MobileNumber.getText().toString() ;
+//        String url = PHONECHECK + "?phone=" + MobileNumber.getText().toString() ;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -218,6 +218,6 @@ public class ForgetpasswordActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
+*/
 
     }
