@@ -8,9 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -39,28 +36,18 @@ import com.grid.appy.citizenrights.R;
 
 import com.grid.appy.citizenrights.adapter.GetDataAdapter;
 import com.grid.appy.citizenrights.adapter.ReplyAdapter;
-import com.grid.appy.citizenrights.adapter.YourissueAdapter;
 import com.grid.appy.citizenrights.config.AppConfig;
 import com.grid.appy.citizenrights.config.AppController;
 import com.grid.appy.citizenrights.helper.RequestHandler;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
-import com.grid.appy.citizenrights.interfaces.FileOpen;
 import com.grid.appy.citizenrights.model.CheckNetwork;
-import com.grid.appy.citizenrights.model.Comment;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,10 +56,8 @@ import java.util.Map;
 import static com.grid.appy.citizenrights.config.AppConfig.ADDREPLY;
 
 import static com.grid.appy.citizenrights.config.AppConfig.GET_ISSUE_DATA;
-import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL2;
 import static com.grid.appy.citizenrights.config.AppConfig.PATH;
 import static com.grid.appy.citizenrights.config.AppConfig.REPLY;
-import static com.grid.appy.citizenrights.config.AppConfig.UPLOADMYSQL_URL;
 
 public class IssuedetailActivity extends AppCompatActivity {
 
