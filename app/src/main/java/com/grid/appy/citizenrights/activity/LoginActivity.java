@@ -160,7 +160,7 @@ public class LoginActivity extends Activity {
 
 
                         JSONObject user = jObj.getJSONObject("user");
-                        String aadhar = user.getString("aadhar");
+                        String dept = "registered";
                         String name = user.getString("name");
                         String phone = user.getString("phone");
                         String imei = user.getString("imei");
@@ -169,7 +169,7 @@ public class LoginActivity extends Activity {
 
 
                         // Inserting row in users table
-                        db.addUser(aadhar, name, phone, imei, email,type);
+                        db.addUser(dept, name, phone, imei, email,type);
 
                         // Launch main activity
                         Intent i = new Intent(getApplicationContext(), HomeActivity.class);

@@ -271,16 +271,16 @@ public class DeptregistrationActivity extends AppCompatActivity
                             // Now store the user in sqlite
 
                             JSONObject user = jObj.getJSONObject("user");
-                            String aadhar = user.getString("aadhar");
+                            String dept = user.getString("deptid");
                             String name = user.getString("name");
                             String phone = user.getString("phone");
                             String imei = user.getString("imei");
                             String email = user.getString("email");
                             String type=user.getString("type");
-                            Log.e("response",aadhar+name+phone+imei+email+type);
+                            Log.e("response",dept+name+phone+imei+email+type);
 
                             // Inserting row in users table
-                            db.addUser(aadhar,name,phone,imei, email,type);
+                            db.addUser(dept,name,phone,imei, email,type);
 
                             Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 

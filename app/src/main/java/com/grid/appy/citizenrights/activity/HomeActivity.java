@@ -97,16 +97,7 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-
-
-
-
-
-
-
-        if (CheckNetwork.isInternetAvailable(this)) {
+     if (CheckNetwork.isInternetAvailable(this)) {
             checkFirstRun();
 
 
@@ -225,9 +216,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
         else{
-            //no connection
-            // Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
-            //toast.show();
 
 
                 Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
@@ -270,18 +258,7 @@ public class HomeActivity extends AppCompatActivity
         }
 
 
-
-
-
-
-
-
-
-
     }
-
-
-
 
 
     public void checkFirstRun() {
@@ -401,10 +378,7 @@ public class HomeActivity extends AppCompatActivity
             startActivity(help);
 
         } else if (id == R.id.logout) {
-            // Handle the logout action
 
-            //Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
-            //startActivity(newissue);
 
             logoutUser();
 

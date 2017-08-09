@@ -36,7 +36,7 @@ import com.grid.appy.citizenrights.helper.SessionManager;
         import java.util.regex.Matcher;
         import java.util.regex.Pattern;
 
-import static com.grid.appy.citizenrights.R.id.aadhar1;
+
 
 public class RegisterActivity extends Activity {
 
@@ -79,14 +79,7 @@ String imei,type;
         // SQLite database handler
         db = new SQLiteHandler(getApplicationContext());
 
-        // Check if user is already logged in or not
-      //  if (session.isLoggedIn()) {
-            // User is already logged in. Take him to main activity
-           // Intent intent = new Intent(RegisterActivity.this,
-                 //   HomeActivity.class);
-         //   startActivity(intent);
-        //    finish();
-      //  }
+
 
         Button deptrScreen = (Button) findViewById(R.id.deptregister);
         // Listening to Login Screen link
@@ -105,30 +98,7 @@ String imei,type;
         register.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                // Closing registration screen
-                // closing register screen
 
-               // TelephonyManager tManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-                //String imei = tManager.getDeviceId();
-
-
-
-
-
-
-
-
-         //       TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-          //      telephonyManager.getDeviceId();
-
-
-                // String imei =telephonyManager.toString();;
-                //form validation
-
-
-                //imei="1234";
-                EditText aadharedit;
-                aadharedit = (EditText) findViewById(aadhar1);
                 EditText nameedit;
                 nameedit = (EditText) findViewById(R.id.name);
                 EditText phoneedit;
@@ -140,15 +110,13 @@ String imei,type;
                 EditText repass;
                 repass = (EditText) findViewById(R.id.repassword);
 
-                String aadhar= aadharedit.getText().toString().trim();
+
                 final String email = emailedit.getText().toString();
                 final String name = nameedit.getText().toString();
                 final String phone = phoneedit.getText().toString();
                 final String password = pass.getText().toString();
                 final String repassword = repass.getText().toString();
-                if (!isValidaadhar(aadhar)){
-                    aadharedit.setError("Invalid Aadharr Number");
-                }
+                final String dept="registered";
 
                 if (!isValidName(name)) {
                     nameedit.setError("Invalid Name");
@@ -169,24 +137,12 @@ String imei,type;
 
                 else {
                     //switching to home activity
-                    registerUser(aadhar, name, phone, imei, email, password,type);
+                    registerUser(dept, name, phone, imei, email, password,type);
                 }
             }
         });
     }
-    //Validating Aadharr number
-    private boolean isValidaadhar (String aadhar) {
-        if (!(aadhar.length() == 12)) {
 
-
-            Toast.makeText(getApplicationContext(), "Incorrect Aadhar Number", Toast.LENGTH_LONG).show();
-            return false;
-
-        } else {
-            return  true;
-
-        }
-    }
 
     // validating email id
     private boolean isValidEmail(String email) {
@@ -235,7 +191,7 @@ String imei,type;
         }
     }
 
-    private void registerUser(final String aadhar,final String name,final String phone,final String imei, final String email,
+    private void registerUser(final String dept,final String name,final String phone,final String imei, final String email,
                               final String password,final String type) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
@@ -259,17 +215,18 @@ String imei,type;
                         // Now store the user in sqlite
 
                         JSONObject user = jObj.getJSONObject("user");
-                        String aadhar = user.getString("aadhar");
+                        //String dept = user.getString("dept");
+                        String dept="registered";
                         String name = user.getString("name");
                         String phone = user.getString("phone");
                         String imei = user.getString("imei");
                         String email = user.getString("email");
                         String type=user.getString("type");
-                        Log.e("values================",aadhar+name+phone+imei+email+type);
+                        Log.e("values================",dept+name+phone+imei+email+type);
 
 
                         // Inserting row in users table
-                        db.addUser(aadhar,name,phone,imei, email,type);
+                        db.addUser(dept,name,phone,imei, email,type);
 
                         Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
@@ -307,7 +264,7 @@ String imei,type;
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("aadhar",aadhar);
+
                 params.put("name", name);
                 params.put("phone", phone);
                 params.put("imei", imei);
@@ -315,7 +272,7 @@ String imei,type;
                 params.put("password", password);
                 params.put("type",type);
 
-                Log.e("post---------------",aadhar+name+phone+imei+email+password+type);
+                Log.e("post---------------",name+phone+imei+email+password+type);
 
                 return params;
             }

@@ -85,6 +85,7 @@ public class ForgetpasswordActivity extends AppCompatActivity {
                 Toast.makeText(ForgetpasswordActivity.this,"verification done"+ phoneAuthCredential,Toast.LENGTH_LONG).show();
             }
 
+
             @Override
             public void onVerificationFailed(FirebaseException e) {
                 Toast.makeText(ForgetpasswordActivity.this,"verification fail",Toast.LENGTH_LONG).show();
@@ -128,10 +129,6 @@ public class ForgetpasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
-
-                     //   getphone();
-
-
 
 
                         "+91"+MobileNumber.getText().toString(),        // Phone number to verify
@@ -179,45 +176,6 @@ public class ForgetpasswordActivity extends AppCompatActivity {
                 });
     }
 
-/*
-    public void getphone() {
 
-        loading = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
-
-//        String url = PHONECHECK + "?phone=" + MobileNumber.getText().toString() ;
-
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                loading.dismiss();
-                showJSON(response);
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ForgetpasswordActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-
-    private void showJSON(String response) {
-
-
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray result = jsonObject.getJSONArray(JSON_ARRAY);
-            JSONObject issueData = result.getJSONObject(0);
-            num = issueData.getString(JSON_PHONE);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-*/
 
     }
