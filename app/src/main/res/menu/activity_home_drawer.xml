@@ -23,10 +23,15 @@
 
     <item android:title="Application">
         <menu>
+
+            <!--
+
             <item
                 android:id="@+id/setting"
                 android:icon="@drawable/settings"
                 android:title="Settings" />
+
+                -->
             <item
                 android:id="@+id/help"
                 android:icon="@drawable/help"

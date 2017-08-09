@@ -16,6 +16,8 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -190,15 +192,6 @@ public class NewissueActivity extends AppCompatActivity  {
 
     }
 
-    private void showFileChooser() {
-        Intent intent = new Intent();
-        //sets the select file to all types of files
-        intent.setType("*/*");
-        //allows to select data and return it
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        //starts new activity to select file and return data
-        startActivityForResult(Intent.createChooser(intent,"Choose File to Upload.."),PICK_FILE_REQUEST);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data)
@@ -349,6 +342,14 @@ public class NewissueActivity extends AppCompatActivity  {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+
     }
 
 

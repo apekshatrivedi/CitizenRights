@@ -277,28 +277,10 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-        // load nav menu header data
-       // loadNavHeader();
 
     }
 
-/*
-    private void loadNavHeader() {
-        // name, website
 
-
-        // Fetching user details from sqlite
-        HashMap<String, String> user = db.getUserDetails();
-
-        String name = user.get("name");
-        String email = user.get("email");
-
-        // Displaying the user details on the screen
-        username.setText(name);
-        email_nav.setText(email);
-
-    }
-*/
 
 
 
@@ -406,12 +388,14 @@ public class HomeActivity extends AppCompatActivity
             }
 
         }
+        /*
         else if (id == R.id.setting) {
             // Handle the setting action
             Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(settings);
 
-        } else if (id == R.id.help) {
+        }
+        */else if (id == R.id.help) {
             // Handle the help action
             Intent help = new Intent(getApplicationContext(), Helpactivity.class);
             startActivity(help);
