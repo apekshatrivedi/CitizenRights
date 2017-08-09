@@ -1,10 +1,12 @@
 package com.grid.appy.citizenrights.activity;
 
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
@@ -74,12 +76,12 @@ import static com.grid.appy.citizenrights.config.AppConfig.UPLOADMYSQL_URL;
 
 public class IssuedetailActivity extends AppCompatActivity {
 
- String paths;
+    String paths;
     ProgressBar pb;
     Dialog dialog;
     int downloadedSize = 0;
     int totalSize = 0;
-   // TextView cur_val;
+    // TextView cur_val;
 
 
     String title="";
@@ -127,7 +129,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     public static final String KEY_IMGPATH= "proof";
     public static final String JSON_ARRAY = "result";
 
-     String imgpaths;
+    String imgpaths;
 
 
 
@@ -135,6 +137,8 @@ public class IssuedetailActivity extends AppCompatActivity {
     TextView issue_useremail;
     TextView issue_datetime;
     TextView issue_description;
+
+    DownloadManager downloadManager;
 
 
 
@@ -149,7 +153,7 @@ public class IssuedetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_issuedetail);
 
 
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -198,16 +202,16 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
 
-                //Floating fab
-                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+            //Floating fab
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                            showInputDialog();
+                    showInputDialog();
 
-                    }
-                });
+                }
+            });
 
 
 
@@ -359,21 +363,21 @@ public class IssuedetailActivity extends AppCompatActivity {
             JSON_DATA_WEB_CALL();
 
 
-           // imgpaths=PATH+imgpaths;
+            // imgpaths=PATH+imgpaths;
 
 
 
-           paths=PATH+imgpaths;
+            paths=PATH+imgpaths;
             Log.e(paths,paths);
-
-          final  Button b = (Button) findViewById(R.id.download);
-         // final  Button open=(Button)findViewById(R.id.btnOpen);
+/*
+            final  Button b = (Button) findViewById(R.id.download);
+            // final  Button open=(Button)findViewById(R.id.btnOpen);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showProgress(paths);
-                   // open.setVisibility(View.VISIBLE);
-                   // b.setVisibility(View.INVISIBLE);
+                    // open.setVisibility(View.VISIBLE);
+                    // b.setVisibility(View.INVISIBLE);
 
 
                     new Thread(new Runnable() {
@@ -383,11 +387,24 @@ public class IssuedetailActivity extends AppCompatActivity {
                     }).start();
                 }
             });
+*/
+
+
+              Button b = (Button) findViewById(R.id.download);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    downloadManager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri uri = Uri.parse(paths);
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    Long reference = downloadManager.enqueue(request);
+                }
+            });
 
 
 /*
             open.setOnClickListener(new View.OnClickListener() {
-
                 public void onClick(View arg0) {
                     // reset email button
                     File myFile = new File(paths);
@@ -396,14 +413,12 @@ public class IssuedetailActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
             });
-
 */
 
 
-         //   Toast.makeText(this,"imgpath"+paths,Toast.LENGTH_LONG).show();
+            //   Toast.makeText(this,"imgpath"+paths,Toast.LENGTH_LONG).show();
 
 
 
@@ -458,7 +473,7 @@ public class IssuedetailActivity extends AppCompatActivity {
                     public void run() {
                         pb.setProgress(downloadedSize);
                         float per = ((float)downloadedSize/totalSize) * 100;
-                       // cur_val.setText("Downloaded " + downloadedSize + "KB / " + totalSize + "KB (" + (int)per + "%)" );
+                        // cur_val.setText("Downloaded " + downloadedSize + "KB / " + totalSize + "KB (" + (int)per + "%)" );
                     }
                 });
             }
@@ -495,9 +510,9 @@ public class IssuedetailActivity extends AppCompatActivity {
         dialog.setTitle("Download Progress");
 
 //        TextView text = (TextView) dialog.findViewById(R.id.tv1);
-  //      text.setText("Downloading file from ... " + file_path);
-    //    cur_val = (TextView) dialog.findViewById(R.id.cur_pg_tv);
-      //  cur_val.setText("Starting download...");
+        //      text.setText("Downloading file from ... " + file_path);
+        //    cur_val = (TextView) dialog.findViewById(R.id.cur_pg_tv);
+        //  cur_val.setText("Starting download...");
         dialog.show();
 
         pb = (ProgressBar)dialog.findViewById(R.id.progress_bar);
@@ -528,10 +543,8 @@ public class IssuedetailActivity extends AppCompatActivity {
 
        /* HashMap<String, String> user = db.getUserDetails();
         String email = user.get("imei");
-
         if(email.trim().equals(useremail))
         {
-
             menu.findItem(R.id.action_delete).setVisible(true);
             menu.findItem(R.id.action_edit).setVisible(true);
         }
@@ -543,7 +556,7 @@ public class IssuedetailActivity extends AppCompatActivity {
         }
         */
 
-    return true;
+        return true;
 
     }
     @Override

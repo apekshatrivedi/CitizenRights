@@ -4,15 +4,23 @@ package com.grid.appy.citizenrights.config;
  * Created by Appy on 26-Jul-17.
  */
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
+import com.grid.appy.citizenrights.activity.NewissueActivity;
+@SuppressLint("NewApi")
 public class FilePath {
 
     /**
@@ -60,6 +68,7 @@ public class FilePath {
 
                 Uri contentUri = null;
                 if ("gallery".equals(type)) {
+
                     contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
                 } else if ("video".equals(type)) {
                     contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
@@ -74,8 +83,10 @@ public class FilePath {
                         selectionArgs);
             }
         }
+
         // MediaStore (and general)
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+        //else
+            if ("content".equalsIgnoreCase(uri.getScheme())) {
 
             // Return the remote address
             if (isGooglePhotosUri(uri))
@@ -126,6 +137,7 @@ public class FilePath {
         return null;
     }
 
+
     /**
      * @param uri
      *            The Uri to check.
@@ -165,6 +177,5 @@ public class FilePath {
         return "com.google.android.apps.photos.content".equals(uri
                 .getAuthority());
     }
-
 
 }
