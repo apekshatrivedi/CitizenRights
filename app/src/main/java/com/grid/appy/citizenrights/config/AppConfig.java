@@ -13,6 +13,8 @@ public class AppConfig {
 
     public static String URL_LOGIN = ipaddress+"login.php";
 
+
+
     public static String URL_LOGIN1 = ipaddress+"loginreg.php";
     // Server user register url
     public static String URL_REGISTER = ipaddress+"register.php";

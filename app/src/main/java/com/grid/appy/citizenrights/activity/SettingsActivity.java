@@ -1,8 +1,10 @@
 package com.grid.appy.citizenrights.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -13,7 +15,9 @@ public class SettingsActivity extends AppCompatActivity
 
 
 {
-    public static final String myPref = "autologin";
+
+
+ public static final String myPref = "autologin";
 
 
     @Override
