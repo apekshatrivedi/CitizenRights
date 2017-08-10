@@ -34,6 +34,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_IMEI = "imei";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_TYPE= "type";
+    private static final String KEY_USERNAME = "username";
 
 
     public SQLiteHandler(Context context) {
@@ -47,7 +48,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + KEY_DEPT + " TEXT," + KEY_NAME + " TEXT,"
                 + KEY_PHONE + " INTEGER," + KEY_IMEI + " INTEGER,"
                 + KEY_EMAIL + " TEXT,"
-                 + KEY_TYPE + " TEXT" + ")";
+                 + KEY_TYPE + " TEXT,"
+                + KEY_USERNAME + " TEXT"  + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
 
         Log.d(TAG, "Database tables created");
@@ -66,7 +68,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in database
      * */
-    public void addUser(String dept,String name, String email, String phone, String imei,String type) {
+    public void addUser(String dept,String name, String email, String phone, String imei,String type, String username) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -75,7 +77,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_PHONE, phone); // Phone
         values.put(KEY_IMEI, imei); // IMEI
         values.put(KEY_EMAIL, email); // Email
-        values.put(KEY_TYPE,type);
+        values.put(KEY_TYPE,type);//Type
+        values.put(KEY_USERNAME,username);//Username
 
 
         // Inserting Row
@@ -103,6 +106,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             user.put("imei", cursor.getString(3));
             user.put("email", cursor.getString(4));
             user.put("type",cursor.getString(5));
+            user.put("username",cursor.getString(6));
 
         }
         cursor.close();

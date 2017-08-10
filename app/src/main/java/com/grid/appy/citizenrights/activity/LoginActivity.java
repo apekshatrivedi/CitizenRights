@@ -166,10 +166,11 @@ public class LoginActivity extends Activity {
                         String imei = user.getString("imei");
                         String email = user.getString("email");
                         String type=user.getString("type");
+                        String username=user.getString("username");
 
 
                         // Inserting row in users table
-                        db.addUser(dept, name, phone, imei, email,type);
+                        db.addUser(dept, name, phone, imei, email,type,username);
 
                         // Launch main activity
                         Intent i = new Intent(getApplicationContext(), HomeActivity.class);

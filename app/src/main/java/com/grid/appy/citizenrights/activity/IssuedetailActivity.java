@@ -187,6 +187,8 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
 
+
+
             //Floating fab
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
             fab.setOnClickListener(new View.OnClickListener() {
@@ -356,22 +358,27 @@ public class IssuedetailActivity extends AppCompatActivity {
             Log.e(paths,paths);
 
 
+            Button b = (Button) findViewById(R.id.download);
+            if(imgpaths.trim().equals("cr"))
+            {
+                b.setVisibility(View.INVISIBLE);
+            }
+
+            else {
+
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                        Uri uri = Uri.parse(paths);
+                        DownloadManager.Request request = new DownloadManager.Request(uri);
+                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        Long reference = downloadManager.enqueue(request);
+                    }
+                });
 
 
-              Button b = (Button) findViewById(R.id.download);
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    downloadManager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
-                    Uri uri = Uri.parse(paths);
-                    DownloadManager.Request request = new DownloadManager.Request(uri);
-                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                    Long reference = downloadManager.enqueue(request);
-                }
-            });
-
-
-
+            }
 
 
             //   Toast.makeText(this,"imgpath"+paths,Toast.LENGTH_LONG).show();
@@ -421,7 +428,7 @@ public class IssuedetailActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         HashMap<String, String> user = db.getUserDetails();
-        String email = user.get("imei");
+        String email = user.get("username");
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
@@ -476,8 +483,10 @@ public class IssuedetailActivity extends AppCompatActivity {
         else {
 
             HashMap<String, String> user = db.getUserDetails();
-            String e= user.get("imei");
+            String e= user.get("username");
             String t=user.get("type");
+            Log.e("type----------",t);
+            String d=user.get("dept");
             if(e.trim().equals(useremail)) {
 
 
@@ -512,38 +521,8 @@ public class IssuedetailActivity extends AppCompatActivity {
             }
             else if(t.trim().equals("deptmember")){
 
-
-                LayoutInflater layoutInflater = LayoutInflater.from(IssuedetailActivity.this);
-                View promptView = layoutInflater.inflate(R.layout.reply, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(IssuedetailActivity.this);
-                alertDialogBuilder.setView(promptView);
-                final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
-
-
-                // setup a dialog window
-                alertDialogBuilder.setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // resultText.setText("Hello, " + editText.getText());
-
-                                addreply(editText.getText().toString());
-
-                            }
-                        })
-                        .setNegativeButton("Cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                // create an alert dialog
-                AlertDialog alert = alertDialogBuilder.create();
-                alert.show();
-
-
-
-
+                Log.e("values-----",t+e+d);
+                checkmember(issueid,d);
 
             }
             else
@@ -568,7 +547,7 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
             HashMap<String, String> user = db.getUserDetails();
-            String useremail = user.get("imei");
+            String useremail = user.get("username");
 
 
             @Override
@@ -603,6 +582,151 @@ public class IssuedetailActivity extends AppCompatActivity {
 
         addreply u = new addreply();
         u.execute();
+    }
+
+    public void addreply1(final String reply){
+
+        class addreply1 extends AsyncTask<Void,Void,String> {
+
+
+            HashMap<String, String> user = db.getUserDetails();
+            String useremail = user.get("dept");
+
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                //  Toast.makeText(NewissueActivity.this, s, Toast.LENGTH_LONG).show();
+                Intent i = new Intent(getApplicationContext(), IssuedetailActivity.class);
+                i.putExtra("message",issueid);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+
+                // Fetching user details from sqlite
+
+                RequestHandler rh = new RequestHandler();
+                HashMap<String, String> param = new HashMap<String, String>();
+
+                Log.e("post data-------------",issueid+useremail+reply);
+                param.put(KEY_ISSUEID,issueid);
+                param.put(JSON_EMAIL, useremail);
+                param.put(JSON_REPLY,reply);
+
+
+                String result = rh.sendPostRequest(ADDREPLY, param);
+                return result;
+            }
+        }
+
+        addreply1 u = new addreply1();
+        u.execute();
+    }
+
+
+
+
+
+
+    private void checkmember(final String issueid, final String dept) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_login";
+
+
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.DREPLY, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Login Response: " + response.toString());
+
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+
+                    // Check for error node in json
+                    if (!error) {
+                        // user successfully logged in
+                        // Create login session
+
+
+
+
+
+                        LayoutInflater layoutInflater = LayoutInflater.from(IssuedetailActivity.this);
+                        View promptView = layoutInflater.inflate(R.layout.reply, null);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(IssuedetailActivity.this);
+                        alertDialogBuilder.setView(promptView);
+                        final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
+
+
+                        // setup a dialog window
+                        alertDialogBuilder.setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // resultText.setText("Hello, " + editText.getText());
+
+                                        addreply1(editText.getText().toString());
+
+                                    }
+                                })
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                        // create an alert dialog
+                        AlertDialog alert = alertDialogBuilder.create();
+                        alert.show();
+
+
+
+                    } else {
+                        // Error in login. Get the error message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Login Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+               // hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("issueid", issueid);
+                params.put("dept", dept);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
 

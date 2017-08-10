@@ -52,6 +52,7 @@ public class NewissueActivity extends AppCompatActivity  {
     EditText desc;
     EditText titleedit;
 
+   String s;
 
     private TextView txtName;
     private SQLiteHandler db;
@@ -63,7 +64,8 @@ public class NewissueActivity extends AppCompatActivity  {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_PROOF = "proof";
 
-    StringBuilder proof = new StringBuilder(100);
+    StringBuilder proof = new StringBuilder(200);
+
 
 
 
@@ -74,6 +76,8 @@ public class NewissueActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newissue);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        proof.append("cr");
+        s = proof.toString();
 
         txtName = (TextView) findViewById(R.id.username);
 
@@ -87,7 +91,7 @@ public class NewissueActivity extends AppCompatActivity  {
         HashMap<String, String> user = db.getUserDetails();
 
 
-        String useremail = user.get("imei");
+        String useremail = user.get("username");
 
         // Displaying the user details on the screen
         txtName.setText(useremail);
@@ -118,13 +122,7 @@ public class NewissueActivity extends AppCompatActivity  {
                     desc.setError("Give some description for the issue");
                 }
                   else {
-
-
-
-
-
-                                    uploadFile();
-
+                                    uploadImage(s);
 
                    }
             }
@@ -163,6 +161,7 @@ public class NewissueActivity extends AppCompatActivity  {
             f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
             content_type = getMimeType(f.getPath());
             file_path = f.getAbsolutePath();
+            uploadFile();
 
         }
     }
@@ -186,7 +185,7 @@ public class NewissueActivity extends AppCompatActivity  {
         RequestBody file_body = RequestBody.create(MediaType.parse(content_type), f);
 
         HashMap<String, String> user = db.getUserDetails();
-        String useremail = user.get("imei");
+        String useremail = user.get("username");
         proof.append(useremail);
         proof.append(file_path.substring(file_path.lastIndexOf
                 ("/") + 1));
@@ -210,8 +209,8 @@ public class NewissueActivity extends AppCompatActivity  {
             }
             else {
                 dialog.dismiss();
-                final String s = proof.toString();
-                uploadImage(s);
+                s = proof.toString();
+
             }
         }
         catch (IOException e)
@@ -244,7 +243,7 @@ public class NewissueActivity extends AppCompatActivity  {
             HashMap<String, String> user = db.getUserDetails();
 
 
-            String useremail = user.get("imei");
+            String useremail = user.get("username");
 
 
 

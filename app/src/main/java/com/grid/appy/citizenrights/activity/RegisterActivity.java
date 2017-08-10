@@ -109,10 +109,13 @@ String imei,type;
                 pass = (EditText) findViewById(R.id.password);
                 EditText repass;
                 repass = (EditText) findViewById(R.id.repassword);
+                EditText usernameedit;
+                usernameedit = (EditText) findViewById(R.id.nikname);
 
 
                 final String email = emailedit.getText().toString();
                 final String name = nameedit.getText().toString();
+                final String username = usernameedit.getText().toString();
                 final String phone = phoneedit.getText().toString();
                 final String password = pass.getText().toString();
                 final String repassword = repass.getText().toString();
@@ -137,7 +140,7 @@ String imei,type;
 
                 else {
                     //switching to home activity
-                    registerUser(dept, name, phone, imei, email, password,type);
+                    registerUser(dept, name, phone, imei, email, password,type,username);
                 }
             }
         });
@@ -192,7 +195,7 @@ String imei,type;
     }
 
     private void registerUser(final String dept,final String name,final String phone,final String imei, final String email,
-                              final String password,final String type) {
+                              final String password,final String type,final  String username) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
 
@@ -222,11 +225,12 @@ String imei,type;
                         String imei = user.getString("imei");
                         String email = user.getString("email");
                         String type=user.getString("type");
-                        Log.e("values================",dept+name+phone+imei+email+type);
+                        String username = user.getString("username");
+                        Log.e("values================",dept+name+phone+imei+email+type+username);
 
 
                         // Inserting row in users table
-                        db.addUser(dept,name,phone,imei, email,type);
+                        db.addUser(dept,name,phone,imei, email,type,username);
 
                         Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
@@ -271,8 +275,9 @@ String imei,type;
                 params.put("email", email);
                 params.put("password", password);
                 params.put("type",type);
+                params.put("username",username);
 
-                Log.e("post---------------",name+phone+imei+email+password+type);
+                Log.e("post---------------",name+phone+imei+email+password+type+username);
 
                 return params;
             }

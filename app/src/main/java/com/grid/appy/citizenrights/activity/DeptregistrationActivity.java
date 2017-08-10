@@ -48,11 +48,6 @@ import static com.grid.appy.citizenrights.config.AppConfig.GET_DESIG;
 public class DeptregistrationActivity extends AppCompatActivity
         implements Spinner.OnItemSelectedListener
 {
-
-
-
-
-
     public static final String JSON_ARRAY = "result";
     public static final String JSON_ARRAY1 ="result";
 
@@ -73,8 +68,6 @@ public class DeptregistrationActivity extends AppCompatActivity
     String desig="";
 
 
-
-
     public static final String TAG_DESIG = "desig";
     public static final String TAG_DEPT = "deptname";
 
@@ -83,10 +76,7 @@ public class DeptregistrationActivity extends AppCompatActivity
     private SessionManager session;
     private SQLiteHandler db;
 
-
-
-
-    EditText et_empname,et_uniqueid,et_phone,et_email,et_password,et_retypepassword;
+    EditText et_empname,et_userempname,et_uniqueid,et_phone,et_email,et_password,et_retypepassword;
     Button btn_reg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +101,7 @@ public class DeptregistrationActivity extends AppCompatActivity
 
 
         et_empname = (EditText) findViewById(R.id.name);
+        et_userempname = (EditText) findViewById(R.id.nikname);
         et_uniqueid = (EditText) findViewById(R.id.otp);
 
         et_phone = (EditText) findViewById(R.id.phone);
@@ -134,6 +125,7 @@ public class DeptregistrationActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 String empname = et_empname.getText().toString();
+                String userempname = et_userempname.getText().toString();
                 String uniqueid = et_uniqueid.getText().toString().trim();
                 String phone = et_phone.getText().toString().trim();
                 String email = et_email.getText().toString().trim();
@@ -149,6 +141,10 @@ public class DeptregistrationActivity extends AppCompatActivity
                 Matcher matcherEmailId = Pattern.compile(validEmailId).matcher(email);
                 Matcher matcherretypepassword = Pattern.compile(validretypepassword).matcher(retypepassword);
                 Matcher matcherpassword = Pattern.compile(validpassword).matcher(password);
+                if (TextUtils.isEmpty(userempname)) {
+                    et_userempname.setError("This field is required");
+                    return;
+                }
                 if (TextUtils.isEmpty(empname)) {
                     et_empname.setError("This field is required");
                     return;
@@ -216,7 +212,7 @@ public class DeptregistrationActivity extends AppCompatActivity
 
 
 
-                registerUser( uniqueid, empname, phone, imei, email, password,type,dname,desig);
+                registerUser( uniqueid, empname, phone, imei, email, password,type,dname,desig,userempname);
 
 
             }
@@ -225,27 +221,8 @@ public class DeptregistrationActivity extends AppCompatActivity
 
     }
 
-/*
-    //this method will execute when we pic an item from the spinner
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //Setting the values to textviews for a selected item
-
-
-
-    }
-
-    //When no item is selected this method would execute
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-*/
-
-
-
     private void registerUser(final String aadhar,final String name,final String phone,final String imei, final String email,
-                              final String password,final String type,final String dname,final String designation) {
+                              final String password,final String type,final String dname,final String designation,final String username) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
 
@@ -277,10 +254,11 @@ public class DeptregistrationActivity extends AppCompatActivity
                             String imei = user.getString("imei");
                             String email = user.getString("email");
                             String type=user.getString("type");
-                            Log.e("response",dept+name+phone+imei+email+type);
+                            String username=user.getString("username");
+                            Log.e("response",dept+name+phone+imei+email+type+username);
 
                             // Inserting row in users table
-                            db.addUser(dept,name,phone,imei, email,type);
+                            db.addUser(dept,name,phone,imei, email,type,username);
 
                             Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
@@ -327,6 +305,7 @@ public class DeptregistrationActivity extends AppCompatActivity
                 params.put("password", password);
                 params.put("deptid", dname);
                 params.put("designation", designation);
+                params.put("username",username);
 
                 return params;
             }
@@ -464,10 +443,7 @@ public class DeptregistrationActivity extends AppCompatActivity
         //Setting the values to textviews for a selected item
         switch(parent.getId()) {
             case R.id.spin_desig: {
-               // Toast.makeText(
-                       // getApplicationContext(),
-                       // parent.getItemAtPosition(position).toString() + " Selected",
-                       // Toast.LENGTH_LONG).show();
+
                 desig = parent.getItemAtPosition(position).toString();
             return;
             }
@@ -483,14 +459,7 @@ public class DeptregistrationActivity extends AppCompatActivity
 
             }
 
-
-
-
-
-
-
-
-        }
+ }
 
     }
 

@@ -106,7 +106,7 @@ public class ViewissueActivity extends AppCompatActivity {
         HashMap<String, String> user = db.getUserDetails();
 
 
-        String useremail = user.get("imei");
+        String useremail = user.get("username");
 
         jsonArrayRequest = new JsonArrayRequest(GET_JSON_DATA_HTTP_URL2+useremail,
 
