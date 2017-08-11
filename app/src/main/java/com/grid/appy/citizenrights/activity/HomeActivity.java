@@ -325,8 +325,9 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.home) {
             // Handle the home action
 
-                    Intent home = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(home);
+            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
 
         } else if (id == R.id.issue) {
             // Handle the viewissue action
@@ -430,6 +431,7 @@ public class HomeActivity extends AppCompatActivity
                 GetDataAdapter2.setHome_username(json.getString(JSON_USEREMAIL));
                 GetDataAdapter2.setHome_date(json.getString(JSON_ISSUEDATETIME));
                 GetDataAdapter2.setHome_issueid(json.getString(JSON_ISSUEID));
+                Log.e("issueid",json.getString(JSON_ISSUEID));
 
             } catch (JSONException e) {
 

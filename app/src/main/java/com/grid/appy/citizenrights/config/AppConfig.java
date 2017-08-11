@@ -9,7 +9,7 @@ public class AppConfig {
 
 
 
-   public static String ipaddress="http://192.168.1.107/Grid/";
+   public static String ipaddress="http://192.168.1.5/Grid/";
 
     public static String URL_LOGIN = ipaddress+"login.php";
 
@@ -34,6 +34,7 @@ public class AppConfig {
     public static String GET_JSON_DATA_HTTP_URL3 = ipaddress+"viewdept.php?dept=";
 
     public  static  String PATH=ipaddress+"uploads/";
+ public  static  String PATH2=ipaddress+"depticons/";
 
     public static String GET_MEMBERVIEW_DATA =ipaddress+"memberview.php?deptmail=";
 

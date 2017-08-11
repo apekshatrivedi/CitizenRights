@@ -124,19 +124,19 @@ String imei,type;
                 if (!isValidName(name)) {
                     nameedit.setError("Invalid Name");
                 }
-                if (!isValidPhone(phone))
+               else if (!isValidPhone(phone))
                 {
                     phoneedit.setError("Invalid Phone");
                 }
-             if (!isValidEmail(email))
+           else  if (!isValidEmail(email))
              {
                     emailedit.setError("Invalid Email");
                 }
-              if (!isValidPassword(password))
+             else if (!isValidPassword(password))
               {
                     pass.setError("Password must be greater than 4 characters");
                 }
-                if (!isValidrePassword(repassword, password))
+             else   if (!isValidrePassword(repassword, password))
                 {
                     repass.setError("Password does not match");
                 }

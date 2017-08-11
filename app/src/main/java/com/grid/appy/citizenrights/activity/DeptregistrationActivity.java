@@ -145,75 +145,73 @@ public class DeptregistrationActivity extends AppCompatActivity
                     et_userempname.setError("This field is required");
                     return;
                 }
-                if (TextUtils.isEmpty(empname)) {
+              else  if (TextUtils.isEmpty(empname)) {
                     et_empname.setError("This field is required");
                     return;
                 }
-                if (TextUtils.isEmpty(uniqueid)) {
+             else   if (TextUtils.isEmpty(uniqueid)) {
                     et_uniqueid.setError("This field is required");
                     return;
-                }  if(!(uniqueid.length()==12))
+                }else  if(!(uniqueid.length()==12))
 
                 {
                     Toast.makeText(getApplicationContext(), "Incorrect Aadhar Number", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if (TextUtils.isEmpty(phone))
+               else if (TextUtils.isEmpty(phone))
                 {
                     et_phone.setError("This field is required");
                     return;
                 }
-                if ((phone.length() < 8 || phone.length() > 13) )
+               else if ((phone.length() < 8 || phone.length() > 13) )
                 {
                     Toast.makeText(getApplicationContext(), "Incorrect Mobile Number", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if (TextUtils.isEmpty(email)) {
+             else   if (TextUtils.isEmpty(email)) {
                     et_email.setError("This field is required");
                     return;
                 }
-                if (!matcherEmailId.matches())
+             else   if (!matcherEmailId.matches())
                 {
                     Toast.makeText(getApplicationContext(), "Enter Valid Email-Id", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (TextUtils.isEmpty(password))
+              else  if (TextUtils.isEmpty(password))
                 {
                     et_password.setError("please enter the password");
                     return;
                 }
 
                 else
-                {
                     if (!matcherpassword.matches())
                     {
                         Toast.makeText(getApplicationContext(), "Enter Valid Password", Toast.LENGTH_LONG).show();
                         return;
                     }
-                }
-                if (TextUtils.isEmpty(retypepassword))
+
+              else  if (TextUtils.isEmpty(retypepassword))
                 {
                     et_retypepassword.setError("This field is required");
                     return;
                 }
-                if (!password.equals(retypepassword))
+                else if (!password.equals(retypepassword))
                 {
                     Toast.makeText(getApplicationContext(), "Password missmatch", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                else {
+                        TelephonyManager mngr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
-                String imei= mngr.getDeviceId();
-                String type="deptmember";
+                        String imei = mngr.getDeviceId();
+                        String type = "deptmember";
 
 
-
-
-                registerUser( uniqueid, empname, phone, imei, email, password,type,dname,desig,userempname);
-
+                        registerUser(uniqueid, empname, phone, imei, email, password, type, dname, desig, userempname);
+                    }
 
             }
         });

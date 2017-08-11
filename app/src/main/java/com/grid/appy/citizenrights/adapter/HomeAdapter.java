@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,12 +60,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
                 Intent intent = new Intent(context, IssuedetailActivity.class);
                 String message=getDataAdapter1.getHome_issueid();
+                Log.e("Homeada",message);
                 intent.putExtra("message", message);
                 context.startActivity(intent);
 
 
             }
-
         });
 
 
@@ -72,7 +73,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         Viewholder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(v.getContext(), "Position/" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Position/"+getDataAdapter1.getHome_issueid() , Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -84,19 +85,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
 
 
-        Viewholder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Intent intent = new Intent(context, IssuedetailActivity.class);
-                String message=getDataAdapter1.getHome_issueid();
-                intent.putExtra("message", message);
-                context.startActivity(intent);
-
-
-            }
-        });
 
 
     }

@@ -303,6 +303,8 @@ public class IssuedetailActivity extends AppCompatActivity {
         String message = bundle.getString("message");
         String issueid = message;
 
+
+Log.e("issueid----",issueid);
         loading = ProgressDialog.show(this,"Please wait...","Fetching...",false,false);
 
         String url = GET_ISSUE_DATA+"?issueid="+issueid;
