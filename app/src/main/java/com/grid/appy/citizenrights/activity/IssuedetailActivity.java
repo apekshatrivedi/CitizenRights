@@ -8,13 +8,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +35,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.grid.appy.citizenrights.R;
-
 import com.grid.appy.citizenrights.adapter.GetDataAdapter;
 import com.grid.appy.citizenrights.adapter.ReplyAdapter;
 import com.grid.appy.citizenrights.config.AppConfig;
@@ -56,7 +56,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.grid.appy.citizenrights.config.AppConfig.ADDREPLY;
-
 import static com.grid.appy.citizenrights.config.AppConfig.GET_ISSUE_DATA;
 import static com.grid.appy.citizenrights.config.AppConfig.PATH;
 import static com.grid.appy.citizenrights.config.AppConfig.REPLY;
@@ -128,6 +127,20 @@ public class IssuedetailActivity extends AppCompatActivity {
 
     private ProgressDialog loading;
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            onBackPressed();
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+            finish();
+
+    }
 
 
 

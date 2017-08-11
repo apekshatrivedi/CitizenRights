@@ -30,7 +30,7 @@ import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
 
 
-public class RegloginActivity extends Activity {
+public class  RegloginActivity extends Activity {
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private ProgressDialog pDialog;
