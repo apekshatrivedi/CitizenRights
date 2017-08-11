@@ -59,7 +59,9 @@
         </activity>
         <activity
             android:name=".activity.NewissueActivity"
-            android:label="Post your issue">
+            android:label="Post your issue"
+
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.HomeActivity" />

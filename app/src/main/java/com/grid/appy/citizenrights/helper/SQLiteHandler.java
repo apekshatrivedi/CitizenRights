@@ -19,7 +19,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     // Database Name
     private static final String DATABASE_NAME = "citizenrights";
@@ -28,12 +28,13 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String TABLE_USER = "user";
 
     // Login Table Columns names
-    private static final String KEY_AADHAR = "aadhar";
+    private static final String KEY_DEPT = "deptid";
     private static final String KEY_NAME = "name";
     private static final String KEY_PHONE = "phone";
     private static final String KEY_IMEI = "imei";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_TYPE= "type";
+    private static final String KEY_USERNAME = "username";
 
 
     public SQLiteHandler(Context context) {
@@ -44,10 +45,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_LOGIN_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_USER + "("
-                + KEY_AADHAR + " INTEGER," + KEY_NAME + " TEXT,"
+                + KEY_DEPT + " TEXT," + KEY_NAME + " TEXT,"
                 + KEY_PHONE + " INTEGER," + KEY_IMEI + " INTEGER,"
                 + KEY_EMAIL + " TEXT,"
-                 + KEY_TYPE + " TEXT" + ")";
+                 + KEY_TYPE + " TEXT,"
+                + KEY_USERNAME + " TEXT"  + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
 
         Log.d(TAG, "Database tables created");
@@ -66,16 +68,17 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in database
      * */
-    public void addUser(String aadhar,String name, String email, String phone, String imei,String type) {
+    public void addUser(String dept,String name, String email, String phone, String imei,String type, String username) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_AADHAR,aadhar);//Aadhar
+        values.put(KEY_DEPT,dept);//dept
         values.put(KEY_NAME, name); // Name
         values.put(KEY_PHONE, phone); // Phone
         values.put(KEY_IMEI, imei); // IMEI
         values.put(KEY_EMAIL, email); // Email
-        values.put(KEY_TYPE,type);
+        values.put(KEY_TYPE,type);//Type
+        values.put(KEY_USERNAME,username);//Username
 
 
         // Inserting Row
@@ -97,12 +100,13 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            user.put("aadhar",cursor.getString(0));
+            user.put("dept",cursor.getString(0));
             user.put("name", cursor.getString(1));
             user.put("phone", cursor.getString(2));
             user.put("imei", cursor.getString(3));
             user.put("email", cursor.getString(4));
             user.put("type",cursor.getString(5));
+            user.put("username",cursor.getString(6));
 
         }
         cursor.close();

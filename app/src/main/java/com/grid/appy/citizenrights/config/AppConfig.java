@@ -9,7 +9,7 @@ public class AppConfig {
 
 
 
-   public static String ipaddress="http://192.168.1.101/Grid/";
+   public static String ipaddress="http://192.168.1.5/Grid/";
 
     public static String URL_LOGIN = ipaddress+"login.php";
 
@@ -57,7 +57,9 @@ public class AppConfig {
 
  public static String ADDREPLY=ipaddress+"addreply.php";
 
- public static String PHONECHECK=ipaddress+"phonecheck.php";
+ public static String DREPLY=ipaddress+"deptreply.php";
+
+
 
 
 }

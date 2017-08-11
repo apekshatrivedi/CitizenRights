@@ -22,16 +22,18 @@ public class Chooselogin extends AppCompatActivity {
                 // Switching to activity_forgetpassword screen
                 Intent i1 = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i1);
-                Button departmentlogin = (Button) findViewById(R.id.btnLogindept);
-                // Listening to forgetpassword link
-                departmentlogin.setOnClickListener(new View.OnClickListener() {
 
-                    public void onClick(View v) {
-                        // Switching to activity_forgetpassword screen
-                        Intent i1 = new Intent(getApplicationContext(), RegloginActivity.class);
-                        startActivity(i1);
-                    }
-                });
+            }
+        });
+
+        Button departmentlogin = (Button) findViewById(R.id.btnLogindept);
+        // Listening to forgetpassword link
+        departmentlogin.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to activity_forgetpassword screen
+                Intent i1 = new Intent(getApplicationContext(), RegloginActivity.class);
+                startActivity(i1);
             }
         });
     }

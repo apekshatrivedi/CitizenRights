@@ -1,14 +1,14 @@
 package com.grid.appy.citizenrights.activity;
 
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -37,28 +36,18 @@ import com.grid.appy.citizenrights.R;
 
 import com.grid.appy.citizenrights.adapter.GetDataAdapter;
 import com.grid.appy.citizenrights.adapter.ReplyAdapter;
-import com.grid.appy.citizenrights.adapter.YourissueAdapter;
 import com.grid.appy.citizenrights.config.AppConfig;
 import com.grid.appy.citizenrights.config.AppController;
 import com.grid.appy.citizenrights.helper.RequestHandler;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
-import com.grid.appy.citizenrights.interfaces.FileOpen;
 import com.grid.appy.citizenrights.model.CheckNetwork;
-import com.grid.appy.citizenrights.model.Comment;
 import com.grid.appy.citizenrights.model.DividerItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,19 +56,17 @@ import java.util.Map;
 import static com.grid.appy.citizenrights.config.AppConfig.ADDREPLY;
 
 import static com.grid.appy.citizenrights.config.AppConfig.GET_ISSUE_DATA;
-import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL2;
 import static com.grid.appy.citizenrights.config.AppConfig.PATH;
 import static com.grid.appy.citizenrights.config.AppConfig.REPLY;
-import static com.grid.appy.citizenrights.config.AppConfig.UPLOADMYSQL_URL;
 
 public class IssuedetailActivity extends AppCompatActivity {
 
- String paths;
+    String paths;
     ProgressBar pb;
     Dialog dialog;
     int downloadedSize = 0;
     int totalSize = 0;
-   // TextView cur_val;
+    // TextView cur_val;
 
 
     String title="";
@@ -127,7 +114,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     public static final String KEY_IMGPATH= "proof";
     public static final String JSON_ARRAY = "result";
 
-     String imgpaths;
+    String imgpaths;
 
 
 
@@ -135,6 +122,8 @@ public class IssuedetailActivity extends AppCompatActivity {
     TextView issue_useremail;
     TextView issue_datetime;
     TextView issue_description;
+
+    DownloadManager downloadManager;
 
 
 
@@ -149,7 +138,7 @@ public class IssuedetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_issuedetail);
 
 
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -198,16 +187,18 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
 
-                //Floating fab
-                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-                            showInputDialog();
 
-                    }
-                });
+            //Floating fab
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    showInputDialog();
+
+                }
+            });
 
 
 
@@ -359,51 +350,38 @@ public class IssuedetailActivity extends AppCompatActivity {
             JSON_DATA_WEB_CALL();
 
 
-           // imgpaths=PATH+imgpaths;
 
 
 
-           paths=PATH+imgpaths;
+
+            paths=PATH+imgpaths;
             Log.e(paths,paths);
 
-          final  Button b = (Button) findViewById(R.id.download);
-         // final  Button open=(Button)findViewById(R.id.btnOpen);
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showProgress(paths);
-                   // open.setVisibility(View.VISIBLE);
-                   // b.setVisibility(View.INVISIBLE);
 
+            Button b = (Button) findViewById(R.id.download);
+            if(imgpaths.trim().equals("cr"))
+            {
+                b.setVisibility(View.INVISIBLE);
+            }
 
-                    new Thread(new Runnable() {
-                        public void run() {
-                            downloadFile();
-                        }
-                    }).start();
-                }
-            });
+            else {
 
-
-/*
-            open.setOnClickListener(new View.OnClickListener() {
-
-                public void onClick(View arg0) {
-                    // reset email button
-                    File myFile = new File(paths);
-                    try {
-                        FileOpen.openFile(IssuedetailActivity.this, myFile);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                        Uri uri = Uri.parse(paths);
+                        DownloadManager.Request request = new DownloadManager.Request(uri);
+                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        Long reference = downloadManager.enqueue(request);
                     }
-
-                }
-            });
-
-*/
+                });
 
 
-         //   Toast.makeText(this,"imgpath"+paths,Toast.LENGTH_LONG).show();
+            }
+
+
+            //   Toast.makeText(this,"imgpath"+paths,Toast.LENGTH_LONG).show();
 
 
 
@@ -415,95 +393,7 @@ public class IssuedetailActivity extends AppCompatActivity {
     }
 
 
-    void downloadFile(){
 
-        try {
-            URL url = new URL(paths);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setDoOutput(true);
-
-            //connect
-            urlConnection.connect();
-
-            //set the path where we want to save the file
-            File SDCardRoot = Environment.getExternalStorageDirectory();
-            //create a new file, to save the downloaded file
-            File file = new File(SDCardRoot,imgpaths);
-
-            FileOutputStream fileOutput = new FileOutputStream(file);
-
-            //Stream used for reading the data from the internet
-            InputStream inputStream = urlConnection.getInputStream();
-
-            //this is the total size of the file which we are downloading
-            totalSize = urlConnection.getContentLength();
-
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    pb.setMax(totalSize);
-                }
-            });
-
-            //create a buffer...
-            byte[] buffer = new byte[1024];
-            int bufferLength = 0;
-
-            while ( (bufferLength = inputStream.read(buffer)) > 0 ) {
-                fileOutput.write(buffer, 0, bufferLength);
-                downloadedSize += bufferLength;
-                // update the progressbar //
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        pb.setProgress(downloadedSize);
-                        float per = ((float)downloadedSize/totalSize) * 100;
-                       // cur_val.setText("Downloaded " + downloadedSize + "KB / " + totalSize + "KB (" + (int)per + "%)" );
-                    }
-                });
-            }
-            //close the output stream when complete //
-            fileOutput.close();
-
-
-
-
-        } catch (final MalformedURLException e) {
-            showError("Error : MalformedURLException " + e);
-            e.printStackTrace();
-        } catch (final IOException e) {
-            showError("Error : IOException " + e);
-            e.printStackTrace();
-        }
-        catch (final Exception e) {
-            showError("Error : Please check your internet connection " + e);
-        }
-    }
-
-    void showError(final String err){
-        runOnUiThread(new Runnable() {
-            public void run() {
-                Toast.makeText(IssuedetailActivity.this, err, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    void showProgress(String file_path){
-        dialog = new Dialog(IssuedetailActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.myprogressdialog);
-        dialog.setTitle("Download Progress");
-
-//        TextView text = (TextView) dialog.findViewById(R.id.tv1);
-  //      text.setText("Downloading file from ... " + file_path);
-    //    cur_val = (TextView) dialog.findViewById(R.id.cur_pg_tv);
-      //  cur_val.setText("Starting download...");
-        dialog.show();
-
-        pb = (ProgressBar)dialog.findViewById(R.id.progress_bar);
-        pb.setProgress(0);
-        pb.setProgressDrawable(getResources().getDrawable(R.drawable.green_progress));
-    }
 
 
 
@@ -526,24 +416,9 @@ public class IssuedetailActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.issue_menu, menu);
 
-       /* HashMap<String, String> user = db.getUserDetails();
-        String email = user.get("imei");
 
-        if(email.trim().equals(useremail))
-        {
 
-            menu.findItem(R.id.action_delete).setVisible(true);
-            menu.findItem(R.id.action_edit).setVisible(true);
-        }
-        else
-        {
-            Log.e("---------------","email"+email+"useremail"+useremail);
-            menu.findItem(R.id.action_delete).setVisible(true);
-            menu.findItem(R.id.action_edit).setVisible(false);
-        }
-        */
-
-    return true;
+        return true;
 
     }
     @Override
@@ -553,7 +428,7 @@ public class IssuedetailActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         HashMap<String, String> user = db.getUserDetails();
-        String email = user.get("imei");
+        String email = user.get("username");
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
@@ -608,8 +483,10 @@ public class IssuedetailActivity extends AppCompatActivity {
         else {
 
             HashMap<String, String> user = db.getUserDetails();
-            String e= user.get("imei");
+            String e= user.get("username");
             String t=user.get("type");
+            Log.e("type----------",t);
+            String d=user.get("dept");
             if(e.trim().equals(useremail)) {
 
 
@@ -644,38 +521,8 @@ public class IssuedetailActivity extends AppCompatActivity {
             }
             else if(t.trim().equals("deptmember")){
 
-
-                LayoutInflater layoutInflater = LayoutInflater.from(IssuedetailActivity.this);
-                View promptView = layoutInflater.inflate(R.layout.reply, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(IssuedetailActivity.this);
-                alertDialogBuilder.setView(promptView);
-                final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
-
-
-                // setup a dialog window
-                alertDialogBuilder.setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // resultText.setText("Hello, " + editText.getText());
-
-                                addreply(editText.getText().toString());
-
-                            }
-                        })
-                        .setNegativeButton("Cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                // create an alert dialog
-                AlertDialog alert = alertDialogBuilder.create();
-                alert.show();
-
-
-
-
+                Log.e("values-----",t+e+d);
+                checkmember(issueid,d);
 
             }
             else
@@ -700,7 +547,7 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
             HashMap<String, String> user = db.getUserDetails();
-            String useremail = user.get("imei");
+            String useremail = user.get("username");
 
 
             @Override
@@ -735,6 +582,151 @@ public class IssuedetailActivity extends AppCompatActivity {
 
         addreply u = new addreply();
         u.execute();
+    }
+
+    public void addreply1(final String reply){
+
+        class addreply1 extends AsyncTask<Void,Void,String> {
+
+
+            HashMap<String, String> user = db.getUserDetails();
+            String useremail = user.get("dept");
+
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                //  Toast.makeText(NewissueActivity.this, s, Toast.LENGTH_LONG).show();
+                Intent i = new Intent(getApplicationContext(), IssuedetailActivity.class);
+                i.putExtra("message",issueid);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+
+                // Fetching user details from sqlite
+
+                RequestHandler rh = new RequestHandler();
+                HashMap<String, String> param = new HashMap<String, String>();
+
+                Log.e("post data-------------",issueid+useremail+reply);
+                param.put(KEY_ISSUEID,issueid);
+                param.put(JSON_EMAIL, useremail);
+                param.put(JSON_REPLY,reply);
+
+
+                String result = rh.sendPostRequest(ADDREPLY, param);
+                return result;
+            }
+        }
+
+        addreply1 u = new addreply1();
+        u.execute();
+    }
+
+
+
+
+
+
+    private void checkmember(final String issueid, final String dept) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_login";
+
+
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.DREPLY, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Login Response: " + response.toString());
+
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+
+                    // Check for error node in json
+                    if (!error) {
+                        // user successfully logged in
+                        // Create login session
+
+
+
+
+
+                        LayoutInflater layoutInflater = LayoutInflater.from(IssuedetailActivity.this);
+                        View promptView = layoutInflater.inflate(R.layout.reply, null);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(IssuedetailActivity.this);
+                        alertDialogBuilder.setView(promptView);
+                        final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
+
+
+                        // setup a dialog window
+                        alertDialogBuilder.setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // resultText.setText("Hello, " + editText.getText());
+
+                                        addreply1(editText.getText().toString());
+
+                                    }
+                                })
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                        // create an alert dialog
+                        AlertDialog alert = alertDialogBuilder.create();
+                        alert.show();
+
+
+
+                    } else {
+                        // Error in login. Get the error message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Login Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+               // hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("issueid", issueid);
+                params.put("dept", dept);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
 
@@ -827,7 +819,6 @@ public class IssuedetailActivity extends AppCompatActivity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
-
 
 
 

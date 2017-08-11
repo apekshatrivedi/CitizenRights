@@ -1,6 +1,7 @@
 package com.grid.appy.citizenrights.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -130,6 +131,14 @@ public class AdminviewActivity extends AppCompatActivity {
         adminadapter = new AdminAdapter(GetDataAdapter1, this);
 
         recyclerView.setAdapter(adminadapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+
     }
 
 }

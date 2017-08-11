@@ -52,6 +52,7 @@ public class DeptissueActivity extends AppCompatActivity {
     String JSON_ISSUEDATETIME = "issuedatetime";
     String JSON_ISSUEID ="issueid";
 
+
     JsonArrayRequest jsonArrayRequest ;
 
     RequestQueue requestQueue ;

@@ -3,71 +3,46 @@ package com.grid.appy.citizenrights.activity;
 //Note file upload MAX 2MB
 
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.grid.appy.citizenrights.R;
-import com.grid.appy.citizenrights.config.AppConfig;
-import com.grid.appy.citizenrights.config.FilePath;
 import com.grid.appy.citizenrights.helper.RequestHandler;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
-import static android.R.attr.bitmap;
-import static android.R.attr.checkable;
-import static android.R.attr.description;
-import static android.R.attr.title;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 import static com.grid.appy.citizenrights.config.AppConfig.SERVER_URL;
 import static com.grid.appy.citizenrights.config.AppConfig.UPLOADMYSQL_URL;
 
 
 public class NewissueActivity extends AppCompatActivity  {
 
+
+    File f;
+    String content_type;
+    String file_path;
 
     private static final int PICK_FILE_REQUEST = 1;
     private static final String TAG = "message======";
@@ -77,6 +52,7 @@ public class NewissueActivity extends AppCompatActivity  {
     EditText desc;
     EditText titleedit;
 
+   String s;
 
     private TextView txtName;
     private SQLiteHandler db;
@@ -88,7 +64,8 @@ public class NewissueActivity extends AppCompatActivity  {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_PROOF = "proof";
 
-    StringBuilder proof = new StringBuilder(100);
+    StringBuilder proof = new StringBuilder(200);
+
 
 
 
@@ -99,6 +76,8 @@ public class NewissueActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newissue);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        proof.append("cr");
+        s = proof.toString();
 
         txtName = (TextView) findViewById(R.id.username);
 
@@ -112,7 +91,7 @@ public class NewissueActivity extends AppCompatActivity  {
         HashMap<String, String> user = db.getUserDetails();
 
 
-        String useremail = user.get("imei");
+        String useremail = user.get("username");
 
         // Displaying the user details on the screen
         txtName.setText(useremail);
@@ -143,37 +122,8 @@ public class NewissueActivity extends AppCompatActivity  {
                     desc.setError("Give some description for the issue");
                 }
                   else {
+                                    uploadImage(s);
 
-                       //uploadImage();
-
-                       //on upload button Click
-                       if(selectedFilePath != null){
-                           dialog = ProgressDialog.show(NewissueActivity.this,"","Uploading File...",true);
-
-                           new Thread(new Runnable() {
-                               @Override
-                               public void run() {
-                                   //creating new thread to handle Http Operations
-
-
-
-
-
-
-
-                                   uploadFile(selectedFilePath);
-                               }
-                           }).start();
-                       }else{
-                           Toast.makeText(NewissueActivity.this,"Please choose a File First",Toast.LENGTH_SHORT).show();
-                       }
-
-
-
-
-                     // Switching to activity_home screen
-                       //Intent issues = new Intent(getApplicationContext(), HomeActivity.class);
-                       //startActivity(issues);
                    }
             }
         });
@@ -185,7 +135,11 @@ public class NewissueActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 // Switching to activity_home screen
                 //openImageIntent();
-                showFileChooser();
+                //showFileChooser();
+
+                new MaterialFilePicker()
+                        .withActivity(NewissueActivity.this)
+                        .withRequestCode(10).start();
             }
         });
 
@@ -194,204 +148,88 @@ public class NewissueActivity extends AppCompatActivity  {
 
     }
 
-    private void showFileChooser() {
-        Intent intent = new Intent();
-        //sets the select file to all types of files
-        intent.setType("*/*");
-        //allows to select data and return it
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        //starts new activity to select file and return data
-        startActivityForResult(Intent.createChooser(intent,"Choose File to Upload.."),PICK_FILE_REQUEST);
-    }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK){
-            if(requestCode == PICK_FILE_REQUEST){
-                if(data == null){
-                    //no data present
-                    return;
-                }
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data)
+    {
 
 
-                Uri selectedFileUri = data.getData();
-                selectedFilePath = FilePath.getPath(this,selectedFileUri);
-                Log.i(TAG,"Selected File Path:" + selectedFilePath);
 
-                if(selectedFilePath != null && !selectedFilePath.equals("")){
-                   // tvFileName.setText(selectedFilePath);
-                }else{
-                    Toast.makeText(this,"Cannot upload file to server",Toast.LENGTH_SHORT).show();
-                }
-            }
+
+        if (requestCode == 10 && resultCode == RESULT_OK) {
+
+            f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
+            content_type = getMimeType(f.getPath());
+            file_path = f.getAbsolutePath();
+            uploadFile();
+
         }
     }
 
 
+    public void uploadFile()
+    {
+        dialog = new ProgressDialog(NewissueActivity.this);
+        dialog.setTitle("Posting");
+        dialog.setMessage("Please wait...");
+        dialog.show();
 
-    //android upload file to server
-    public int uploadFile(final String selectedFilePath){
 
 
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
 
-        int serverResponseCode = 0;
-
-        HttpURLConnection connection;
-        DataOutputStream dataOutputStream;
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
-        String boundary = "*****";
-
+        OkHttpClient client = new OkHttpClient();
+        RequestBody file_body = RequestBody.create(MediaType.parse(content_type), f);
 
         HashMap<String, String> user = db.getUserDetails();
+        String useremail = user.get("username");
+        proof.append(useremail);
+        proof.append(file_path.substring(file_path.lastIndexOf
+                ("/") + 1));
 
+        RequestBody request_body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("type", content_type)
+                .addFormDataPart("uploaded_file",proof.toString(), file_body)
+                .build();
 
-        String useremail = user.get("imei");
+        Request request = new Request.Builder()
+                .url(SERVER_URL)
+                .post(request_body)
+                .build();
 
-        int bytesRead,bytesAvailable,bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
-        File selectedFile = new File(selectedFilePath);
+        try {
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful()){
+                throw new IOException("Error: "+response);
 
-
-
-        String[] parts = selectedFilePath.split("/");
-        final String fileName = parts[parts.length-1];
-
-        if (!selectedFile.isFile()){
-            dialog.dismiss();
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    //tvFileName.setText("Source File Doesn't Exist: " + selectedFilePath);
-                }
-            });
-            return 0;
-        }else{
-            try{
-
-
-
-                FileInputStream fileInputStream = new FileInputStream(selectedFile);
-                URL url = new URL(SERVER_URL);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);//Allow Inputs
-                connection.setDoOutput(true);//Allow Outputs
-                connection.setUseCaches(false);//Don't use a cached Copy
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Connection", "Keep-Alive");
-                connection.setRequestProperty("ENCTYPE", "multipart/form-data");
-                connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                connection.setRequestProperty("uploaded_file",selectedFilePath);
-                Log.e("selected====","selected file path-----======================"+selectedFilePath);
-
-
-
-
-
-
-                //creating new dataoutputstream
-                dataOutputStream = new DataOutputStream(connection.getOutputStream());
-
-
-                dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
-
-
-                proof.append(useremail);
-                proof.append(fileName);
-
-
-                Log.e(TAG,"filename"+ proof);
-                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
-                       +proof + "\"" +lineEnd);
-
-
-
-                dataOutputStream.writeBytes(lineEnd);
-
-                //returns no. of bytes present in fileInputStream
-                bytesAvailable = fileInputStream.available();
-                //selecting the buffer size as minimum of available bytes or 1 MB
-                bufferSize = Math.min(bytesAvailable,maxBufferSize);
-                //setting the buffer as byte array of size of bufferSize
-                buffer = new byte[bufferSize];
-
-                //reads bytes from FileInputStream(from 0th index of buffer to buffersize)
-                bytesRead = fileInputStream.read(buffer,0,bufferSize);
-
-                //loop repeats till bytesRead = -1, i.e., no bytes are left to read
-                while (bytesRead > 0){
-                    //write the bytes read from inputstream
-                    dataOutputStream.write(buffer,0,bufferSize);
-                    bytesAvailable = fileInputStream.available();
-                    bufferSize = Math.min(bytesAvailable,maxBufferSize);
-                    bytesRead = fileInputStream.read(buffer,0,bufferSize);
-                }
-
-                dataOutputStream.writeBytes(lineEnd);
-                dataOutputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-                serverResponseCode = connection.getResponseCode();
-                String serverResponseMessage = connection.getResponseMessage();
-
-                InputStreamReader reader=new InputStreamReader(connection.getInputStream());
-                StringBuffer sb=new StringBuffer();
-                int k=0;
-                while((k=reader.read())!=-1)
-
-                {
-                    sb.append((char)k);
-                }
-                Log.e(TAG, "Server Response is: " + serverResponseMessage + ": " + serverResponseCode+"======data======"+sb.toString());
-
-                //response code of 200 indicates the server status OK
-                if(serverResponseCode == 200){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-
-                            final String s = proof.toString();
-                           uploadImage(s);
-
-
-
-                            //tvFileName.setText("File Upload completed.\n\n You can see the uploaded file here: \n\n" + "http://coderefer.com/extras/uploads/"+ fileName);
-                        }
-                    });
-                }
-
-                //closing the input and output streams
-                fileInputStream.close();
-                dataOutputStream.flush();
-                dataOutputStream.close();
-
-
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(NewissueActivity.this,"File Not Found",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                Toast.makeText(NewissueActivity.this, "URL error!", Toast.LENGTH_SHORT).show();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(NewissueActivity.this, "Cannot Read/Write File!", Toast.LENGTH_SHORT).show();
             }
-            dialog.dismiss();
-            return serverResponseCode;
+            else {
+                dialog.dismiss();
+                s = proof.toString();
+
+            }
         }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+
+            }
+        });
+        t.start();
 
     }
 
+    private String getMimeType(String path)
+    {
+       String extension = MimeTypeMap.getFileExtensionFromUrl(path);
+        return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+    }
 
 
 
@@ -405,7 +243,7 @@ public class NewissueActivity extends AppCompatActivity  {
             HashMap<String, String> user = db.getUserDetails();
 
 
-            String useremail = user.get("imei");
+            String useremail = user.get("username");
 
 
 
@@ -461,6 +299,14 @@ public class NewissueActivity extends AppCompatActivity  {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+
     }
 
 

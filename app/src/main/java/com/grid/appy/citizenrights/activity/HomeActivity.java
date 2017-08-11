@@ -97,16 +97,7 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-
-
-
-
-
-
-
-        if (CheckNetwork.isInternetAvailable(this)) {
+     if (CheckNetwork.isInternetAvailable(this)) {
             checkFirstRun();
 
 
@@ -225,9 +216,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
         else{
-            //no connection
-            // Toast toast = Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG);
-            //toast.show();
 
 
                 Intent newissue = new Intent(getApplicationContext(), NointernetActivity.class);
@@ -267,39 +255,12 @@ public class HomeActivity extends AppCompatActivity
                 nav_Menu.findItem(R.id.admin).setVisible(false);
 
             }
+
+
         }
 
 
-
-
-
-
-
-
-
-        // load nav menu header data
-       // loadNavHeader();
-
     }
-
-/*
-    private void loadNavHeader() {
-        // name, website
-
-
-        // Fetching user details from sqlite
-        HashMap<String, String> user = db.getUserDetails();
-
-        String name = user.get("name");
-        String email = user.get("email");
-
-        // Displaying the user details on the screen
-        username.setText(name);
-        email_nav.setText(email);
-
-    }
-*/
-
 
 
     public void checkFirstRun() {
@@ -406,21 +367,20 @@ public class HomeActivity extends AppCompatActivity
             }
 
         }
+        /*
         else if (id == R.id.setting) {
             // Handle the setting action
             Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(settings);
 
-        } else if (id == R.id.help) {
+        }
+        */else if (id == R.id.help) {
             // Handle the help action
             Intent help = new Intent(getApplicationContext(), Helpactivity.class);
             startActivity(help);
 
         } else if (id == R.id.logout) {
-            // Handle the logout action
 
-            //Intent newissue = new Intent(getApplicationContext(), LoginActivity.class);
-            //startActivity(newissue);
 
             logoutUser();
 
@@ -493,10 +453,9 @@ public class HomeActivity extends AppCompatActivity
     private void logoutUser() {
         session.setLogin(false);
         db.deleteUsers();
-
-
         // Launching the login activity
         Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
        // finish();
     }

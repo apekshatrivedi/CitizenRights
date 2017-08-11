@@ -159,17 +159,18 @@ public class RegloginActivity extends Activity {
 
 
                         JSONObject user = jObj.getJSONObject("user");
-                        String aadhar = user.getString("aadhar");
+                        String dept = user.getString("dept");
                         String name = user.getString("name");
                         String phone = user.getString("phone");
                         String imei = user.getString("imei");
                         String email = user.getString("email");
-                        String type= user.getString("type");
+                        String type = user.getString("type");
+                        String username = user.getString("username");
 
 
 
                         // Inserting row in users table
-                        db.addUser(aadhar, name, phone, imei, email,type);
+                        db.addUser(dept, name, phone, imei, email,type,username);
 
                         // Launch main activity
                         Intent i = new Intent(getApplicationContext(), HomeActivity.class);

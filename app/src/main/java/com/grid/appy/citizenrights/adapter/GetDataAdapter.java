@@ -14,7 +14,6 @@ public class GetDataAdapter {
     public String home_username;
     public String history_issueid;
     public String history_date;
-    public String history_username;
     public String history_title;
     public String dept_title;
     public String dept_username;
@@ -87,11 +86,7 @@ public class GetDataAdapter {
 
     public void setHistory_title(String history_title){this.history_title=history_title;}
 
-    public String getHistory_username(){return  history_username;}
-
-    public void setHistory_username(String history_username){this.history_issueid=history_username;}
-
-    public String getHistory_date(){return  history_date;}
+        public String getHistory_date(){return  history_date;}
 
     public void setHistory_date(String history_date){this.history_date=history_date;}
 

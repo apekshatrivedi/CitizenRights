@@ -48,7 +48,6 @@ public class YourissueAdapter extends RecyclerView.Adapter<YourissueAdapter.View
 
 
         Viewholder.history_title.setText(getDataAdapter1.getHistory_title());
-        Viewholder.history_username.setText(getDataAdapter1.getHistory_username());
         Viewholder.history_date.setText(getDataAdapter1.getHistory_date());
 
         Viewholder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +78,6 @@ public class YourissueAdapter extends RecyclerView.Adapter<YourissueAdapter.View
 
         public TextView history_title;
         public TextView history_date;
-        public TextView history_username;
         public CardView cardView;
 
 
@@ -88,7 +86,6 @@ public class YourissueAdapter extends RecyclerView.Adapter<YourissueAdapter.View
             super(itemView);
 
             history_title = (TextView) itemView.findViewById(R.id.history_title) ;
-            history_username = (TextView) itemView.findViewById(R.id.history_username) ;
             history_date = (TextView) itemView.findViewById(R.id.history_date) ;
             cardView =(CardView)itemView.findViewById(R.id.cardview3);
 

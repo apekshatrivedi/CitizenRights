@@ -298,6 +298,12 @@ public class PeopleviewActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+       finish();
+
+    }
+
 
 
 }

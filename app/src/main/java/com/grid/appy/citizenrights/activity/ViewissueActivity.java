@@ -106,7 +106,7 @@ public class ViewissueActivity extends AppCompatActivity {
         HashMap<String, String> user = db.getUserDetails();
 
 
-        String useremail = user.get("imei");
+        String useremail = user.get("username");
 
         jsonArrayRequest = new JsonArrayRequest(GET_JSON_DATA_HTTP_URL2+useremail,
 
@@ -143,7 +143,6 @@ public class ViewissueActivity extends AppCompatActivity {
                     json = array.getJSONObject(i);
 
                     GetDataAdapter2.setHistory_title(json.getString(JSON_TITLE));
-                    GetDataAdapter2.setHistory_username(json.getString(JSON_USEREMAIL));
                     GetDataAdapter2.setHistory_date(json.getString(JSON_ISSUEDATETIME));
                     GetDataAdapter2.setHistory_issueid(json.getString(JSON_ISSUEID));
 
@@ -186,8 +185,20 @@ public class ViewissueActivity extends AppCompatActivity {
     }
     @Override
     public boolean onSupportNavigateUp() {
-        finish();
+       // finish();
+
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+
     }
 
 }

@@ -71,6 +71,36 @@
 
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_top"
+                    android:gravity="center"
+                    android:background="@drawable/lower_border"
+                    >
+
+                    <ImageView
+                        android:id="@+id/niknameicon"
+                        android:layout_width="@dimen/icon_width"
+                        android:layout_height="@dimen/icon_height"
+                        android:padding="@dimen/micro_padding"
+                        android:src="@drawable/user"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/user" />
+
+                    <EditText
+                        android:id="@+id/nikname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/bg"
+                        android:hint="Username"
+                        android:paddingLeft="@dimen/small_padding"
+                        android:inputType="textCapWords"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textColorHint="@color/colorTextSecondary" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -95,7 +125,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/bg"
-                        android:hint="Aadharr Number"
+                        android:hint="Unique - id"
                         android:inputType="number"
                         android:paddingLeft="10dp"
                         android:textColor="@color/colorTextPrimary"
