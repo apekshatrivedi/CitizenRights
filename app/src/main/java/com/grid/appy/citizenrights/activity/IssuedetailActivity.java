@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import com.grid.appy.citizenrights.adapter.GetDataAdapter;
 import com.grid.appy.citizenrights.adapter.ReplyAdapter;
 import com.grid.appy.citizenrights.config.AppConfig;
 import com.grid.appy.citizenrights.config.AppController;
+import com.grid.appy.citizenrights.helper.ImageLoader;
 import com.grid.appy.citizenrights.helper.RequestHandler;
 import com.grid.appy.citizenrights.helper.SQLiteHandler;
 import com.grid.appy.citizenrights.helper.SessionManager;
@@ -62,11 +64,6 @@ import static com.grid.appy.citizenrights.config.AppConfig.REPLY;
 public class IssuedetailActivity extends AppCompatActivity {
 
     String paths;
-    ProgressBar pb;
-    Dialog dialog;
-    int downloadedSize = 0;
-    int totalSize = 0;
-    // TextView cur_val;
 
 
     String title="";
@@ -113,8 +110,10 @@ public class IssuedetailActivity extends AppCompatActivity {
     public static final String KEY_desc = "description";
     public static final String KEY_IMGPATH= "proof";
     public static final String JSON_ARRAY = "result";
+    public static final String KEY_CONTENT ="content";
 
     String imgpaths;
+    String content;
 
 
 
@@ -136,6 +135,10 @@ public class IssuedetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issuedetail);
+
+
+
+
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -287,14 +290,6 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
     private void getData() {
 
         Bundle bundle = getIntent().getExtras();
@@ -337,6 +332,7 @@ public class IssuedetailActivity extends AppCompatActivity {
             desc = issueData.getString(KEY_desc);
             imgpaths=issueData.getString(KEY_IMGPATH);
             issueid=issueData.getString(KEY_ISSUEID);
+            content=issueData.getString(KEY_CONTENT);
 
             issue_title=(TextView)findViewById(R.id.issue_title);
             issue_useremail=(TextView)findViewById(R.id.issue_useremail);
@@ -349,23 +345,39 @@ public class IssuedetailActivity extends AppCompatActivity {
             issue_description.setText(desc);
             JSON_DATA_WEB_CALL();
 
-
-
-
-
-
             paths=PATH+imgpaths;
             Log.e(paths,paths);
 
+            Log.e("content",content);
+
+            // Imageview to show
+            ImageView image = (ImageView) findViewById(R.id.image);
 
             Button b = (Button) findViewById(R.id.download);
-            if(imgpaths.trim().equals("cr"))
+            if(content.trim().equals(""))
             {
-                b.setVisibility(View.INVISIBLE);
+                b.setVisibility(View.GONE);
+                image.setVisibility(View.GONE);
+            }
+
+            else if(content.trim().equals("image/png")||content.trim().equals("image/jpeg"))
+
+            {
+                b.setVisibility(View.GONE);
+                image.setVisibility(View.VISIBLE);
+                // Loader image - will be shown before loading image
+                int loader = R.drawable.citizen;
+
+                // ImageLoader class instance
+                ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+                // Image url
+                String image_url = paths;
+                imgLoader.DisplayImage(image_url, loader, image);
             }
 
             else {
-
+                image.setVisibility(View.GONE);
+                b.setVisibility(View.VISIBLE);
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -403,11 +415,7 @@ public class IssuedetailActivity extends AppCompatActivity {
 
 
 
-    //action on back
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
+
 
 
     //action bar icon
@@ -536,7 +544,12 @@ public class IssuedetailActivity extends AppCompatActivity {
     }
     @Override
     public boolean onSupportNavigateUp() {
-        finish();
+
+
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+
         return true;
     }
 
@@ -820,6 +833,13 @@ public class IssuedetailActivity extends AppCompatActivity {
             pDialog.dismiss();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+
+    }
 
 
 
