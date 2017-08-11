@@ -135,12 +135,6 @@ public class IssuedetailActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-            finish();
-
-    }
 
 
 
@@ -565,6 +559,10 @@ public class IssuedetailActivity extends AppCompatActivity {
 
         return true;
     }
+
+
+
+
 
 
     public void addreply(final String reply){
