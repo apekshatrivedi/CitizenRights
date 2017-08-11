@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.grid.appy.citizenrights.R;
 import com.grid.appy.citizenrights.activity.IssuedetailActivity;
@@ -50,6 +51,38 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         Viewholder.home_title.setText(getDataAdapter1.getHome_title());
         Viewholder.home_username.setText(getDataAdapter1.getHome_username());
         Viewholder.home_date.setText(getDataAdapter1.getHome_date());
+
+        Viewholder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intent = new Intent(context, IssuedetailActivity.class);
+                String message=getDataAdapter1.getHome_issueid();
+                intent.putExtra("message", message);
+                context.startActivity(intent);
+
+
+            }
+
+        });
+
+
+
+        Viewholder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(v.getContext(), "Position/" , Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+
+
+
+
+
+
 
         Viewholder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
