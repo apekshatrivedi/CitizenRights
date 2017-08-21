@@ -21,6 +21,8 @@ public class AppConfig {
 
 
 
+
+
     public static String SERVER_URL = ipaddress+"upload.php";
 
     public static String UPLOADMYSQL_URL = ipaddress+"uploadmysql.php";
