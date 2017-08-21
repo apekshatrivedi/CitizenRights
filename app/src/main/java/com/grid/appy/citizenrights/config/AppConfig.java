@@ -19,6 +19,8 @@ public class AppConfig {
 
     public static String URL_DREGISTER = ipaddress+"register1.php";
 
+
+
     public static String SERVER_URL = ipaddress+"upload.php";
 
     public static String UPLOADMYSQL_URL = ipaddress+"uploadmysql.php";
