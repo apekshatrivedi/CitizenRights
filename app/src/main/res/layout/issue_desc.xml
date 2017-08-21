@@ -1,207 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.grid.appy.citizenrights.activity.HomeActivity"
-    android:background="@color/bg"
-    android:textColor="@color/white"
-    android:textColorHint="@color/white"
-    >
-    <ScrollView
-        android:id="@+id/svContent"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+    android:background="#eceff1"
+    tools:context="com.grid.appy.citizenrights.activity.HomeActivity">
 
-        <LinearLayout
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <ScrollView
+            android:id="@+id/svContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!-- Content here -->
-            <LinearLayout
+            android:layout_height="wrap_content">
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-              <!--  <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Username: "
-                    android:inputType="textCapWords"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorTextSecondary"
-                    android:textSize="16dp"
-                    android:textStyle="bold"  />
-                    -->
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="6dp"
-                    android:id="@+id/issue_useremail"
-                    android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    android:hint="( who posted issue)"
-                    android:inputType="textCapWords"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textColorHint="@color/colorTextPrimary" />
-                <TextView
-                    android:layout_marginTop="6dp"
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/issue_datetime"
-                    android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    android:hint="12-09-2017"
-                    android:inputType="textCapWords"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textColorHint="@color/colorTextPrimary" />
-
-            </LinearLayout>
+                android:layout_height="match_parent">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
+                <LinearLayout
+                    android:id="@+id/layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
 
-                android:background="@drawable/lower_border"
-                android:gravity="center">
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/lower_border"
+                    android:gravity="center">
 
 
-                <TextView
-                    android:id="@+id/issue_title"
+                    <TextView
+                        android:id="@+id/issue_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#eceff1"
+                        android:hint="Title of the Issue"
+                        android:inputType="textCapWords"
+                        android:padding="10dp"
+
+                        android:textColor="@color/colorTextPrimary"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/cardview1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg"
+                    android:layout_below="@id/layout1"
+                    android:layout_margin="10dp"
+                    card_view:cardCornerRadius="5dp"
+                    android:padding="10dp"
+                    card_view:cardElevation="3dp"
+                    card_view:cardMaxElevation="5dp"
+                    card_view:contentPadding="3dp"
 
-                    android:hint="Title of the Issue"
-                    android:inputType="textCapWords"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/layout2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+
+                            android:background="@drawable/lower_border">
+
+                            <TextView
+                                android:id="@+id/textView12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="Nikname: "
+                                android:inputType="textCapWords"
+                                android:paddingLeft="10dp"
+                                android:textColor="@color/colorTextSecondary"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/issue_useremail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="( who posted issue)"
+                                android:inputType="textCapWords"
+                                android:paddingLeft="10dp"
+                                android:textColor="@color/colorTextPrimary"
+                                android:textColorHint="@color/colorTextPrimary" />
+
+                        </LinearLayout>
 
 
-            </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/layout3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/layout2"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/lower_border">
+
+                            <TextView
+                                android:id="@+id/textView10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="Posted at: "
+                                android:inputType="textCapWords"
+                                android:paddingLeft="10dp"
+                                android:textColor="@color/colorTextSecondary"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/issue_datetime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="12-09-2017"
+                                android:inputType="textCapWords"
+                                android:paddingLeft="10dp"
+                                android:textColor="@color/colorTextPrimary"
+                                android:textColorHint="@color/colorTextPrimary" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/issue_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/layout3"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/lower_border"
+                            android:gravity="top|left"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textColorHint="@color/colorTextPrimary" />
+
+                        <LinearLayout
+                            android:id="@+id/layout4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/issue_description">
+
+                            <ImageView
+                                android:id="@+id/image"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/layout3"
+                                android:layout_gravity="center"
+                                android:layout_margin="10dp"
+                                android:layout_marginTop="20dp"
+                                android:layout_weight="0.45"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/citizen"
+                                app:srcCompat="@drawable/citizen" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/lower_border">
+                            <Button
+                                android:id="@+id/download"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/layout3"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/curve"
+                                android:text="Download the proof"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white"
+                                android:textSize="15dp" />
+                        </LinearLayout>
 
 
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
 
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/lower_border">
-
-
-               <!--<TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/layout5"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Posted at: "
-                    android:inputType="textCapWords"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorTextSecondary"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-                    -->
+                    android:layout_below="@id/cardview1"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/lower_border"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/reply"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+
+
+                        android:hint="Reply"
+                        android:inputType="textCapWords"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
 
 
 
-            </LinearLayout>
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentTop="true"
 
 
-            <Button
-                android:id="@+id/download"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@null"
-                android:text="Download the proof"
-                android:textAllCaps="false"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="15dp" />
-
-            <!--
-            <Button
-                android:id="@+id/btnOpen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@null"
-                android:text="Open"
-                android:visibility="invisible"
-                android:textAllCaps="false"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="15dp" />
-
-                -->
+                        android:scrollbars="vertical" />
+                </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/issue_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/lower_border"
-                android:gravity="top|left"
-
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:textColor="@color/colorTextPrimary"
-                android:textColorHint="@color/colorTextPrimary" />
+            </RelativeLayout>
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:hint="Reply"
-                android:inputType="textCapWords"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="16dp"
-                android:textStyle="bold" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentTop="true"
-                android:scrollbars="vertical" />
+        </ScrollView>
 
 
-        </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="54dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginTop="5dp"
+            android:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:srcCompat="@drawable/reply" />
 
 
+    </android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
 
-    </ScrollView>
-
-
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_marginTop="5dp"
-        android:layout_width="54dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/reply"
-        android:elevation="6dp"
-        app:pressedTranslationZ="12dp"/>
-
-
-
-
-</android.support.design.widget.CoordinatorLayout>

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -41,12 +42,10 @@ public class NewissueActivity extends AppCompatActivity  {
 
 
     File f;
-    String content_type;
-    String file_path;
+    String content_type="";
+    String file_path="";
 
-    private static final int PICK_FILE_REQUEST = 1;
-    private static final String TAG = "message======";
-    private String selectedFilePath;
+
     ProgressDialog dialog;
 
     EditText desc;
@@ -63,6 +62,8 @@ public class NewissueActivity extends AppCompatActivity  {
     public static final String KEY_TITLE = "title";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_PROOF = "proof";
+    public static final String KEY_CONTENT="content";
+
 
     StringBuilder proof = new StringBuilder(200);
 
@@ -76,10 +77,11 @@ public class NewissueActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newissue);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        proof.append("cr");
-        s = proof.toString();
+       // proof.append("cr");
+        //s = proof.toString();
 
         txtName = (TextView) findViewById(R.id.username);
+
 
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
@@ -122,7 +124,10 @@ public class NewissueActivity extends AppCompatActivity  {
                     desc.setError("Give some description for the issue");
                 }
                   else {
-                                    uploadImage(s);
+                                    uploadImage(proof.toString());
+                       titleedit.setText(null);
+                       desc.setText(null);
+                       proof.setLength(0);
 
                    }
             }
@@ -160,6 +165,8 @@ public class NewissueActivity extends AppCompatActivity  {
 
             f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
             content_type = getMimeType(f.getPath());
+            Log.e("content type",content_type);
+
             file_path = f.getAbsolutePath();
             uploadFile();
 
@@ -209,7 +216,7 @@ public class NewissueActivity extends AppCompatActivity  {
             }
             else {
                 dialog.dismiss();
-                s = proof.toString();
+                //proof = proof.toString();
 
             }
         }
@@ -269,11 +276,14 @@ public class NewissueActivity extends AppCompatActivity  {
                 param.put(KEY_PROOF,proof);
                 param.put(KEY_TITLE, title);
                 param.put(KEY_DESCRIPTION, description);
+                param.put(KEY_CONTENT,content_type);
+                //Log.e("paramcontent",content_type);
 
                 String result = rh.sendPostRequest(UPLOADMYSQL_URL, param);
                 return result;
             }
         }
+
 
             UploadImage u = new UploadImage();
         u.execute();

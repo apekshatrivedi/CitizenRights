@@ -91,7 +91,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/bg"
-                        android:hint="Nick Name"
+                        android:hint="Nikname"
                         android:paddingLeft="@dimen/small_padding"
                         android:inputType="textCapWords"
                         android:textColor="@color/colorTextPrimary"

@@ -225,5 +225,15 @@ public class LoginActivity extends Activity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+
     }
 }

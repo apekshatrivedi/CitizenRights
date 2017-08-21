@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.grid.appy.citizenrights.config.AppConfig.GET_IMAGEJSON_HTTP_URL;
+import static com.grid.appy.citizenrights.config.AppConfig.PATH2;
 
 public class AdminviewActivity extends AppCompatActivity {
     List<GetDataAdapter> GetDataAdapter1;
@@ -118,8 +119,9 @@ public class AdminviewActivity extends AppCompatActivity {
                 json = array.getJSONObject(i);
 
                 GetDataAdapter2.setimagetitlename2(json.getString(JSON_IMAGE_TITLE_NAME));
+                String imageurl=PATH2+json.getString(JSON_IMAGE_URL);
 
-               GetDataAdapter2.setImageServerUrl2(json.getString(JSON_IMAGE_URL));
+               GetDataAdapter2.setImageServerUrl2(imageurl);
 
             } catch (JSONException e) {
 

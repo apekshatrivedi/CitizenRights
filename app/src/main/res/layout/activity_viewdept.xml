@@ -4,11 +4,13 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eceff1"
     tools:context=".activity.ViewdeptActivity">
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview1"
+
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 

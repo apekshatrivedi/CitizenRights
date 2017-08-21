@@ -10,6 +10,7 @@ import com.android.volley.toolbox.Volley;
 import java.util.List;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -24,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.grid.appy.citizenrights.config.AppConfig.GET_JSON_DATA_HTTP_URL;
+import static com.grid.appy.citizenrights.config.AppConfig.PATH;
+import static com.grid.appy.citizenrights.config.AppConfig.PATH2;
 
 
 public class ViewdeptActivity extends AppCompatActivity {
@@ -121,7 +124,9 @@ public class ViewdeptActivity extends AppCompatActivity {
 
                 GetDataAdapter2.setImageTitleNamee(json.getString(JSON_IMAGE_TITLE_NAME));
 
-                GetDataAdapter2.setImageServerUrl(json.getString(JSON_IMAGE_URL));
+                String imageurl=PATH2+json.getString(JSON_IMAGE_URL);
+                Log.e("------------------",imageurl);
+                GetDataAdapter2.setImageServerUrl(imageurl);
 
             } catch (JSONException e) {
 
